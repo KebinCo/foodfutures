@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodFutures - Register</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">FoodFutures</div>
+    <ul class="nav-links">
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="register.html">REGISTER</a></li>
+      <li><a href="login.html">LOG IN</a></li>
+      <li><a href="#">CHART</a></li>
+    </ul>
+  </nav>
+
+  <!-- REGISTER FORM -->
+  <section class="register-section">
+    <h1>회원가입</h1>
+    <form id="registerForm">
+      <label for="username">사용자 이름</label>
+      <input type="text" id="username" required>
+      <label for="password">비밀번호</label>
+      <input type="password" id="password" required>
+      <button type="submit">가입하기</button>
+      <p id="registerMessage"></p>
+    </form>
+  </section>
+
+  <script src="auth.js"></script>
+</body>
+</html>
