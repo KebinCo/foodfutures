@@ -1,0 +1,200 @@
+/* --- GENERAL RESET --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #000;
+  color: #0f0; /* neon green */
+  line-height: 1.6;
+}
+
+/* --- NAVBAR --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background-color: rgba(0,0,0,0.9);
+  z-index: 1000;
+}
+
+.navbar .logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links li a {
+  color: #0f0;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.nav-links li a:hover {
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+}
+
+/* --- HERO SECTION --- */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 2rem;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+}
+
+.hero p {
+  font-size: 1.2rem;
+}
+
+/* --- SECTIONS --- */
+section {
+  padding: 6rem 2rem;
+  max-width: 900px;
+  margin: auto;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
+
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 5px #0f0;
+}
+
+/* --- TICKER --- */
+.ticker {
+  background-color: #010;
+  padding: 1rem;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#ticker-content {
+  display: inline-block;
+  animation: ticker 15s linear infinite;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* --- FAQ --- */
+.faq-item {
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.faq-item h3 {
+  background-color: rgba(0,255,0,0.1);
+  padding: 0.5rem;
+  border-left: 3px solid #0f0;
+}
+
+.faq-item p {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  padding-left: 1rem;
+}
+
+.faq-item.active p {
+  max-height: 200px;
+  margin-top: 0.5rem;
+}
+
+/* --- FOOTER --- */
+footer {
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba(0,0,0,0.9);
+  margin-top: 3rem;
+  border-top: 1px solid #0f0;
+}
+
+/* --- REGISTER / LOGIN FORM --- */
+.register-section, .login-section {
+  max-width: 400px;
+  margin: 8rem auto;
+  padding: 2rem;
+  border: 1px solid #0f0;
+  border-radius: 10px;
+  background-color: rgba(0,0,0,0.8);
+}
+
+.register-section h1, .login-section h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.register-section label, .login-section label {
+  display: block;
+  margin-top: 1rem;
+}
+
+.register-section input, .login-section input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid #0f0;
+  border-radius: 5px;
+  background-color: #000;
+  color: #0f0;
+}
+
+.register-section button, .login-section button {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #0f0;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.register-section button:hover, .login-section button:hover {
+  background-color: #0ff;
+  color: #000;
+  box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
