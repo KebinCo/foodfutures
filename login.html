@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodFutures - Log In</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">FoodFutures</div>
+    <ul class="nav-links">
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="register.html">REGISTER</a></li>
+      <li><a href="login.html">LOG IN</a></li>
+      <li><a href="#">CHART</a></li>
+    </ul>
+  </nav>
+
+  <!-- LOGIN FORM -->
+  <section class="login-section">
+    <h1>로그인</h1>
+    <form id="loginForm">
+      <label for="usernameLogin">사용자 이름</label>
+      <input type="text" id="usernameLogin" required>
+      <label for="passwordLogin">비밀번호</label>
+      <input type="password" id="passwordLogin" required>
+      <button type="submit">로그인</button>
+      <p id="loginMessage"></p>
+    </form>
+  </section>
+
+  <script src="auth.js"></script>
+</body>
+</html>
