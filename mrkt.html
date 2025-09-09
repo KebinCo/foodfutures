@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markets - FoodFutures</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .markets-main {
+            margin-top: 80px;
+            padding: var(--spacing-xl) 0;
+        }
+
+        .markets-header {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .markets-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .markets-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .market-filters {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .filter-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .filter-select {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--card-bg);
+            border: var(--border-width) solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .filter-tabs {
+            display: flex;
+            background: var(--secondary-bg);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-xs);
+            border: var(--border-width) solid var(--border-color);
+        }
+
+        .filter-tab {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            border-radius: calc(var(--border-radius) - 2px);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tab.active {
+            background: var(--accent-color);
+            color: var(--primary-bg);
+        }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            padding-left: 40px;
+            background: var(--card-bg);
+            border: var(--border-width) solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: var(--spacing-md);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .markets-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .markets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--spacing-xl);
+        }
+
+        .market-card {
+            background: var(--card-bg);
+            border: var(--border-width) solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .market-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-elevated);
+            border-color: var(--accent-color);
+        }
+
+        .market-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .market-info h3 {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .market-name {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .market-status {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .market-status.active {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--positive-color);
+            border: 1px solid var(--positive-color);
+        }
+
+        .market-status.closing-soon {
+            background: rgba(255, 167, 38, 0.2);
+            color: var(--warning-color);
+            border: 1px solid var(--warning-color);
+        }
+
+        .market-price-section {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .market-current-price {
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .market-price-change {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .market-price-change.positive {
+            color: var(--positive-color);
+        }
+
+        .market-price-change.negative {
+            color: var(--negative-color);
+        }
+
+        .market-details {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .market-detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .market-detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .market-detail-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .market-detail-value {
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .market-chart {
+            height: 80px;
+            background: rgba(0, 255, 136, 0.03);
+            border-radius: var(--border-radius);
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: end;
+            padding: var(--spacing-sm);
+            gap: 2px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: var(--accent-color);
+            border-radius: 2px 2px 0 0;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            animation: barGrow 0.8s ease-out;
+        }
+
+        .chart-bar:hover {
+            opacity: 1;
+        }
+
+        @keyframes barGrow {
+            from {
+                height: 0;
+            }
+            to {
+                height: var(--bar-height);
+            }
+        }
+
+        .market-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .market-btn {
+            flex: 1;
+            padding: var(--spacing-md);
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+
+        .market-btn.buy {
+            background: var(--positive-color);
+            color: var(--primary-bg);
+        }
+
+        .market-btn.buy:hover {
+            background: transparent;
+            color: var(--positive-color);
+            border: var(--border-width) solid var(--positive-color);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .market-btn.sell {
+            background: var(--negative-color);
+            color: var(--text-primary);
+        }
+
+        .market-btn.sell:hover {
+            background: transparent;
+            color: var(--negative-color);
+            border: var(--border-width) solid var(--negative-color);
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.4);
+        }
+
+        .market-btn.view {
+            background: transparent;
+            color: var(--text-primary);
+            border: var(--border-width) solid var(--border-color);
+        }
+
+        .market-btn.view:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            box-shadow: var(--glow-primary);
+        }
+
+        .featured-section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .featured-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .featured-icon {
+            color: var(--accent-color);
+        }
+
+        .trending-indicator {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            background: var(--accent-color);
+            color: var(--primary-bg);
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .volume-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .volume-bar {
+            width: 40px;
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .volume-fill {
+            height: 100%;
+            background: var(--accent-color);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .market-category-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-lg) 0;
+            border-bottom: var(--border-width) solid var(--border-color);
+        }
+
+        .category-icon {
+            font-size: 2rem;
+        }
+
+        .category-info h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .category-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .markets-title {
+                font-size: 2rem;
+            }
+
+            .market-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                justify-content: space-between;
+            }
+
+            .markets-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .market-card {
+                padding: var(--spacing-lg);
+            }
+
+            .market-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-glow"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-text">FoodFutures</a>
+                <div class="logo-pulse"></div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="#" class="nav-link active">Markets</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            
+            <div class="nav-actions">
+                <div class="language-toggle">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ko">한국어</button>
+                </div>
+                <a href="dashboard.html" class="nav-btn">Dashboard</a>
+                <a href="portfolio.html" class="nav-btn">Portfolio</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="markets-main">
+        <div class="markets-header">
+            <h1 class="markets-title">Food Ingredient Markets</h1>
+            <p class="markets-subtitle">Trade prediction contracts on future food ingredient prices</p>
+            
+            <div class="market-filters">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-category="all">All Markets</button>
+                    <button class="filter-tab" data-category="proteins">Proteins</button>
+                    <button class="filter-tab" data-category="produce">Produce</button>
+                    <button class="filter-tab" data-category="grains">Grains</button>
+                    <button class="filter-tab" data-category="dairy">Dairy</button>
+                </div>
+
+                <div class="filter-group">
+                    <span class="filter-label">Sort:</span>
+                    <select class="filter-select" id="sortSelect">
+                        <option value="trending">Trending</option>
+                        <option value="volume">Volume</option>
+                        <option value="change">Price Change</option>
+                        <option value="alphabetical">Alphabetical</option>
+                    </select>
+                </div>
+
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Search markets..." id="searchInput">
+                </div>
+            </div>
+        </div>
+
+        <div class="markets-container">
+            <!-- Featured Markets Section -->
+            <div class="featured-section">
+                <h2 class="featured-title">
+                    <span class="featured-icon">🔥</span>
+                    Trending Markets
+                </h2>
+                <div class="markets-grid" id="featuredMarkets">
+                    <!-- Featured markets will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- All Markets Section -->
+            <div class="market-category-header">
+                <div class="category-icon">📊</div>
+                <div class="category-info">
+                    <h2>All Markets</h2>
+                    <p>Browse all available food ingredient futures contracts</p>
+                </div>
+            </div>
+            
+            <div class="markets-grid" id="allMarkets">
+                <!-- All markets will be populated by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mock market data
+        const marketData = [
+            {
+                symbol: 'BEEF-US-MAR26',
+                name: 'US Beef Futures',
+                category: 'proteins',
+                price: 0.73,
+                change: 8.2,
+                volume: 85,
+                settlement: '2026-03-15',
+                description: 'US beef price prediction for March 2026',
+                trending: true,
+                featured: true
+            },
+            {
+                symbol: 'CORN-US-JUN26',
+                name: 'Corn Price Index',
+                category: 'grains',
+                price: 0.45,
+                change: -3.1,
+                volume: 67,
+                settlement: '2026-06-30',
+                description: 'US corn commodity price futures',
+                trending: false,
+                featured: false
+            },
+            {
+                symbol: 'TOMATO-CA-APR26',
+                name: 'CA Tomato Futures',
+                category: 'produce',
+                price: 0.89,
+                change: 15.7,
+                volume: 92,
+                settlement: '2026-04-20',
+                description: 'California tomato price prediction',
+                trending: true,
+                featured: true
+            },
+            {
+                symbol: 'WHEAT-US-SEP26',
+                name: 'Wheat Futures',
+                category: 'grains',
+                price: 0.52,
+                change: -1.4,
+                volume: 45,
+                settlement: '2026-09-15',
+                description: 'US wheat commodity futures',
+                trending: false,
+                featured: false
+            },
+            {
+                symbol: 'MILK-US-MAY26',
+                name: 'Milk Price Index',
+                category: 'dairy',
+                price: 0.61,
+                change: 4.8,
+                volume: 78,
+                settlement: '2026-05-31',
+                description: 'US milk price prediction contract',
+                trending: false,
+                featured: true
+            },
+            {
+                symbol: 'CHICKEN-US-JUL26',
+                name: 'Chicken Breast Futures',
+                category: 'proteins',
+                price: 0.55,
+                change: 2.3,
+                volume: 58,
+                settlement: '2026-07-15',
+                description: 'US chicken breast price futures',
+                trending: false,
+                featured: false
+            },
+            {
+                symbol: 'RICE-US-DEC26',
+                name: 'Rice Commodity Index',
+                category: 'grains',
+                price: 0.39,
+                change: -0.8,
+                volume: 34,
+                settlement: '2026-12-31',
+                description: 'US rice commodity price prediction',
+                trending: false,
+                featured: false
+            },
+            {
+                symbol: 'AVOCADO-CA-FEB26',
+                name: 'California Avocado Futures',
+                category: 'produce',
+                price: 0.76,
+                change: 11.2,
+                volume: 71,
+                settlement: '2026-02-28',
+                description: 'California avocado price futures',
+                trending: true,
+                featured: false
+            },
+            {
+                symbol: 'CHEESE-US-AUG26',
+                name: 'Cheese Price Index',
+                category: 'dairy',
+                price: 0.44,
+                change: -2.1,
+                volume: 41,
+                settlement: '2026-08-31',
+                description: 'US cheese commodity price prediction',
+                trending: false,
+                featured: false
+            },
+            {
+                symbol: 'POTATO-ID-OCT26',
+                name: 'Idaho Potato Futures',
+                category: 'produce',
+                price: 0.31,
+                change: 6.7,
+                volume: 29,
+                settlement: '2026-10-15',
+                description: 'Idaho potato price prediction contract',
+                trending: false,
+                featured: false
+            }
+        ];
+
+        let filteredData = [...marketData];
+        let currentCategory = 'all';
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderFeaturedMarkets();
+            renderAllMarkets();
+            setupEventListeners();
+        });
+
+        // Cursor glow effect
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.querySelector('.cursor-glow');
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // Language toggle
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Create market card HTML
+        function createMarketCard(market) {
+            const changeClass = market.change >= 0 ? 'positive' : 'negative';
+            const changeSymbol = market.change >= 0 ? '+' : '';
+            
+            return `
+                <div class="market-card" data-category="${market.category}">
+                    ${market.trending ? '<div class="trending-indicator">TRENDING</div>' : ''}
+                    <div class="market-card-header">
+                        <div class="market-info">
+                            <h3>${market.symbol}</h3>
+                            <p class="market-name">${market.name}</p>
+                        </div>
+                        <div class="market-status active">ACTIVE</div>
+                    </div>
+                    
+                    <div class="market-price-section">
+                        <div class="market-current-price">${market.price.toFixed(2)}</div>
+                        <div class="market-price-change ${changeClass}">${changeSymbol}${market.change.toFixed(1)}%</div>
+                    </div>
+                    
+                    <div class="market-details">
+                        <div class="market-detail-row">
+                            <span class="market-detail-label">Settlement</span>
+                            <span class="market-detail-value">${market.settlement}</span>
+                        </div>
+                        <div class="market-detail-row">
+                            <span class="market-detail-label">Volume</span>
+                            <span class="market-detail-value">
+                                <div class="volume-indicator">
+                                    <div class="volume-bar">
+                                        <div class="volume-fill" style="width: ${market.volume}%"></div>
+                                    </div>
+                                    ${market.volume}%
+                                </div>
+                            </span>
+                        </div>
+                        <div class="market-detail-row">
+                            <span class="market-detail-label">Category</span>
+                            <span class="market-detail-value">${market.category.charAt(0).toUpperCase() + market.category.slice(1)}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="market-chart">
+                        ${generateChartBars()}
+                    </div>
+                    
+                    <div class="market-actions">
+                        <button class="market-btn buy" onclick="openTradeModal('${market.symbol}', 'buy')">Buy</button>
+                        <button class="market-btn sell" onclick="openTradeModal('${market.symbol}', 'sell')">Sell</button>
+                        <button class="market-btn view" onclick="viewMarketDetails('${market.symbol}')">Details</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Generate chart bars
+        function generateChartBars() {
+            let barsHtml = '';
+            for (let i = 0; i < 15; i++) {
+                const height = Math.random() * 60 + 20;
+                barsHtml += `<div class="chart-bar" style="--bar-height: ${height}%; height: ${height}%"></div>`;
+            }
+            return barsHtml;
+        }
+
+        // Render featured markets
+        function renderFeaturedMarkets() {
+            const featuredContainer = document.getElementById('featuredMarkets');
+            const featuredMarkets = marketData.filter(market => market.featured);
+            featuredContainer.innerHTML = featuredMarkets.map(market => createMarketCard(market)).join('');
+        }
+
+        // Render all markets
+        function renderAllMarkets() {
+            const allMarketsContainer = document.getElementById('allMarkets');
+            allMarketsContainer.innerHTML = filteredData.map(market => createMarketCard(market)).join('');
+        }
+
+        // Filter markets by category
+        function filterByCategory(category) {
+            currentCategory = category;
+            if (category === 'all') {
+                filteredData = [...marketData];
+            } else {
+                filteredData = marketData.filter(market => market.category === category);
+            }
+            
+            // Apply current search term
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm) {
+                filteredData = filteredData.filter(market => 
+                    market.name.toLowerCase().includes(searchTerm) ||
+                    market.symbol.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            renderAllMarkets();
+        }
+
+        // Sort markets
+        function sortMarkets(sortBy) {
+            switch (sortBy) {
+                case 'trending':
+                    filteredData.sort((a, b) => (b.trending ? 1 : 0) - (a.trending ? 1 : 0));
+                    break;
+                case 'volume':
+                    filteredData.sort((a, b) => b.volume - a.volume);
+                    break;
+                case 'change':
+                    filteredData.sort((a, b) => Math.abs(b.change) - Math.abs(a.change));
+                    break;
+                case 'alphabetical':
+                    filteredData.sort((a, b) => a.symbol.localeCompare(b.symbol));
+                    break;
+            }
+            renderAllMarkets();
+        }
+
+        // Search markets
+        function searchMarkets(searchTerm) {
+            if (currentCategory === 'all') {
+                filteredData = [...marketData];
+            } else {
+                filteredData = marketData.filter(market => market.category === currentCategory);
+            }
+            
+            if (searchTerm) {
+                filteredData = filteredData.filter(market =>
+                    market.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    market.symbol.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+            
+            renderAllMarkets();
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Category filter tabs
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    filterByCategory(this.dataset.category);
+                });
+            });
+
+            // Sort select
+            document.getElementById('sortSelect').addEventListener('change', function() {
+                sortMarkets(this.value);
+            });
+
+            // Search input
+            document.getElementById('searchInput').addEventListener('input', function() {
+                searchMarkets(this.value);
+            });
+        }
+
+        // Open trade modal (placeholder function)
+        function openTradeModal(symbol, action) {
+            alert(`${action.toUpperCase()} ${symbol} - Trading interface coming soon!`);
+        }
+
+        // View market details (placeholder function)
+        function viewMarketDetails(symbol) {
+            alert(`Viewing details for ${symbol} - Detailed view coming soon!`);
+        }
+
+        // Update market prices (simulate real-time updates)
+        function updateMarketPrices() {
+            marketData.forEach(market => {
+                const variation = (Math.random() - 0.5) * 0.1;
+                const oldPrice = market.price;
+                market.price = Math.max(0.1, market.price + variation);
+                market.change = ((market.price - oldPrice) / oldPrice) * 100;
+            });
+            
+            renderFeaturedMarkets();
+            renderAllMarkets();
+        }
+
+        // Start price updates
+        setInterval(updateMarketPrices, 8000);
+    </script>
+</body>
+</html>
