@@ -1,77 +1,270 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FoodFutures — Prediction Market</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodFutures - Advanced Food Price Trading Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo">FoodFutures</div>
-    <ul class="nav-links">
-      <li><a href="#hero">HOME</a></li>
-      <li><a href="#">REGISTER</a></li>
-      <li><a href="#">LOG IN</a></li>
-      <li><a href="#">CHART</a></li>
-    </ul>
-    <div class="lang-toggle" id="lang-toggle">KR | EN</div>
-  </nav>
-
-  <!-- Hero Section -->
-  <section id="hero" class="hero section">
-    <h1 class="reveal">푸드퓨처스</h1>
-    <p class="reveal">미래 식자재 가격을 예측하는 글로벌 마켓</p>
-  </section>
-
-  <!-- Contracts & Trading -->
-  <section id="contracts" class="section">
-    <h2 class="reveal">계약 & 거래</h2>
-    <p class="reveal">식자재 가격 변동에 따라 수익을 얻을 수 있는 간단한 계약 구조.</p>
-  </section>
-
-  <!-- Market Mechanics -->
-  <section id="mechanics" class="section">
-    <h2 class="reveal">시장 구조</h2>
-    <p class="reveal">24/7 거래, 자동화된 가격 조정, 누구나 참여 가능한 오픈 마켓.</p>
-  </section>
-
-  <!-- Revenue Model -->
-  <section id="revenue" class="section">
-    <h2 class="reveal">수익 모델</h2>
-    <p class="reveal">거래 수수료, 레버리지 수익, 데이터 서비스로 운영을 지속.</p>
-  </section>
-
-  <!-- Risk & Safety -->
-  <section id="risk" class="section">
-    <h2 class="reveal">리스크 관리</h2>
-    <p class="reveal">포지션 한도, 시장 감시, 사용자 보호 기능을 통해 안전한 거래 환경 제공.</p>
-  </section>
-
-  <!-- Technology -->
-  <section id="tech" class="section">
-    <h2 class="reveal">기술 인프라</h2>
-    <p class="reveal">빠른 거래 엔진, 모바일 앱 지원, 고급 분석 도구 제공.</p>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq" class="section">
-    <h2 class="reveal">자주 묻는 질문</h2>
-    <div class="faq-item reveal">
-      <button class="faq-question">FoodFutures는 무엇인가요?</button>
-      <div class="faq-answer">식자재 가격 예측을 기반으로 한 합법적인 마켓 플랫폼입니다.</div>
-    </div>
-    <div class="faq-item reveal">
-      <button class="faq-question">어떻게 시작하나요?</button>
-      <div class="faq-answer">회원가입 후 간단한 인증 절차를 거치면 거래할 수 있습니다.</div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 FoodFutures</p>
-  </footer>
+    <!-- Cursor follower glow -->
+    <div class="cursor-glow"></div>
+    
+    <!-- Background grid -->
+    <div class="background-grid"></div>
+    
+    <!-- Floating particles -->
+    <div class="particles-container"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-text">Food<span class="brand-accent">Futures</span></span>
+                <div class="brand-glow"></div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#" class="nav-link" data-text="Markets">Markets</a>
+                <a href="#" class="nav-link" data-text="Trading">Trading</a>
+                <a href="#" class="nav-link" data-text="Analytics">Analytics</a>
+                <a href="#" class="nav-link" data-text="About">About</a>
+            </div>
+            
+            <div class="nav-actions">
+                <div class="language-toggle">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ko">한국어</button>
+                    <div class="lang-slider"></div>
+                </div>
+                
+                <button class="cta-button">
+                    <span>Get Started</span>
+                    <div class="button-glow"></div>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span>Next Generation Trading Platform</span>
+                        <div class="badge-glow"></div>
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        <span class="title-line">Trade the Future of</span>
+                        <span class="title-line accent-line">Food Markets</span>
+                        <div class="title-glow"></div>
+                    </h1>
+                    
+                    <p class="hero-description">
+                        Advanced prediction markets for food ingredient prices. 
+                        Professional-grade trading platform with real-time analytics, 
+                        leverage options, and institutional-level market intelligence.
+                    </p>
+                    
+                    <div class="hero-actions">
+                        <button class="primary-button">
+                            <span>Start Trading</span>
+                            <div class="button-particles"></div>
+                        </button>
+                        <button class="secondary-button">
+                            <span>Watch Demo</span>
+                            <svg class="play-icon" viewBox="0 0 24 24" fill="none">
+                                <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="trading-card">
+                        <div class="card-header">
+                            <span class="card-title">BEEF-TX-MAR2026</span>
+                            <span class="card-status positive">+12.5%</span>
+                        </div>
+                        <div class="card-chart">
+                            <!-- Animated chart placeholder -->
+                            <svg class="chart-svg" viewBox="0 0 300 150">
+                                <polyline class="chart-line" points="0,130 50,120 100,80 150,90 200,60 250,40 300,30"></polyline>
+                                <circle class="chart-dot" cx="300" cy="30" r="3"></circle>
+                            </svg>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-price">$0.67</span>
+                            <span class="card-volume">Vol: 2.4K</span>
+                        </div>
+                        <div class="card-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2 class="section-title">Advanced Trading Features</h2>
+                    <p class="section-subtitle">Professional tools for serious traders</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Real-Time Trading</h3>
+                        <p class="feature-description">Execute trades instantly with professional-grade order matching and sub-millisecond latency.</p>
+                        <div class="feature-glow"></div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Advanced Analytics</h3>
+                        <p class="feature-description">Comprehensive market intelligence with predictive algorithms and sentiment analysis.</p>
+                        <div class="feature-glow"></div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M16 4H18C19.1046 4 20 4.89543 20 6V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V6C4 4.89543 4.89543 4 6 4H8" stroke="currentColor" stroke-width="2"/>
+                                <rect x="8" y="2" width="8" height="4" rx="1" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Portfolio Management</h3>
+                        <p class="feature-description">Sophisticated risk management tools with automated stop-losses and position sizing.</p>
+                        <div class="feature-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="section-container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">$50M+</div>
+                        <div class="stat-label">Trading Volume</div>
+                        <div class="stat-glow"></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Active Traders</div>
+                        <div class="stat-glow"></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Uptime</div>
+                        <div class="stat-glow"></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Market Hours</div>
+                        <div class="stat-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <script>
+        // Cursor glow effect
+        const cursorGlow = document.querySelector('.cursor-glow');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+        });
+        
+        // Language toggle
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const langSlider = document.querySelector('.lang-slider');
+        
+        langButtons.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                langButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                langSlider.style.transform = `translateX(${index * 100}%)`;
+            });
+        });
+        
+        // Floating particles
+        const particlesContainer = document.querySelector('.particles-container');
+        
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            particle.style.opacity = Math.random() * 0.5 + 0.1;
+            particlesContainer.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 5000);
+        }
+        
+        setInterval(createParticle, 300);
+        
+        // Chart animation
+        const chartLine = document.querySelector('.chart-line');
+        const chartDot = document.querySelector('.chart-dot');
+        
+        function animateChart() {
+            chartLine.style.strokeDashoffset = '0';
+            chartDot.style.opacity = '1';
+        }
+        
+        setTimeout(animateChart, 1000);
+        
+        // Button hover effects
+        document.querySelectorAll('.primary-button, .secondary-button').forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                const particles = button.querySelector('.button-particles');
+                if (particles) {
+                    particles.style.opacity = '1';
+                }
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                const particles = button.querySelector('.button-particles');
+                if (particles) {
+                    particles.style.opacity = '0';
+                }
+            });
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Add navigation logic here
+            });
+        });
+        
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+        });
+    </script>
 </body>
 </html>
