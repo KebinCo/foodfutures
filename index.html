@@ -174,6 +174,18 @@
     </footer>
 
     <script>
+// Redirect login/signup buttons
+document.querySelector('.login-btn').addEventListener('click', () => {
+    window.location.href = 'https://kebinco.github.io/foodfutures/login.html';
+});
+
+document.querySelector('.signup-btn').addEventListener('click', () => {
+    window.location.href = 'https://kebinco.github.io/foodfutures/signup.html';
+});
+
+
+
+        
         // Cursor glow effect
         document.addEventListener('mousemove', (e) => {
             const glow = document.querySelector('.cursor-glow');
