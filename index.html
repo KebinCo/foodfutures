@@ -3,268 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodFutures - Advanced Food Price Trading Platform</title>
+    <title>FoodFutures - Trade the Future of Food</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Cursor follower glow -->
     <div class="cursor-glow"></div>
     
-    <!-- Background grid -->
-    <div class="background-grid"></div>
-    
-    <!-- Floating particles -->
-    <div class="particles-container"></div>
-    
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-brand">
-                <span class="brand-text">Food<span class="brand-accent">Futures</span></span>
-                <div class="brand-glow"></div>
+            <div class="nav-logo">
+                <span class="logo-text">FoodFutures</span>
+                <div class="logo-pulse"></div>
             </div>
             
-            <div class="nav-links">
-                <a href="#" class="nav-link" data-text="Markets">Markets</a>
-                <a href="#" class="nav-link" data-text="Trading">Trading</a>
-                <a href="#" class="nav-link" data-text="Analytics">Analytics</a>
-                <a href="#" class="nav-link" data-text="About">About</a>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#markets" class="nav-link">Markets</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </div>
             
             <div class="nav-actions">
                 <div class="language-toggle">
                     <button class="lang-btn active" data-lang="en">EN</button>
                     <button class="lang-btn" data-lang="ko">한국어</button>
-                    <div class="lang-slider"></div>
                 </div>
-                
-                <button class="cta-button">
-                    <span>Get Started</span>
-                    <div class="button-glow"></div>
-                </button>
+                <button class="nav-btn login-btn">Login</button>
+                <button class="nav-btn signup-btn">Sign Up</button>
             </div>
         </div>
     </nav>
-    
-    <!-- Main Content -->
+
     <main class="main-content">
         <!-- Hero Section -->
         <section class="hero-section">
             <div class="hero-container">
                 <div class="hero-content">
-                    <div class="hero-badge">
-                        <span>Next Generation Trading Platform</span>
-                        <div class="badge-glow"></div>
-                    </div>
-                    
                     <h1 class="hero-title">
-                        <span class="title-line">Trade the Future of</span>
-                        <span class="title-line accent-line">Food Markets</span>
-                        <div class="title-glow"></div>
+                        <span class="title-line">Trade the Future</span>
+                        <span class="title-line accent">of Food Prices</span>
                     </h1>
-                    
-                    <p class="hero-description">
-                        Advanced prediction markets for food ingredient prices. 
-                        Professional-grade trading platform with real-time analytics, 
-                        leverage options, and institutional-level market intelligence.
+                    <p class="hero-subtitle">
+                        Professional prediction markets for restaurant ingredient prices. 
+                        Make informed trades on beef, produce, grains and more.
                     </p>
-                    
                     <div class="hero-actions">
-                        <button class="primary-button">
-                            <span>Start Trading</span>
-                            <div class="button-particles"></div>
-                        </button>
-                        <button class="secondary-button">
-                            <span>Watch Demo</span>
-                            <svg class="play-icon" viewBox="0 0 24 24" fill="none">
-                                <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
-                            </svg>
-                        </button>
+                        <button class="cta-primary">Start Trading</button>
+                        <button class="cta-secondary">Learn More</button>
                     </div>
                 </div>
                 
                 <div class="hero-visual">
                     <div class="trading-card">
                         <div class="card-header">
-                            <span class="card-title">BEEF-TX-MAR2026</span>
-                            <span class="card-status positive">+12.5%</span>
+                            <span class="market-name">BEEF-US-MAR2026</span>
+                            <span class="market-status active">ACTIVE</span>
                         </div>
-                        <div class="card-chart">
-                            <!-- Animated chart placeholder -->
-                            <svg class="chart-svg" viewBox="0 0 300 150">
-                                <polyline class="chart-line" points="0,130 50,120 100,80 150,90 200,60 250,40 300,30"></polyline>
-                                <circle class="chart-dot" cx="300" cy="30" r="3"></circle>
-                            </svg>
+                        <div class="price-display">
+                            <span class="current-price">$0.68</span>
+                            <span class="price-change positive">+12.4%</span>
                         </div>
-                        <div class="card-footer">
-                            <span class="card-price">$0.67</span>
-                            <span class="card-volume">Vol: 2.4K</span>
+                        <div class="mini-chart">
+                            <div class="chart-line"></div>
                         </div>
-                        <div class="card-glow"></div>
+                        <div class="card-actions">
+                            <button class="trade-btn buy">BUY</button>
+                            <button class="trade-btn sell">SELL</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-        
+
         <!-- Features Section -->
         <section class="features-section">
             <div class="section-container">
-                <div class="section-header">
-                    <h2 class="section-title">Advanced Trading Features</h2>
-                    <p class="section-subtitle">Professional tools for serious traders</p>
-                </div>
-                
+                <h2 class="section-title">Why Choose FoodFutures?</h2>
                 <div class="features-grid">
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg viewBox="0 0 24 24" fill="none">
-                                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <h3 class="feature-title">Real-Time Trading</h3>
-                        <p class="feature-description">Execute trades instantly with professional-grade order matching and sub-millisecond latency.</p>
-                        <div class="feature-glow"></div>
+                        <div class="feature-icon">📈</div>
+                        <h3>Professional Trading</h3>
+                        <p>Advanced charts, real-time data, and professional-grade trading tools.</p>
                     </div>
-                    
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg viewBox="0 0 24 24" fill="none">
-                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <h3 class="feature-title">Advanced Analytics</h3>
-                        <p class="feature-description">Comprehensive market intelligence with predictive algorithms and sentiment analysis.</p>
-                        <div class="feature-glow"></div>
+                        <div class="feature-icon">🎯</div>
+                        <h3>Market Intelligence</h3>
+                        <p>Crowd-sourced predictions provide valuable insights for the food industry.</p>
                     </div>
-                    
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg viewBox="0 0 24 24" fill="none">
-                                <path d="M16 4H18C19.1046 4 20 4.89543 20 6V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V6C4 4.89543 4.89543 4 6 4H8" stroke="currentColor" stroke-width="2"/>
-                                <rect x="8" y="2" width="8" height="4" rx="1" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                        </div>
-                        <h3 class="feature-title">Portfolio Management</h3>
-                        <p class="feature-description">Sophisticated risk management tools with automated stop-losses and position sizing.</p>
-                        <div class="feature-glow"></div>
+                        <div class="feature-icon">⚡</div>
+                        <h3>Instant Settlement</h3>
+                        <p>Automated settlement system with transparent, reliable data sources.</p>
                     </div>
                 </div>
             </div>
         </section>
-        
+
         <!-- Stats Section -->
         <section class="stats-section">
             <div class="section-container">
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <div class="stat-number">$50M+</div>
+                        <div class="stat-number">$2.4M</div>
                         <div class="stat-label">Trading Volume</div>
-                        <div class="stat-glow"></div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">10K+</div>
+                        <div class="stat-number">15,000+</div>
                         <div class="stat-label">Active Traders</div>
-                        <div class="stat-glow"></div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">95%</div>
-                        <div class="stat-label">Uptime</div>
-                        <div class="stat-glow"></div>
+                        <div class="stat-number">73%</div>
+                        <div class="stat-label">Prediction Accuracy</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">Market Hours</div>
-                        <div class="stat-glow"></div>
+                        <div class="stat-number">45</div>
+                        <div class="stat-label">Available Markets</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="section-container">
+                <div class="cta-content">
+                    <h2>Ready to Start Trading?</h2>
+                    <p>Join thousands of traders making informed predictions on food markets.</p>
+                    <div class="cta-actions">
+                        <button class="cta-primary large">Create Account</button>
+                        <button class="cta-secondary large">View Markets</button>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-    
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>FoodFutures</h4>
+                    <p>Professional prediction markets for food ingredient prices.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Markets</h4>
+                    <a href="#">Proteins</a>
+                    <a href="#">Produce</a>
+                    <a href="#">Grains</a>
+                    <a href="#">Dairy</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="#">Trading Guide</a>
+                    <a href="#">Market Data</a>
+                    <a href="#">API Docs</a>
+                    <a href="#">Support</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <a href="#">About Us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Legal</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FoodFutures. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <script>
         // Cursor glow effect
-        const cursorGlow = document.querySelector('.cursor-glow');
-        
         document.addEventListener('mousemove', (e) => {
-            cursorGlow.style.left = e.clientX + 'px';
-            cursorGlow.style.top = e.clientY + 'px';
+            const glow = document.querySelector('.cursor-glow');
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
         });
-        
+
         // Language toggle
-        const langButtons = document.querySelectorAll('.lang-btn');
-        const langSlider = document.querySelector('.lang-slider');
-        
-        langButtons.forEach((btn, index) => {
+        document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                langButtons.forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                langSlider.style.transform = `translateX(${index * 100}%)`;
             });
         });
-        
-        // Floating particles
-        const particlesContainer = document.querySelector('.particles-container');
-        
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.style.left = Math.random() * 100 + 'vw';
-            particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            particle.style.opacity = Math.random() * 0.5 + 0.1;
-            particlesContainer.appendChild(particle);
-            
-            setTimeout(() => {
-                particle.remove();
-            }, 5000);
-        }
-        
-        setInterval(createParticle, 300);
-        
-        // Chart animation
-        const chartLine = document.querySelector('.chart-line');
-        const chartDot = document.querySelector('.chart-dot');
-        
-        function animateChart() {
-            chartLine.style.strokeDashoffset = '0';
-            chartDot.style.opacity = '1';
-        }
-        
-        setTimeout(animateChart, 1000);
-        
-        // Button hover effects
-        document.querySelectorAll('.primary-button, .secondary-button').forEach(button => {
-            button.addEventListener('mouseenter', () => {
-                const particles = button.querySelector('.button-particles');
-                if (particles) {
-                    particles.style.opacity = '1';
-                }
-            });
-            
-            button.addEventListener('mouseleave', () => {
-                const particles = button.querySelector('.button-particles');
-                if (particles) {
-                    particles.style.opacity = '0';
-                }
-            });
-        });
-        
-        // Smooth scrolling for navigation
+
+        // Nav link active state
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                // Add navigation logic here
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
             });
         });
-        
-        // Add loading animation
-        window.addEventListener('load', () => {
-            document.body.classList.add('loaded');
+
+        // Animate stats on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-item').forEach(stat => {
+            observer.observe(stat);
         });
+
+        // Animate trading card price
+        function animatePrice() {
+            const priceElement = document.querySelector('.current-price');
+            const changeElement = document.querySelector('.price-change');
+            
+            const basePrice = 0.68;
+            const variation = (Math.random() - 0.5) * 0.1;
+            const newPrice = Math.max(0.1, basePrice + variation);
+            const change = ((newPrice - basePrice) / basePrice * 100);
+            
+            priceElement.textContent = `$${newPrice.toFixed(2)}`;
+            changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(1)}%`;
+            changeElement.className = `price-change ${change >= 0 ? 'positive' : 'negative'}`;
+        }
+
+        // Update price every 3 seconds
+        setInterval(animatePrice, 3000);
     </script>
 </body>
 </html>
