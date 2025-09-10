@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - FoodFutures</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="dshbrd.css">
+    <link rel="stylesheet" href="dsh.css">
 </head>
 <body>
     <div class="cursor-glow"></div>
@@ -35,173 +35,76 @@
         </div>
     </nav>
 
-    <button class="mobile-toggle" id="mobileToggle">☰</button>
-
-    <div class="dashboard-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Trading</h3>
-                <ul class="sidebar-nav">
-                    <li><a href="#" class="sidebar-link active"><span class="sidebar-icon">📊</span> Dashboard</a></li>
-                    <li><a href="markets.html" class="sidebar-link"><span class="sidebar-icon">📈</span> Markets</a></li>
-                    <li><a href="portfolio.html" class="sidebar-link"><span class="sidebar-icon">💼</span> Portfolio</a></li>
-                    <li><a href="#" class="sidebar-link"><span class="sidebar-icon">📋</span> Orders</a></li>
-                    <li><a href="#" class="sidebar-link"><span class="sidebar-icon">📊</span> Analysis</a></li>
-                </ul>
+    <main class="dashboard-layout">
+        <header class="dashboard-header">
+            <h1 class="welcome-title" id="welcomeMessage">Welcome Back!</h1>
+            <div class="balance-card">
+                <span class="balance-label">Total Balance</span>
+                <span class="balance-value" id="balanceValue">$0.00</span>
             </div>
+        </header>
 
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Account</h3>
-                <ul class="sidebar-nav">
-                    <li><a href="account.html" class="sidebar-link"><span class="sidebar-icon">⚙️</span> Settings</a></li>
-                    <li><a href="#" class="sidebar-link"><span class="sidebar-icon">📚</span> Help</a></li>
-                    <li><a href="#" class="sidebar-link"><span class="sidebar-icon">🔔</span> Alerts</a></li>
-                </ul>
-            </div>
-        </aside>
-
-        <main class="main-dashboard">
-            <div class="dashboard-header">
-                <div class="welcome-section">
-                    <h1 class="welcome-title">Welcome back, <span id="userName">Trader</span></h1>
-                    <p class="welcome-subtitle">Here's your trading overview for today</p>
-                </div>
-                <div class="header-actions">
-                    <a href="markets.html" class="quick-action-btn">Browse Markets</a>
-                    <a href="#" class="quick-action-btn">Quick Trade</a>
+        <section class="account-summary-grid">
+            <div class="summary-card">
+                <span class="summary-label">Portfolio Value</span>
+                <div class="summary-details">
+                    <span class="text-primary" id="portfolioValue">$0.00</span>
                 </div>
             </div>
-
-            <div class="dashboard-grid">
-                <div class="portfolio-overview">
-                    <div class="portfolio-header">
-                        <h2 class="portfolio-title">Portfolio Performance</h2>
-                        <span class="portfolio-period">Last 30 days</span>
-                    </div>
-
-                    <div class="portfolio-stats">
-                        <div class="stat-card">
-                            <div class="stat-value" id="totalValue">$12,847</div>
-                            <div class="stat-label">Total Value</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value positive" id="totalPnL">+$2,347</div>
-                            <div class="stat-label">Total P&L</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value positive" id="dailyPnL">+$184</div>
-                            <div class="stat-label">Today's P&L</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="openPositions">8</div>
-                            <div class="stat-label">Open Positions</div>
-                        </div>
-                    </div>
-
-                    <div class="chart-placeholder">
-                        <div class="chart-line-container" id="portfolioChart">
-                            </div>
-                    </div>
-                </div>
-
-                <div class="quick-stats">
-                    <h3 class="quick-stats-title">Market Overview</h3>
-                    
-                    <div class="market-summary">
-                        <div class="summary-item">
-                            <div class="summary-info">
-                                <h4>BEEF-US-MAR26</h4>
-                                <p>US Beef Futures</p>
-                            </div>
-                            <div class="summary-value">
-                                <div class="summary-price">$0.73</div>
-                                <div class="summary-change positive">+8.2%</div>
-                            </div>
-                        </div>
-
-                        <div class="summary-item">
-                            <div class="summary-info">
-                                <h4>CORN-US-JUN26</h4>
-                                <p>Corn Price Index</p>
-                            </div>
-                            <div class="summary-value">
-                                <div class="summary-price">$0.45</div>
-                                <div class="summary-change negative">-3.1%</div>
-                            </div>
-                        </div>
-
-                        <div class="summary-item">
-                            <div class="summary-info">
-                                <h4>TOMATO-CA-APR26</h4>
-                                <p>CA Tomato Futures</p>
-                            </div>
-                            <div class="summary-value">
-                                <div class="summary-price">$0.89</div>
-                                <div class="summary-change positive">+15.7%</div>
-                            </div>
-                        </div>
-
-                        <div class="summary-item">
-                            <div class="summary-info">
-                                <h4>WHEAT-US-SEP26</h4>
-                                <p>Wheat Futures</p>
-                            </div>
-                            <div class="summary-value">
-                                <div class="summary-price">$0.52</div>
-                                <div class="summary-change negative">-1.4%</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="news-feed">
-                        <h4 style="color: var(--text-primary); margin-bottom: var(--spacing-md);">Market News</h4>
-                        
-                        <div class="news-item">
-                            <div class="news-time">2 hours ago</div>
-                            <div class="news-title">Beef prices surge on supply concerns</div>
-                            <div class="news-impact">High impact on BEEF contracts</div>
-                        </div>
-
-                        <div class="news-item">
-                            <div class="news-time">4 hours ago</div>
-                            <div class="news-title">California drought affects tomato yields</div>
-                            <div class="news-impact">Medium impact on TOMATO-CA contracts</div>
-                        </div>
-
-                        <div class="news-item">
-                            <div class="news-time">6 hours ago</div>
-                            <div class="news-title">Corn harvest exceeds expectations</div>
-                            <div class="news-impact">Medium impact on CORN contracts</div>
-                        </div>
-                    </div>
+            <div class="summary-card">
+                <span class="summary-label">Total P&L</span>
+                <div class="summary-details">
+                    <span class="summary-price" id="totalPnL">$0.00</span>
+                    <span class="summary-change" id="changePercentage">0.00%</span>
                 </div>
             </div>
-
-            <div class="positions-section">
-                <div class="section-header">
-                    <h2 class="section-title">Active Positions</h2>
-                    <a href="portfolio.html" class="view-all-link">View All →</a>
+            <div class="summary-card">
+                <span class="summary-label">Total Positions</span>
+                <div class="summary-details">
+                    <span class="text-primary" id="totalPositions">3</span>
+                    <span class="text-secondary">Active</span>
                 </div>
-
-                <table class="positions-table">
-                    <thead>
-                        <tr>
-                            <th>Contract</th>
-                            <th>Type</th>
-                            <th>Size</th>
-                            <th>Entry Price</th>
-                            <th>Current Price</th>
-                            <th>P&L</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="positionsTable">
-                        </tbody>
-                </table>
             </div>
-        </main>
-    </div>
-    
-    <script src="trdngdshbrd.js"></script>
+            <div class="summary-card">
+                <span class="summary-label">Available Margin</span>
+                <div class="summary-details">
+                    <span class="text-primary">$23,500</span>
+                    <span class="text-secondary">Unused</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="positions-section">
+            <div class="section-header">
+                <h2 class="section-title">Open Positions</h2>
+                <a href="#" class="view-all-link">View All</a>
+            </div>
+            <table class="positions-table">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Side</th>
+                        <th>Qty</th>
+                        <th>Entry Price</th>
+                        <th>Current Price</th>
+                        <th>P&L</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="positionsTable">
+                    </tbody>
+            </table>
+        </section>
+
+        <section class="trade-history-section">
+            <div class="section-header">
+                <h2 class="section-title">Trade History</h2>
+                <a href="#" class="view-all-link">View All</a>
+            </div>
+            <div id="tradeHistory">
+                </div>
+        </section>
+    </main>
+    <script src="dsh.js"></script>
 </body>
 </html>
