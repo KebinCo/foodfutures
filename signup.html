@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - FoodFutures</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="signup.css">
 </head>
 <body>
     <div class="cursor-glow"></div>
@@ -19,7 +18,7 @@
             
             <div class="nav-menu">
                 <a href="index.html" class="nav-link">Home</a>
-                <a href="#markets" class="nav-link">Markets</a>
+                <a href="markets.html" class="nav-link">Markets</a>
                 <a href="#about" class="nav-link">About</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
@@ -29,8 +28,8 @@
                     <button class="lang-btn active" data-lang="en">EN</button>
                     <button class="lang-btn" data-lang="ko">한국어</button>
                 </div>
-                <a href="login.html" class="nav-btn login-btn">Login</a>
-                <a href="signup.html" class="nav-btn signup-btn active">Sign Up</a>
+                <a href="login.html" class="nav-btn">Login</a>
+                <a href="signup.html" class="nav-btn active">Sign Up</a>
             </div>
         </div>
     </nav>
@@ -40,224 +39,56 @@
             <div class="auth-card">
                 <div class="auth-header">
                     <h1 class="auth-title">Create Your Account</h1>
-                    <p class="auth-subtitle">Get started with a free demo account and explore the platform</p>
+                    <p class="auth-subtitle">Join the future of food trading with FoodFutures.</p>
                 </div>
 
                 <form class="auth-form" id="signupForm">
-                    <div class="form-group two-col">
-                        <div>
-                            <label class="form-label" for="firstName">First Name</label>
-                            <input 
-                                type="text" 
-                                id="firstName" 
-                                class="form-input" 
-                                placeholder="e.g., Jane"
-                                required
-                            >
-                        </div>
-                        <div>
-                            <label class="form-label" for="lastName">Last Name</label>
-                            <input 
-                                type="text" 
-                                id="lastName" 
-                                class="form-input" 
-                                placeholder="e.g., Doe"
-                                required
-                            >
-                        </div>
-                    </div>
-
                     <div class="form-group">
-                        <label class="form-label" for="email">Email Address</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            class="form-input" 
-                            placeholder="e.g., jane.doe@example.com"
-                            required
-                        >
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="accountType">Account Type</label>
+                        <div class="account-type-group">
+                            <button type="button" class="account-type selected" data-type="individual">Individual</button>
+                            <button type="button" class="account-type" data-type="business">Business</button>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label class="form-label">Account Type</label>
-                        <div class="account-type-selection">
-                            <div class="account-type selected" data-type="beginner">
-                                <strong>Beginner</strong>
-                            </div>
-                            <div class="account-type" data-type="pro">
-                                <strong>Pro Trader</strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="auth-button primary">
-                        <span class="button-text">Create Account</span>
+                    <button type="submit" class="auth-button">
+                        <span class="button-text">Sign Up</span>
                         <div class="button-loader hidden"></div>
                     </button>
                 </form>
-                
-                <div class="auth-divider">
-                    <span>or continue with</span>
+
+                <div class="social-login-separator">
+                    <span>Or Sign Up with</span>
                 </div>
 
-                <div class="social-login">
-                    <button class="social-btn google">
-                        <span class="social-icon">🔍</span>
-                        Google
+                <div class="social-buttons">
+                    <button class="social-btn google-btn">
+                        <img src="https://www.google.com/favicon.ico" alt="Google"> Google
                     </button>
-                    <button class="social-btn github">
-                        <span class="social-icon">🐱</span>
-                        GitHub
+                    <button class="social-btn apple-btn">
+                        <img src="https://www.apple.com/favicon.ico" alt="Apple"> Apple
                     </button>
-                </div>
-
-                <div class="auth-footer">
-                    <p>Already have an account? <a href="login.html" class="auth-link">Sign in</a></p>
                 </div>
             </div>
-
-            <div class="signup-visual">
-                <div class="chart-header">
-                    <h3 class="chart-title">Historical Futures Prices</h3>
-                    <span class="chart-period">Last 12 hours</span>
-                </div>
-                <div class="chart-area">
-                    <div class="chart-bars" id="chart-bars">
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                        <div class="chart-bar"></div>
-                    </div>
-                </div>
-                <div class="chart-legend">
-                    <div class="legend-item">
-                        <div class="legend-color long"></div>
-                        Long Position
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color short"></div>
-                        Short Position
-                    </div>
-                </div>
+            <div class="auth-info">
+                <h2 class="auth-info-title">Global Food Markets at Your Fingertips.</h2>
+                <p class="auth-info-text">Access real-time data, manage your portfolio, and make informed decisions on a secure, user-friendly platform.</p>
             </div>
         </div>
     </main>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('.auth-form');
-        const accountTypeButtons = document.querySelectorAll('.account-type');
-        
-        // Account Type Toggle
-        accountTypeButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                accountTypeButtons.forEach(b => b.classList.remove('selected'));
-                this.classList.add('selected');
-            });
-        });
-        
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const submitBtn = document.querySelector('.auth-button');
-            const buttonText = submitBtn.querySelector('.button-text');
-            const buttonLoader = submitBtn.querySelector('.button-loader');
-            
-            submitBtn.disabled = true;
-            buttonText.classList.add('hidden');
-            buttonLoader.classList.remove('hidden');
-            
-            // Generate a unique user ID (timestamp is a simple way to do this)
-            const userId = 'user_' + Date.now();
-            
-            const newUser = {
-                id: userId,
-                firstName: document.getElementById('firstName').value,
-                lastName: document.getElementById('lastName').value,
-                email: document.getElementById('email').value,
-                accountType: document.querySelector('.account-type.selected').dataset.type,
-                signupTime: new Date().toISOString(),
-                balance: 10000.00, // Initial balance
-                trades: [] // Empty array for trades
-            };
-            
-            // Store the new user data in a dedicated localStorage key
-            localStorage.setItem(userId, JSON.stringify(newUser));
-            
-            // Save the currently logged-in user ID
-            localStorage.setItem('currentUserId', userId);
-            
-            setTimeout(() => {
-                // Redirect to the dashboard
-                window.location.href = 'dsh.html';
-            }, 1000);
-        });
-        
-        document.querySelectorAll('.social-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.style.opacity = '0.7';
-                setTimeout(() => {
-                    this.style.opacity = '1';
-                }, 200);
-            });
-        });
-    });
-</script>
+    
+    <script src="signup.js"></script>
 </body>
 </html>
