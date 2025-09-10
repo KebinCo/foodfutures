@@ -29,47 +29,31 @@
                     <button class="lang-btn active" data-lang="en">EN</button>
                     <button class="lang-btn" data-lang="ko">한국어</button>
                 </div>
-                <a href="portfolio.html" class="nav-btn">Portfolio</a>
+                <a href="dsh.html" class="nav-btn">Dashboard</a>
                 <button class="nav-btn" id="logoutBtn">Logout</button>
             </div>
         </div>
     </nav>
 
     <main class="dashboard-layout">
-        <header class="dashboard-header">
-            <h1 class="welcome-title" id="welcomeMessage">Welcome Back!</h1>
-            <div class="balance-card">
-                <span class="balance-label">Total Balance</span>
-                <span class="balance-value" id="balanceValue">$0.00</span>
-            </div>
-        </header>
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Dashboard</h1>
+            <p class="dashboard-subtitle">Your personalized view of market activity and portfolio performance.</p>
+        </div>
 
-        <section class="account-summary-grid">
+        <section class="summary-section">
             <div class="summary-card">
-                <span class="summary-label">Portfolio Value</span>
-                <div class="summary-details">
-                    <span class="text-primary" id="portfolioValue">$0.00</span>
+                <div class="summary-item">
+                    <span class="summary-label">Account Balance</span>
+                    <span class="summary-value" id="accountBalance">$10,000.00</span>
                 </div>
-            </div>
-            <div class="summary-card">
-                <span class="summary-label">Total P&L</span>
-                <div class="summary-details">
-                    <span class="summary-price" id="totalPnL">$0.00</span>
-                    <span class="summary-change" id="changePercentage">0.00%</span>
+                <div class="summary-item">
+                    <span class="summary-label">Portfolio Value</span>
+                    <span class="summary-value" id="portfolioValue">$0.00</span>
                 </div>
-            </div>
-            <div class="summary-card">
-                <span class="summary-label">Total Positions</span>
-                <div class="summary-details">
-                    <span class="text-primary" id="totalPositions">3</span>
-                    <span class="text-secondary">Active</span>
-                </div>
-            </div>
-            <div class="summary-card">
-                <span class="summary-label">Available Margin</span>
-                <div class="summary-details">
-                    <span class="text-primary">$23,500</span>
-                    <span class="text-secondary">Unused</span>
+                <div class="summary-item">
+                    <span class="summary-label">Total P/L</span>
+                    <span class="summary-value" id="totalProfitLoss">0.00%</span>
                 </div>
             </div>
         </section>
@@ -79,32 +63,19 @@
                 <h2 class="section-title">Open Positions</h2>
                 <a href="#" class="view-all-link">View All</a>
             </div>
-            <table class="positions-table">
-                <thead>
-                    <tr>
-                        <th>Symbol</th>
-                        <th>Side</th>
-                        <th>Qty</th>
-                        <th>Entry Price</th>
-                        <th>Current Price</th>
-                        <th>P&L</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="positionsTable">
-                    </tbody>
-            </table>
-        </section>
-
-        <section class="trade-history-section">
-            <div class="section-header">
-                <h2 class="section-title">Trade History</h2>
-                <a href="#" class="view-all-link">View All</a>
+            <div class="positions-list" id="positionsList">
+                <p>You have no open positions.</p>
             </div>
-            <div id="tradeHistory">
-                </div>
         </section>
+        
+        <section class="watch-list-section">
+            <div class="section-header">
+                <h2 class="section-title">Watchlist</h2>
+                <a href="markets.html" class="view-all-link">View All Markets</a>
+            </div>
+            </section>
     </main>
+    
     <script src="dsh.js"></script>
 </body>
 </html>
