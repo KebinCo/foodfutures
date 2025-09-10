@@ -1,0 +1,184 @@
+/* Portfolio-specific styles */
+.portfolio-layout {
+    margin-top: 80px;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    max-width: 1200px;
+    margin: 80px auto;
+}
+
+.portfolio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: var(--border-width) solid var(--border-color);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.portfolio-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.balance-card {
+    background: var(--card-bg);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    text-align: right;
+    width: 250px;
+}
+
+.balance-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.balance-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--positive-color);
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing-2xl);
+}
+
+.positions-section,
+.historical-trades-section,
+.portfolio-chart-section {
+    background: var(--card-bg);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-xl);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.status-badge {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.success {
+    background: rgba(0, 255, 136, 0.2);
+    color: var(--positive-color);
+}
+
+.positions-table,
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.positions-table th,
+.positions-table td,
+.history-table th,
+.history-table td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: var(--border-width) solid var(--border-color);
+}
+
+.positions-table th,
+.history-table th {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.positions-table td,
+.history-table td {
+    color: var(--text-primary);
+}
+
+.positions-table tbody tr:last-child td,
+.history-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.position-side.long,
+.history-side.long {
+    color: var(--positive-color);
+}
+
+.position-side.short,
+.history-side.short {
+    color: var(--negative-color);
+}
+
+.position-profit.positive,
+.history-profit.positive {
+    color: var(--positive-color);
+    font-weight: 600;
+}
+
+.position-profit.negative,
+.history-profit.negative {
+    color: var(--negative-color);
+    font-weight: 600;
+}
+
+.action-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--card-bg);
+    color: var(--text-primary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.action-btn.close-btn {
+    background: var(--negative-color);
+    color: var(--primary-bg);
+    border-color: var(--negative-color);
+}
+
+.action-btn:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.action-btn.close-btn:hover {
+    box-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
