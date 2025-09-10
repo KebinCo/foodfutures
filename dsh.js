@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Find the current market price for this symbol
             const currentMarket = marketData.find(market => market.symbol === symbol);
 
-            if (currentMarket) {
+            // Only render the position if the total quantity is greater than 0
+            if (currentMarket && totalQuantity > 0) {
                 // Calculate the current value and profit/loss
                 const initialValue = relevantTrades.reduce((sum, trade) => sum + trade.price * trade.quantity, 0);
                 const currentValue = totalQuantity * currentMarket.price;
