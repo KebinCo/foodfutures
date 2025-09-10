@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - FoodFutures</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="portfolio.css">
+</head>
+<body>
+    <div class="cursor-glow"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-text">FoodFutures</a>
+                <div class="logo-pulse"></div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="markets.html" class="nav-link">Markets</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            
+            <div class="nav-actions">
+                <div class="language-toggle">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ko">한국어</button>
+                </div>
+                <a href="dsh.html" class="nav-btn">Dashboard</a>
+                <button class="nav-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="portfolio-layout">
+        <header class="portfolio-header">
+            <h1 class="portfolio-title">Your Portfolio</h1>
+            <div class="balance-card">
+                <span class="balance-label">Total Portfolio Value</span>
+                <span class="balance-value" id="portfolioValue">$0.00</span>
+            </div>
+        </header>
+
+        <section class="portfolio-grid">
+            <div class="positions-section">
+                <div class="section-header">
+                    <h2 class="section-title">Current Positions</h2>
+                    <span class="status-badge success" id="positionCount">0 Positions</span>
+                </div>
+                <table class="positions-table">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Side</th>
+                            <th>Qty</th>
+                            <th>P&L</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="positionsTable">
+                        </tbody>
+                </table>
+            </div>
+
+            <aside class="sidebar-portfolio">
+                <div class="portfolio-chart-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Portfolio Breakdown</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="portfolioChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="historical-trades-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Historical Trades</h2>
+                    </div>
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Symbol</th>
+                                <th>Side</th>
+                                <th>P&L</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTable">
+                            </tbody>
+                    </table>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="portfolio.js"></script>
+</body>
+</html>
