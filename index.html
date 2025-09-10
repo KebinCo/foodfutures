@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodFutures - Trade the Future of Food</title>
+    <title>FoodFutures - Home</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,13 +12,13 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <span class="logo-text">FoodFutures</span>
+                <a href="index.html" class="logo-text">FoodFutures</a>
                 <div class="logo-pulse"></div>
             </div>
             
             <div class="nav-menu">
-                <a href="#home" class="nav-link active">Home</a>
-                <a href="#markets" class="nav-link">Markets</a>
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="mrkt.html" class="nav-link">Markets</a>
                 <a href="#about" class="nav-link">About</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
@@ -28,228 +28,125 @@
                     <button class="lang-btn active" data-lang="en">EN</button>
                     <button class="lang-btn" data-lang="ko">한국어</button>
                 </div>
-                <button class="nav-btn login-btn">Login</button>
-                <button class="nav-btn signup-btn">Sign Up</button>
+                <a href="dsh.html" class="nav-btn">Dashboard</a>
+                <button class="nav-btn" id="logoutBtn">Logout</button>
             </div>
         </div>
     </nav>
 
-    <main class="main-content">
-        <!-- Hero Section -->
+    <main class="home-main">
         <section class="hero-section">
-            <div class="hero-container">
-                <div class="hero-content">
-                    <h1 class="hero-title">
-                        <span class="title-line">Trade the Future</span>
-                        <span class="title-line accent">of Food Prices</span>
-                    </h1>
-                    <p class="hero-subtitle">
-                        Professional prediction markets for restaurant ingredient prices. 
-                        Make informed trades on beef, produce, grains and more.
-                    </p>
-                    <div class="hero-actions">
-                        <button class="cta-primary">Start Trading</button>
-                        <button class="cta-secondary">Learn More</button>
-                    </div>
-                </div>
-                
-                <div class="hero-visual">
-                    <div class="trading-card">
-                        <div class="card-header">
-                            <span class="market-name">BEEF-US-MAR2026</span>
-                            <span class="market-status active">ACTIVE</span>
-                        </div>
-                        <div class="price-display">
-                            <span class="current-price">$0.68</span>
-                            <span class="price-change positive">+12.4%</span>
-                        </div>
-                        <div class="mini-chart">
-                            <div class="chart-line"></div>
-                        </div>
-                        <div class="card-actions">
-                            <button class="trade-btn buy">BUY</button>
-                            <button class="trade-btn sell">SELL</button>
-                        </div>
-                    </div>
-                </div>
+            <h1 class="hero-title">Trade the Future of Food.</h1>
+            <p class="hero-subtitle">Invest in a sustainable tomorrow with agricultural commodities.</p>
+            <div class="hero-actions">
+                <a href="mrkt.html" class="btn btn-primary">Start Trading Now</a>
+                <a href="dsh.html" class="btn btn-secondary">View Dashboard</a>
             </div>
         </section>
 
-        <!-- Features Section -->
-        <section class="features-section">
-            <div class="section-container">
-                <h2 class="section-title">Why Choose FoodFutures?</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">📈</div>
-                        <h3>Professional Trading</h3>
-                        <p>Advanced charts, real-time data, and professional-grade trading tools.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🎯</div>
-                        <h3>Market Intelligence</h3>
-                        <p>Crowd-sourced predictions provide valuable insights for the food industry.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">⚡</div>
-                        <h3>Instant Settlement</h3>
-                        <p>Automated settlement system with transparent, reliable data sources.</p>
-                    </div>
-                </div>
+        <section class="intro-section">
+            <div class="intro-card">
+                <h2 class="section-title">What is FoodFutures?</h2>
+                <p>FoodFutures is a platform for trading agricultural commodities, allowing you to invest in a market that's essential for our future. Our real-time price simulations, driven by market data, provide a safe environment to learn and practice trading without real financial risk.</p>
             </div>
         </section>
-
-        <!-- Stats Section -->
-        <section class="stats-section">
-            <div class="section-container">
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number">$2.4M</div>
-                        <div class="stat-label">Trading Volume</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">15,000+</div>
-                        <div class="stat-label">Active Traders</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">73%</div>
-                        <div class="stat-label">Prediction Accuracy</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">45</div>
-                        <div class="stat-label">Available Markets</div>
-                    </div>
-                </div>
+        
+        <section class="sample-position-section">
+            <div class="section-header">
+                <h2 class="section-title">Sample Market Position</h2>
             </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <div class="section-container">
-                <div class="cta-content">
-                    <h2>Ready to Start Trading?</h2>
-                    <p>Join thousands of traders making informed predictions on food markets.</p>
-                    <div class="cta-actions">
-                        <button class="cta-primary large">Create Account</button>
-                        <button class="cta-secondary large">View Markets</button>
+            <div class="position-card">
+                <div class="position-info">
+                    <span class="position-symbol">WHEAT</span>
+                    <span class="position-name">Wheat</span>
+                </div>
+                <div class="position-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Quantity</span>
+                        <span class="detail-value" id="sampleQuantity">100.00</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Current Price</span>
+                        <span class="detail-value" id="sampleCurrentPrice">$0.00</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">P/L ($)</span>
+                        <span class="detail-value" id="sampleProfitLoss">$0.00</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">P/L (%)</span>
+                        <span class="detail-value" id="sampleProfitLossPercent">0.00%</span>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>FoodFutures</h4>
-                    <p>Professional prediction markets for food ingredient prices.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Markets</h4>
-                    <a href="#">Proteins</a>
-                    <a href="#">Produce</a>
-                    <a href="#">Grains</a>
-                    <a href="#">Dairy</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Resources</h4>
-                    <a href="#">Trading Guide</a>
-                    <a href="#">Market Data</a>
-                    <a href="#">API Docs</a>
-                    <a href="#">Support</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Company</h4>
-                    <a href="#">About Us</a>
-                    <a href="#">Careers</a>
-                    <a href="#">Legal</a>
-                    <a href="#">Contact</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 FoodFutures. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
     <script>
-// Redirect login/signup buttons
-document.querySelector('.login-btn').addEventListener('click', () => {
-    window.location.href = 'https://kebinco.github.io/foodfutures/login.html';
-});
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn === 'true') {
+                document.getElementById('logoutBtn').addEventListener('click', () => {
+                    localStorage.removeItem('isLoggedIn');
+                    window.location.href = 'index.html';
+                });
+            }
 
-document.querySelector('.signup-btn').addEventListener('click', () => {
-    window.location.href = 'https://kebinco.github.io/foodfutures/signup.html';
-});
+            // Function to sync the sample position with live market data
+            function syncSamplePosition() {
+                const marketData = JSON.parse(localStorage.getItem('marketData')) || [];
+                const wheatMarket = marketData.find(m => m.symbol === 'WHEAT');
 
-
-
-        
-        // Cursor glow effect
-        document.addEventListener('mousemove', (e) => {
-            const glow = document.querySelector('.cursor-glow');
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-        });
-
-        // Language toggle
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-        });
-
-        // Nav link active state
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-            });
-        });
-
-        // Animate stats on scroll
-        const observerOptions = {
-            threshold: 0.5,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
+                if (!wheatMarket) {
+                    // Initialize a sample position if market data is not available
+                    const sampleTradeHistory = [{
+                        id: 'sample_trade',
+                        symbol: 'WHEAT',
+                        name: 'Wheat',
+                        action: 'buy',
+                        quantity: 100,
+                        price: 7.25,
+                        timestamp: new Date().toISOString()
+                    }];
+                    localStorage.setItem('tradeHistory', JSON.stringify(sampleTradeHistory));
+                    localStorage.setItem('marketData', JSON.stringify([
+                         { id: 1, symbol: 'WHEAT', name: 'Wheat', category: 'grains', basePrice: 7.25, volatility: 0.15, price: 7.25, change: 0 },
+                         { id: 2, symbol: 'CORN', name: 'Corn', category: 'grains', basePrice: 5.80, volatility: 0.12, price: 5.80, change: 0 }
+                    ]));
+                    console.log('Sample position and initial market data created in localStorage.');
+                    return;
                 }
-            });
-        }, observerOptions);
 
-        document.querySelectorAll('.stat-item').forEach(stat => {
-            observer.observe(stat);
+                const sampleTradeHistory = JSON.parse(localStorage.getItem('tradeHistory')) || [];
+                const sampleTrade = sampleTradeHistory.find(trade => trade.symbol === 'WHEAT');
+                
+                if (sampleTrade) {
+                    const currentPrice = wheatMarket.price;
+                    const initialPrice = sampleTrade.price;
+                    const quantity = sampleTrade.quantity;
+
+                    const currentValue = currentPrice * quantity;
+                    const initialValue = initialPrice * quantity;
+                    const profitLoss = currentValue - initialValue;
+                    const profitLossPercent = (profitLoss / initialValue) * 100;
+                    
+                    const profitLossClass = profitLoss >= 0 ? 'positive' : 'negative';
+
+                    document.getElementById('sampleCurrentPrice').textContent = `$${currentPrice.toFixed(2)}`;
+                    document.getElementById('sampleQuantity').textContent = quantity.toFixed(2);
+                    document.getElementById('sampleProfitLoss').textContent = `$${profitLoss.toFixed(2)}`;
+                    document.getElementById('sampleProfitLoss').className = `detail-value ${profitLossClass}`;
+                    document.getElementById('sampleProfitLossPercent').textContent = `${profitLoss >= 0 ? '+' : ''}${profitLossPercent.toFixed(2)}%`;
+                    document.getElementById('sampleProfitLossPercent').className = `detail-value ${profitLossClass}`;
+                } else {
+                    console.error('Sample trade not found in trade history.');
+                }
+            }
+
+            // Initial sync and then set an interval for continuous updates
+            syncSamplePosition();
+            setInterval(syncSamplePosition, 5000);
         });
-// Redirect Markets button
-document.querySelector('.nav-link[href="#markets"]').addEventListener('click', (e) => {
-    e.preventDefault();
-    window.location.href = 'https://kebinco.github.io/foodfutures/mrkt.html';
-});
-
-        // Animate trading card price
-        function animatePrice() {
-            const priceElement = document.querySelector('.current-price');
-            const changeElement = document.querySelector('.price-change');
-            
-            const basePrice = 0.68;
-            const variation = (Math.random() - 0.5) * 0.1;
-            const newPrice = Math.max(0.1, basePrice + variation);
-            const change = ((newPrice - basePrice) / basePrice * 100);
-            
-            priceElement.textContent = `$${newPrice.toFixed(2)}`;
-            changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(1)}%`;
-            changeElement.className = `price-change ${change >= 0 ? 'positive' : 'negative'}`;
-        }
-
-        // Update price every 3 seconds
-        setInterval(animatePrice, 3000);
     </script>
 </body>
 </html>
