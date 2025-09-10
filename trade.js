@@ -26,85 +26,77 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Function to calculate a consistent price based on time
-    function getCyclicalPrice(basePrice, volatility, durationMinutes = 30) {
+    // New function for consistent pricing
+    function getDailyPriceChange(basePrice) {
+        const today = new Date().toDateString();
+        const hash = today.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const dailyFactor = (Math.sin(hash) + 1) / 2;
+        const dailyChange = (dailyFactor - 0.5) * 0.10;
+        return basePrice * dailyChange;
+    }
+
+    function getConsistentPrice(basePrice, dailyChange) {
         const now = Date.now();
-        const cycleDuration = durationMinutes * 60 * 1000;
-        const phase = (now % cycleDuration) / cycleDuration;
-        const fluctuation = Math.sin(phase * 2 * Math.PI) * volatility;
-        return basePrice * (1 + fluctuation);
+        const secondsInDay = 24 * 60 * 60;
+        const timeFactor = (now / 1000) % secondsInDay;
+        const volatility = dailyChange / (secondsInDay / 2);
+        return basePrice + (volatility * timeFactor) + dailyChange;
     }
 
-    function renderTradePage() {
+    function findMarketBySymbol(symbol) {
         const marketData = JSON.parse(localStorage.getItem('marketData'));
-        currentMarket = marketData.find(m => m.symbol === symbol);
-
-        if (!currentMarket) {
-            tradeTitle.textContent = 'Market Not Found';
-            tradePriceElement.textContent = '';
-            tradeChangeElement.textContent = '';
-            return;
+        if (!marketData) return null;
+        const market = marketData.find(m => m.symbol === symbol);
+        // Ensure price is up-to-date
+        if (market) {
+            if (!market.dailyChange) {
+                 market.dailyChange = getDailyPriceChange(market.basePrice);
+            }
+            market.price = getConsistentPrice(market.basePrice, market.dailyChange);
+            market.change = ((market.price - market.basePrice) / market.basePrice) * 100;
         }
-
-        tradeTitle.textContent = `${currentMarket.name} (${currentMarket.symbol})`;
-        tradePriceElement.textContent = `$${currentMarket.price.toFixed(2)}`;
-        const changeClass = currentMarket.change >= 0 ? 'positive' : 'negative';
-        tradeChangeElement.textContent = `${currentMarket.change >= 0 ? '+' : ''}${currentMarket.change.toFixed(2)}%`;
-        tradeChangeElement.className = `trade-change ${changeClass}`;
-        
-        // Set the active button based on the URL parameter
-        if (action === 'buy') {
-            buyBtn.classList.add('active');
-            sellBtn.classList.remove('active');
-        } else if (action === 'sell') {
-            sellBtn.classList.add('active');
-            buyBtn.classList.remove('active');
-        }
-
-        renderChart();
-    }
-    
-    function updatePrice() {
-        if (!currentMarket) return;
-        
-        const oldPrice = currentMarket.price;
-        const newPrice = getCyclicalPrice(currentMarket.basePrice, currentMarket.volatility);
-        const change = ((newPrice - oldPrice) / oldPrice) * 100;
-        
-        currentMarket.price = newPrice;
-        currentMarket.change = change;
-
-        tradePriceElement.textContent = `$${newPrice.toFixed(2)}`;
-        const changeClass = change >= 0 ? 'positive' : 'negative';
-        tradeChangeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
-        tradeChangeElement.className = `trade-change ${changeClass}`;
-
-        updateChartData(newPrice);
+        return market;
     }
 
-    function renderChart() {
-        if (!priceHistory[symbol]) {
-            priceHistory[symbol] = [];
+    function updateChart(newPrice, time) {
+        if (priceChart) {
+            const timeLabel = new Date(time).toLocaleTimeString();
+            priceChart.data.labels.push(timeLabel);
+            priceChart.data.datasets[0].data.push(newPrice);
+            
+            // Limit the number of data points for performance
+            const maxPoints = 20;
+            if (priceChart.data.labels.length > maxPoints) {
+                priceChart.data.labels.shift();
+                priceChart.data.datasets[0].data.shift();
+            }
+
+            priceChart.update();
         }
-        
-        const labels = priceHistory[symbol].map((_, i) => i + 1);
-        const data = priceHistory[symbol];
-        
+    }
+
+    function createChart(data) {
         if (priceChart) {
             priceChart.destroy();
         }
-        
-        priceChart = new Chart(tradeChartCanvas, {
+
+        const ctx = tradeChartCanvas.getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 0, 250);
+        gradient.addColorStop(0, 'rgba(0, 255, 136, 0.4)');
+        gradient.addColorStop(1, 'rgba(0, 255, 136, 0)');
+
+        priceChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: labels,
+                labels: data.map(point => new Date(point.timestamp).toLocaleTimeString()),
                 datasets: [{
                     label: 'Price',
-                    data: data,
-                    borderColor: 'rgba(0, 255, 136, 1)',
-                    backgroundColor: 'rgba(0, 255, 136, 0.2)',
+                    data: data.map(point => point.price),
+                    borderColor: 'var(--positive-color)',
+                    backgroundColor: gradient,
+                    borderWidth: 2,
                     fill: true,
-                    tension: 0.2,
+                    tension: 0.4,
                     pointRadius: 0
                 }]
             },
@@ -113,63 +105,76 @@ document.addEventListener('DOMContentLoaded', () => {
                 maintainAspectRatio: false,
                 scales: {
                     x: {
-                        display: false
+                        grid: { display: false },
+                        ticks: { color: 'var(--text-secondary)' }
                     },
                     y: {
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)',
-                            drawBorder: false
-                        },
-                        ticks: {
-                            color: 'white',
-                            font: {
-                                family: 'JetBrains Mono'
-                            }
-                        }
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: 'var(--text-secondary)' }
                     }
                 },
                 plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return `$${context.parsed.y.toFixed(2)}`;
-                            }
-                        }
-                    }
+                    legend: { display: false }
                 }
             }
         });
     }
 
-    function updateChartData(newPrice) {
-        if (priceHistory[symbol].length >= 50) {
-            priceHistory[symbol].shift();
-        }
-        priceHistory[symbol].push(newPrice);
-        
-        localStorage.setItem('priceHistory', JSON.stringify(priceHistory));
-        
-        if (priceChart) {
-            priceChart.data.labels = priceHistory[symbol].map((_, i) => i + 1);
-            priceChart.data.datasets[0].data = priceHistory[symbol];
-            priceChart.update();
+    function updatePrice() {
+        if (currentMarket) {
+            const marketData = findMarketBySymbol(currentMarket.symbol);
+            if (marketData) {
+                currentMarket.price = marketData.price;
+                currentMarket.change = marketData.change;
+                tradePriceElement.textContent = `$${currentMarket.price.toFixed(2)}`;
+                const changeClass = currentMarket.change >= 0 ? 'positive' : 'negative';
+                const changeSign = currentMarket.change >= 0 ? '+' : '';
+                tradeChangeElement.textContent = `${changeSign}${currentMarket.change.toFixed(2)}%`;
+                tradeChangeElement.className = `trade-change ${changeClass}`;
+
+                // Update chart
+                const newPoint = { price: currentMarket.price, timestamp: Date.now() };
+                if (!priceHistory[currentMarket.symbol]) {
+                    priceHistory[currentMarket.symbol] = [];
+                }
+                priceHistory[currentMarket.symbol].push(newPoint);
+                localStorage.setItem('priceHistory', JSON.stringify(priceHistory));
+                updateChart(newPoint.price, newPoint.timestamp);
+            }
         }
     }
 
-    // Trade submission logic
-    tradeForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        
+    function renderTradePage() {
+        currentMarket = findMarketBySymbol(symbol);
         if (!currentMarket) {
-            showMessage('Market data is not available.', 'error');
+            tradeTitle.textContent = 'Market not found.';
+            return;
+        }
+
+        tradeTitle.textContent = `${currentMarket.name} (${currentMarket.symbol})`;
+        tradePriceElement.textContent = `$${currentMarket.price.toFixed(2)}`;
+        const changeClass = currentMarket.change >= 0 ? 'positive' : 'negative';
+        const changeSign = currentMarket.change >= 0 ? '+' : '';
+        tradeChangeElement.textContent = `${changeSign}${currentMarket.change.toFixed(2)}%`;
+        tradeChangeElement.className = `trade-change ${changeClass}`;
+
+        if (!priceHistory[currentMarket.symbol]) {
+            priceHistory[currentMarket.symbol] = [{ price: currentMarket.price, timestamp: Date.now() }];
+            localStorage.setItem('priceHistory', JSON.stringify(priceHistory));
+        }
+        createChart(priceHistory[currentMarket.symbol]);
+    }
+
+    tradeForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        if (!currentMarket) {
+            showMessage('Error: Market not found.', 'error');
             return;
         }
 
         const quantity = parseInt(quantityInput.value);
-        if (quantity <= 0) {
+        if (isNaN(quantity) || quantity <= 0) {
             showMessage('Quantity must be a positive number.', 'error');
             return;
         }
