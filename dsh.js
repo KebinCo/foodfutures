@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const portfolioValueElement = document.getElementById('portfolioValue');
     const totalProfitLossElement = document.getElementById('totalProfitLoss');
 
+    // Function to handle redirection to the trade page
+    function goToTradePage(symbol) {
+        window.location.href = `trade.html?symbol=${symbol}`;
+    }
+
     // This function is now the single source of truth for the dashboard
     // It reads all its data from localStorage, which is updated by mrkt.js
     function renderOpenPositions() {
@@ -59,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const profitLossClass = profitLoss >= 0 ? 'positive' : 'negative';
                 const positionHtml = `
-                    <div class="position-card">
+                    <div class="position-card" onclick="goToTradePage('${symbol}')">
                         <div class="position-info">
                             <span class="position-symbol">${symbol}</span>
                             <span class="position-name">${currentMarket.name}</span>
