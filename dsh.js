@@ -12,81 +12,118 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalProfitLossElement = document.getElementById('totalProfitLoss');
 
     // Function to calculate a consistent price based on time
-    function getCyclicalPrice(basePrice, volatility, durationMinutes = 30) {
+    function getDailyPriceChange(basePrice) {
+        const today = new Date().toDateString();
+        const hash = today.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const dailyFactor = (Math.sin(hash) + 1) / 2;
+        const dailyChange = (dailyFactor - 0.5) * 0.10;
+        return basePrice * dailyChange;
+    }
+
+    function getConsistentPrice(basePrice, dailyChange) {
         const now = Date.now();
-        const cycleDuration = durationMinutes * 60 * 1000;
-        const phase = (now % cycleDuration) / cycleDuration;
-        const fluctuation = Math.sin(phase * 2 * Math.PI) * volatility;
-        return basePrice * (1 + fluctuation);
+        const secondsInDay = 24 * 60 * 60;
+        const timeFactor = (now / 1000) % secondsInDay;
+        const volatility = dailyChange / (secondsInDay / 2);
+        return basePrice + (volatility * timeFactor) + dailyChange;
+    }
+
+    function findMarketBySymbol(symbol) {
+        const marketData = JSON.parse(localStorage.getItem('marketData'));
+        if (!marketData) return null;
+        const market = marketData.find(m => m.symbol === symbol);
+        if (market) {
+            if (!market.dailyChange) {
+                 market.dailyChange = getDailyPriceChange(market.basePrice);
+            }
+            market.price = getConsistentPrice(market.basePrice, market.dailyChange);
+            market.change = ((market.price - market.basePrice) / market.basePrice) * 100;
+        }
+        return market;
     }
 
     function renderOpenPositions() {
         const tradeHistory = JSON.parse(localStorage.getItem('tradeHistory')) || [];
-        const marketData = JSON.parse(localStorage.getItem('marketData')) || [];
+        const openPositions = {};
         
-        if (tradeHistory.length === 0) {
-            positionsList.innerHTML = '<p class="no-positions">You have no open positions.</p>';
-            portfolioValueElement.textContent = '$0.00';
-            totalProfitLossElement.textContent = '0.00%';
-            return;
-        }
-
+        tradeHistory.forEach(trade => {
+            if (trade.action === 'buy') {
+                if (openPositions[trade.symbol]) {
+                    openPositions[trade.symbol].quantity += trade.quantity;
+                    openPositions[trade.symbol].cost += trade.quantity * trade.price;
+                } else {
+                    openPositions[trade.symbol] = {
+                        symbol: trade.symbol,
+                        name: trade.name,
+                        quantity: trade.quantity,
+                        cost: trade.quantity * trade.price,
+                        currentPrice: 0,
+                        profitLoss: 0
+                    };
+                }
+            } else if (trade.action === 'sell') {
+                if (openPositions[trade.symbol]) {
+                    openPositions[trade.symbol].quantity -= trade.quantity;
+                    openPositions[trade.symbol].cost -= trade.quantity * trade.price;
+                    if (openPositions[trade.symbol].quantity <= 0) {
+                        delete openPositions[trade.symbol];
+                    }
+                }
+            }
+        });
+        
         positionsList.innerHTML = '';
         let totalPortfolioValue = 0;
         let totalProfitLoss = 0;
-        
-        tradeHistory.forEach(trade => {
-            const currentMarket = marketData.find(m => m.symbol === trade.symbol);
-            if (!currentMarket) return;
-            
-            const currentValue = currentMarket.price * trade.quantity;
-            const initialValue = trade.price * trade.quantity;
-            const profitLoss = currentValue - initialValue;
-            const profitLossPercent = (profitLoss / initialValue) * 100;
+        let positionCount = 0;
 
-            totalPortfolioValue += currentValue;
-            totalProfitLoss += profitLoss;
+        for (const symbol in openPositions) {
+            const position = openPositions[symbol];
+            positionCount++;
 
-            const profitLossClass = profitLoss >= 0 ? 'positive' : 'negative';
-            const actionClass = trade.action === 'buy' ? 'positive' : 'negative';
+            const currentMarket = findMarketBySymbol(symbol);
+            if (currentMarket) {
+                position.currentPrice = currentMarket.price;
+                position.currentValue = position.quantity * position.currentPrice;
+                position.profitLoss = position.currentValue - position.cost;
+                position.profitLossPercent = (position.profitLoss / position.cost) * 100;
 
-            const positionHtml = `
-                <div class="position-card">
-                    <div class="position-header">
-                        <span class="position-symbol">${trade.symbol}</span>
-                        <span class="position-name">${trade.name}</span>
-                    </div>
-                    <div class="position-details">
-                        <div class="detail-item">
-                            <span class="detail-label">Action</span>
-                            <span class="detail-value ${actionClass}">${trade.action.toUpperCase()}</span>
+                const profitLossClass = position.profitLoss >= 0 ? 'positive' : 'negative';
+                const profitLossSign = position.profitLoss >= 0 ? '+' : '';
+                
+                totalPortfolioValue += position.currentValue;
+                totalProfitLoss += position.profitLoss;
+
+                const positionHtml = `
+                    <div class="position-card">
+                        <div class="position-info">
+                            <h3>${position.name} (${position.symbol})</h3>
+                            <p>Quantity: ${position.quantity}</p>
                         </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Quantity</span>
-                            <span class="detail-value">${trade.quantity}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Entry Price</span>
-                            <span class="detail-value">$${trade.price.toFixed(2)}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Current Price</span>
-                            <span class="detail-value">$${currentMarket.price.toFixed(2)}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">P/L ($)</span>
-                            <span class="detail-value ${profitLossClass}">$${profitLoss.toFixed(2)}</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">P/L (%)</span>
-                            <span class="detail-value ${profitLossClass}">${profitLossPercent.toFixed(2)}%</span>
+                        <div class="position-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Current Price</span>
+                                <span class="detail-value">$${position.currentPrice.toFixed(2)}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">P/L ($)</span>
+                                <span class="detail-value ${profitLossClass}">${profitLossSign}$${position.profitLoss.toFixed(2)}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">P/L (%)</span>
+                                <span class="detail-value ${profitLossClass}">${profitLossSign}${position.profitLossPercent.toFixed(2)}%</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
-            positionsList.insertAdjacentHTML('beforeend', positionHtml);
-        });
+                `;
+                positionsList.insertAdjacentHTML('beforeend', positionHtml);
+            }
+        }
         
+        if (positionCount === 0) {
+            positionsList.innerHTML = '<p class="no-positions">You have no open positions.</p>';
+        }
+
         // Update summary values
         const totalInitialValue = tradeHistory.reduce((sum, trade) => sum + trade.price * trade.quantity, 0);
         const totalProfitLossPercent = (totalProfitLoss / totalInitialValue) * 100;
