@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markets - FoodFutures</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mrkt.css">
+</head>
+<body>
+    <div class="cursor-glow"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-text">FoodFutures</a>
+                <div class="logo-pulse"></div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="markets.html" class="nav-link">Markets</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            
+            <div class="nav-actions">
+                <div class="language-toggle">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ko">한국어</button>
+                </div>
+                <a href="dsh/dsh.html" class="nav-btn">Dashboard</a>
+                <button class="nav-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="markets-main">
+        <div class="markets-header">
+            <h1 class="markets-title">Live Markets</h1>
+            <p class="markets-subtitle">Explore a diverse range of agricultural and food commodity markets. All prices are updated in real-time.</p>
+            
+            <div class="market-filters">
+                <div class="filter-group">
+                    <span class="filter-label">Category:</span>
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn" data-category="grains">Grains</button>
+                    <button class="filter-btn" data-category="livestock">Livestock</button>
+                    <button class="filter-btn" data-category="softs">Softs</button>
+                    <button class="filter-btn" data-category="dairy">Dairy</button>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">Sort by:</span>
+                    <select id="sortSelect" class="market-select">
+                        <option value="name-asc">Name (A-Z)</option>
+                        <option value="price-desc">Price (High-Low)</option>
+                        <option value="change-desc">Change (%)</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">Search:</span>
+                    <input type="text" id="searchInput" class="market-search" placeholder="Search markets...">
+                </div>
+            </div>
+        </div>
+
+        <section class="market-grid-section">
+            <div class="market-grid" id="marketGrid">
+                <!-- Market cards will be dynamically populated here -->
+            </div>
+        </section>
+    </main>
+
+    <script src="mrkt.js"></script>
+</body>
+</html>
