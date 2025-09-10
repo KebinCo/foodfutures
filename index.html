@@ -227,6 +227,11 @@ document.querySelector('.signup-btn').addEventListener('click', () => {
         document.querySelectorAll('.stat-item').forEach(stat => {
             observer.observe(stat);
         });
+// Redirect Markets button
+document.querySelector('.nav-link[href="#markets"]').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'https://kebinco.github.io/foodfutures/mrkt.html';
+});
 
         // Animate trading card price
         function animatePrice() {
