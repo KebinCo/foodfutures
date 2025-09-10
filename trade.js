@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Optional: redirect to dashboard after a delay
         setTimeout(() => {
-            window.location.href = 'dsh/dsh.html';
+            window.location.href = 'dsh.html';
         }, 1500);
     });
 
