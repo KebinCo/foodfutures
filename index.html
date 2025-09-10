@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodFutures - Home</title>
+    <title>FoodFutures - Trade the Future of Food</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,12 +12,12 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="index.html" class="logo-text">FoodFutures</a>
+                <span class="logo-text">FoodFutures</span>
                 <div class="logo-pulse"></div>
             </div>
             
             <div class="nav-menu">
-                <a href="index.html" class="nav-link active">Home</a>
+                <a href="#home" class="nav-link active">Home</a>
                 <a href="mrkt.html" class="nav-link">Markets</a>
                 <a href="#about" class="nav-link">About</a>
                 <a href="#contact" class="nav-link">Contact</a>
@@ -28,29 +28,62 @@
                     <button class="lang-btn active" data-lang="en">EN</button>
                     <button class="lang-btn" data-lang="ko">한국어</button>
                 </div>
-                <a href="dsh.html" class="nav-btn">Dashboard</a>
-                <button class="nav-btn" id="logoutBtn">Logout</button>
+                <button class="nav-btn login-btn">Login</button>
+                <button class="nav-btn signup-btn">Sign Up</button>
             </div>
         </div>
     </nav>
 
-    <main class="home-main">
+    <main class="main-content">
+        <!-- Hero Section -->
         <section class="hero-section">
-            <h1 class="hero-title">Trade the Future of Food.</h1>
-            <p class="hero-subtitle">Invest in a sustainable tomorrow with agricultural commodities.</p>
-            <div class="hero-actions">
-                <a href="mrkt.html" class="btn btn-primary">Start Trading Now</a>
-                <a href="dsh.html" class="btn btn-secondary">View Dashboard</a>
+            <div class="hero-container">
+                <h1 class="hero-title">Trade the Future of Food.</h1>
+                <p class="hero-subtitle">Invest in a sustainable tomorrow with agricultural commodities.</p>
+                <div class="hero-actions">
+                    <a href="mrkt.html" class="btn btn-primary">Start Trading Now</a>
+                    <a href="#learn" class="btn btn-secondary">Learn More</a>
+                </div>
             </div>
         </section>
 
-        <section class="intro-section">
-            <div class="intro-card">
-                <h2 class="section-title">What is FoodFutures?</h2>
-                <p>FoodFutures is a platform for trading agricultural commodities, allowing you to invest in a market that's essential for our future. Our real-time price simulations, driven by market data, provide a safe environment to learn and practice trading without real financial risk.</p>
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <span class="stat-number">250K+</span>
+                    <span class="stat-label">Transactions</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">40+</span>
+                    <span class="stat-label">Commodities</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Countries</span>
+                </div>
             </div>
         </section>
-        
+
+        <!-- Trading Card Section -->
+        <section class="trading-card-section">
+            <div class="trading-card">
+                <div class="card-header">
+                    <span class="card-symbol">CORN</span>
+                    <span class="card-name">Corn Futures</span>
+                </div>
+                <div class="card-price-container">
+                    <span class="current-price" id="tradePrice">$0.00</span>
+                    <span class="price-change" id="tradeChange">0.00%</span>
+                </div>
+                <div class="card-actions">
+                    <a href="trade.html?symbol=CORN&action=buy" class="btn btn-primary">Buy Now</a>
+                    <a href="trade.html?symbol=CORN&action=sell" class="btn btn-secondary">Sell Now</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sample Position Section -->
         <section class="sample-position-section">
             <div class="section-header">
                 <h2 class="section-title">Sample Market Position</h2>
@@ -80,17 +113,56 @@
                 </div>
             </div>
         </section>
+        
     </main>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            if (isLoggedIn === 'true') {
-                document.getElementById('logoutBtn').addEventListener('click', () => {
-                    localStorage.removeItem('isLoggedIn');
-                    window.location.href = 'index.html';
+            const cursorGlow = document.querySelector('.cursor-glow');
+            document.addEventListener('mousemove', (e) => {
+                cursorGlow.style.left = `${e.clientX}px`;
+                cursorGlow.style.top = `${e.clientY}px`;
+            });
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
                 });
+            }, observerOptions);
+
+            document.querySelectorAll('.stat-item').forEach(stat => {
+                observer.observe(stat);
+            });
+// Redirect Markets button
+document.querySelector('.nav-link[href="mrkt.html"]').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'mrkt.html';
+});
+
+            // Animate trading card price
+            function animatePrice() {
+                const priceElement = document.querySelector('.current-price');
+                const changeElement = document.querySelector('.price-change');
+                
+                const basePrice = 0.68;
+                const variation = (Math.random() - 0.5) * 0.1;
+                const newPrice = Math.max(0.1, basePrice + variation);
+                const change = ((newPrice - basePrice) / basePrice * 100);
+                
+                priceElement.textContent = `$${newPrice.toFixed(2)}`;
+                changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(1)}%`;
+                changeElement.className = `price-change ${change >= 0 ? 'positive' : 'negative'}`;
             }
+
+            // Update price every 3 seconds
+            setInterval(animatePrice, 3000);
 
             // Function to sync the sample position with live market data
             function syncSamplePosition() {
