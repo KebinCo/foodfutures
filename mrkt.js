@@ -10,88 +10,85 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // New, more extensive market data
     let marketData = JSON.parse(localStorage.getItem('marketData')) || [
-        { id: 1, symbol: 'WHEAT', name: 'Wheat', category: 'grains', basePrice: 7.25, volatility: 0.15 },
-        { id: 2, symbol: 'CORN', name: 'Corn', category: 'grains', basePrice: 5.80, volatility: 0.12 },
-        { id: 3, symbol: 'SOYBEAN', name: 'Soybean', category: 'grains', basePrice: 13.50, volatility: 0.18 },
-        { id: 4, symbol: 'RICE', name: 'Rice', category: 'grains', basePrice: 15.10, volatility: 0.10 },
-        { id: 5, symbol: 'OATS', name: 'Oats', category: 'grains', basePrice: 3.90, volatility: 0.08 },
-        { id: 6, symbol: 'BEEF', name: 'Beef', category: 'livestock', basePrice: 1.85, volatility: 0.25 },
-        { id: 7, symbol: 'PORK', name: 'Pork', category: 'livestock', basePrice: 1.20, volatility: 0.20 },
-        { id: 8, symbol: 'CHICKEN', name: 'Chicken', category: 'livestock', basePrice: 0.95, volatility: 0.18 },
-        { id: 9, symbol: 'SUGAR', name: 'Sugar', category: 'softs', basePrice: 0.19, volatility: 0.30 },
-        { id: 10, symbol: 'COFFEE', name: 'Coffee', category: 'softs', basePrice: 2.15, volatility: 0.22 },
-        { id: 11, symbol: 'COCOA', name: 'Cocoa', category: 'softs', basePrice: 2.80, volatility: 0.28 },
-        { id: 12, symbol: 'COTTON', name: 'Cotton', category: 'softs', basePrice: 0.85, volatility: 0.17 },
-        { id: 13, symbol: 'ORANGE_JUICE', name: 'Orange Juice', category: 'softs', basePrice: 1.60, volatility: 0.20 },
-        { id: 14, symbol: 'MILK', name: 'Milk', category: 'dairy', basePrice: 0.35, volatility: 0.14 },
-        { id: 15, symbol: 'CHEESE', name: 'Cheese', category: 'dairy', basePrice: 2.50, volatility: 0.16 }
+        { id: 1, symbol: 'WHEAT', name: 'Wheat', category: 'grains', basePrice: 7.25, dailyChange: 0 },
+        { id: 2, symbol: 'CORN', name: 'Corn', category: 'grains', basePrice: 5.80, dailyChange: 0 },
+        { id: 3, symbol: 'SOYBEAN', name: 'Soybean', category: 'grains', basePrice: 13.50, dailyChange: 0 },
+        { id: 4, symbol: 'RICE', name: 'Rice', category: 'grains', basePrice: 15.10, dailyChange: 0 },
+        { id: 5, symbol: 'OATS', name: 'Oats', category: 'grains', basePrice: 3.90, dailyChange: 0 },
+        { id: 6, symbol: 'BEEF', name: 'Beef', category: 'livestock', basePrice: 1.85, dailyChange: 0 },
+        { id: 7, symbol: 'PORK', name: 'Pork', category: 'livestock', basePrice: 1.10, dailyChange: 0 },
+        { id: 8, symbol: 'CHICKEN', name: 'Chicken', category: 'livestock', basePrice: 0.95, dailyChange: 0 },
+        { id: 9, symbol: 'SUGAR', name: 'Sugar', category: 'softs', basePrice: 0.18, dailyChange: 0 },
+        { id: 10, symbol: 'COFFEE', name: 'Coffee', category: 'softs', basePrice: 2.15, dailyChange: 0 },
+        { id: 11, symbol: 'COCOA', name: 'Cocoa', category: 'softs', basePrice: 2.50, dailyChange: 0 },
+        { id: 12, symbol: 'ORANGE', name: 'Orange Juice', category: 'softs', basePrice: 1.70, dailyChange: 0 },
+        { id: 13, symbol: 'DAIRY', name: 'Dairy', category: 'dairy', basePrice: 1.55, dailyChange: 0 },
+        { id: 14, symbol: 'LUMBER', name: 'Lumber', category: 'other', basePrice: 450.00, dailyChange: 0 },
+        { id: 15, symbol: 'COTTON', name: 'Cotton', category: 'softs', basePrice: 0.85, dailyChange: 0 }
     ];
 
     let filteredMarkets = [...marketData];
+    const marketGrid = document.getElementById('marketGrid');
 
-    // Function to calculate a consistent price based on time
-    function getCyclicalPrice(basePrice, volatility, durationMinutes = 30) {
-        const now = Date.now();
-        const cycleDuration = durationMinutes * 60 * 1000;
-        const phase = (now % cycleDuration) / cycleDuration;
-        const fluctuation = Math.sin(phase * 2 * Math.PI) * volatility;
-        return basePrice * (1 + fluctuation);
+    // New function for consistent pricing
+    function getDailyPriceChange(basePrice) {
+        // Generate a consistent daily change based on the day
+        const today = new Date().toDateString();
+        const hash = today.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const dailyFactor = (Math.sin(hash) + 1) / 2; // Value between 0 and 1
+        const dailyChange = (dailyFactor - 0.5) * 0.10; // -5% to +5%
+        return basePrice * dailyChange;
     }
 
-    // Function to update market prices and save to localStorage
+    function getConsistentPrice(basePrice, dailyChange) {
+        const now = Date.now();
+        const secondsInDay = 24 * 60 * 60;
+        const timeFactor = (now / 1000) % secondsInDay;
+        const volatility = dailyChange / (secondsInDay / 2);
+        return basePrice + (volatility * timeFactor) + dailyChange;
+    }
+
     function updateMarketPrices() {
-        const updatedMarkets = marketData.map(market => {
-            const oldPrice = market.price || market.basePrice;
-            const newPrice = getCyclicalPrice(market.basePrice, market.volatility);
-            const change = ((newPrice - oldPrice) / oldPrice) * 100;
-            return {
-                ...market,
-                price: newPrice,
-                change: change,
-                lastUpdated: Date.now()
-            };
+        marketData.forEach(market => {
+            if (market.dailyChange === 0) {
+                market.dailyChange = getDailyPriceChange(market.basePrice);
+            }
+            market.price = getConsistentPrice(market.basePrice, market.dailyChange);
+            market.change = ((market.price - market.basePrice) / market.basePrice) * 100;
         });
-        
-        marketData = updatedMarkets;
+
         localStorage.setItem('marketData', JSON.stringify(marketData));
         renderMarkets();
     }
 
-    // Function to render all market cards
     function renderMarkets() {
-        const marketGrid = document.getElementById('marketGrid');
-        marketGrid.innerHTML = '';
-        
+        marketGrid.innerHTML = ''; // Clear previous cards
+        if (filteredMarkets.length === 0) {
+            marketGrid.innerHTML = '<p class="no-results">No markets found for this search/filter.</p>';
+        }
+
         filteredMarkets.forEach(market => {
             const changeClass = market.change >= 0 ? 'positive' : 'negative';
-            const card = `
-                <div class="market-card" data-category="${market.category}" data-symbol="${market.symbol}">
+            const changeSign = market.change >= 0 ? '+' : '';
+            const cardHtml = `
+                <div class="market-card" data-symbol="${market.symbol}" onclick="location.href='trade.html?symbol=${market.symbol}'">
                     <div class="market-info">
                         <span class="market-symbol">${market.symbol}</span>
                         <span class="market-name">${market.name}</span>
-                        <span class="market-category status-badge">${market.category}</span>
+                        <span class="market-category">${market.category}</span>
                     </div>
                     <div class="market-price-details">
                         <span class="market-price">$${market.price.toFixed(2)}</span>
-                        <span class="market-change ${changeClass}">${market.change >= 0 ? '+' : ''}${market.change.toFixed(2)}%</span>
-                    </div>
-                    <div class="market-actions">
-                        <a href="trade.html?symbol=${market.symbol}&action=buy" class="trade-btn buy-btn">BUY</a>
-                        <a href="trade.html?symbol=${market.symbol}&action=sell" class="trade-btn sell-btn">SELL</a>
+                        <span class="market-change ${changeClass}">${changeSign}${market.change.toFixed(2)}%</span>
                     </div>
                 </div>
             `;
-            marketGrid.insertAdjacentHTML('beforeend', card);
+            marketGrid.insertAdjacentHTML('beforeend', cardHtml);
         });
     }
 
-    // Filter and sort functions
     function filterMarkets(category) {
-        if (category === 'all') {
-            filteredMarkets = [...marketData];
-        } else {
-            filteredMarkets = marketData.filter(market => market.category === category);
-        }
+        filteredMarkets = category === 'all' ? [...marketData] : marketData.filter(market => market.category === category);
         renderMarkets();
     }
 
