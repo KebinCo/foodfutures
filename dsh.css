@@ -63,57 +63,25 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.summary-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-card);
 }
 
 .summary-label {
-    font-weight: 500;
     color: var(--text-secondary);
     font-size: 0.9rem;
-}
-
-.summary-details {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-    text-align: right;
-}
-
-.summary-details .text-primary {
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-.summary-details .text-secondary {
-    font-size: 0.8rem;
+    margin-bottom: var(--spacing-sm);
 }
 
 .summary-value {
-    text-align: right;
-}
-
-.summary-price {
+    font-size: 1.5rem;
+    font-weight: 700;
     font-family: var(--font-mono);
-    font-weight: 600;
-    color: var(--text-primary);
-    font-size: 1.1rem;
 }
 
-.summary-change {
-    font-size: 0.85rem;
-    font-weight: 500;
-}
-
-.summary-change.positive {
+.summary-value.positive {
     color: var(--positive-color);
 }
 
-.summary-change.negative {
+.summary-value.negative {
     color: var(--negative-color);
 }
 
@@ -128,96 +96,117 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
 }
 
 .section-title {
     font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--text-primary);
+    font-weight: 700;
 }
 
 .view-all-link {
     color: var(--accent-color);
     text-decoration: none;
-    font-weight: 500;
     font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
 
 .view-all-link:hover {
     text-decoration: underline;
+    opacity: 0.8;
 }
 
-.positions-table {
-    width: 100%;
-    border-collapse: collapse;
+.positions-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
 }
 
-.positions-table th, .positions-table td {
-    padding: var(--spacing-md);
-    text-align: left;
-    border-bottom: var(--border-width) solid var(--border-color);
-}
-
-.positions-table th {
-    font-size: 0.8rem;
+.no-positions {
     color: var(--text-secondary);
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+    text-align: center;
+    padding: var(--spacing-lg);
 }
 
-.positions-table td {
-    color: var(--text-primary);
-}
-
-.positions-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.position-symbol {
-    font-weight: 600;
-}
-
-.position-side.long {
-    color: var(--positive-color);
-}
-
-.position-side.short {
-    color: var(--negative-color);
-}
-
-.position-profit.positive {
-    color: var(--positive-color);
-    font-weight: 600;
-}
-
-.position-profit.negative {
-    color: var(--negative-color);
-    font-weight: 600;
-}
-
-.action-btn {
-    padding: var(--spacing-sm) var(--spacing-md);
+/* Open Position Card Styles */
+.position-card {
+    background: var(--secondary-bg);
     border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius);
-    background: var(--card-bg);
-    color: var(--text-primary);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Adjust for responsiveness */
+    align-items: center;
+    gap: var(--spacing-lg);
+    transition: all 0.2s ease-in-out;
 }
 
-.action-btn:hover {
+.position-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevated);
     border-color: var(--accent-color);
-    color: var(--accent-color);
 }
 
-.trade-history-section {
+.position-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.position-info h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.position-info p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.position-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.detail-value {
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+}
+
+.detail-value.positive {
+    color: var(--positive-color);
+}
+
+.detail-value.negative {
+    color: var(--negative-color);
+}
+
+/* Watchlist and Trade History Sections */
+.watch-list-section, .trade-history-section {
     background: var(--card-bg);
     border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius-lg);
     padding: var(--spacing-xl);
+}
+
+.trade-history-section h2 {
+    margin-bottom: var(--spacing-lg);
 }
 
 .history-item {
@@ -264,19 +253,11 @@
         flex-direction: column;
         align-items: flex-start;
     }
-
     .balance-card {
         width: 100%;
         text-align: left;
     }
-
-    .account-summary-grid {
+    .position-card {
         grid-template-columns: 1fr;
-    }
-
-    .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--spacing-sm);
     }
 }
