@@ -6,6 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative; /* Needed for positioning the message box */
 }
 
 .trade-container {
@@ -48,7 +49,7 @@
 
 .trade-chart-container {
     height: 250px;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-2xl);
 }
 
 .trade-form {
@@ -60,12 +61,12 @@
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-sm);
 }
 
 .form-group label {
-    font-size: 0.9rem;
     color: var(--text-secondary);
+    font-size: 0.9rem;
 }
 
 .form-group input,
@@ -119,17 +120,23 @@
 }
 
 .trade-btn.sell-btn:hover {
-    box-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+    box-shadow: 0 0 10px rgba(255, 71, 87, 0.4);
 }
 
+/* New message box styles */
 .message-box {
-    margin-top: var(--spacing-lg);
-    padding: var(--spacing-md);
-    border-radius: var(--border-radius);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    font-weight: 600;
     text-align: center;
-    font-weight: 500;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1000;
+    pointer-events: none;
 }
 
 .message-box.show {
@@ -137,11 +144,11 @@
 }
 
 .message-box.success {
-    background: rgba(0, 255, 136, 0.2);
-    color: var(--positive-color);
+    background: rgba(0, 255, 136, 0.95);
+    color: var(--primary-bg);
 }
 
 .message-box.error {
-    background: rgba(255, 71, 87, 0.2);
-    color: var(--negative-color);
+    background: rgba(255, 71, 87, 0.95);
+    color: var(--primary-bg);
 }
