@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Futures Exchange</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="ticker-bar">
+        <div class="ticker-content" id="ticker"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>FOOD FUTURES EXCHANGE</h1>
+            <div class="user-info">
+                <span id="username">Loading...</span>
+                <span class="balance">Balance: $<span id="balance">10000.00</span></span>
+            </div>
+        </header>
+
+        <div class="news-bar" id="newsBar"></div>
+
+        <div class="search-section">
+            <input type="text" id="searchBar" placeholder="Search futures (e.g., GRAIN, WHEAT, PORK)..." />
+            <div id="searchResults"></div>
+        </div>
+
+        <div class="main-content">
+            <div class="chart-section">
+                <div class="chart-header">
+                    <h2 id="selectedFuture">GRAIN-1W</h2>
+                    <div class="price-info">
+                        <span class="current-price">$<span id="currentPrice">245.50</span></span>
+                        <span class="price-change" id="priceChange">+2.34 (+0.96%)</span>
+                    </div>
+                </div>
+                <canvas id="priceChart"></canvas>
+            </div>
+
+            <div class="holdings-section">
+                <h3>Your Holdings</h3>
+                <div id="holdings"></div>
+            </div>
+        </div>
+
+        <div class="trade-section">
+            <div class="trade-controls">
+                <input type="number" id="quantity" placeholder="Quantity (kg)" min="1" value="10" />
+                <button class="buy-btn" onclick="executeTrade('buy')">BUY</button>
+                <button class="sell-btn" onclick="executeTrade('sell')">SELL</button>
+            </div>
+            <div class="trade-info">
+                <span>Est. Cost: $<span id="estCost">2455.00</span></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
