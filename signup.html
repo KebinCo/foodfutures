@@ -4,9 +4,56 @@
     <meta charset="UTF-8">
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4e5LLtvYQ63HLsavreenFNFle4Y1GtorG4g&s" type="image/png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원가입</title>
-    <link rel="stylesheet" href="signup.css">
+    <title>Sign Up - FoodFutures</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #121212;
+            --card-bg: #1a1a1a;
+            --accent-color: #00ff88;
+            --accent-glow: rgba(0, 255, 136, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --negative-color: #ff4757;
+            --glow-primary: 0 0 20px rgba(0, 255, 136, 0.3);
+            --shadow-elevated: 0 16px 64px rgba(0, 0, 0, 0.6);
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --border-width: 1px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
+        }
+        
         .auth-container {
             min-height: 100vh;
             display: flex;
@@ -24,6 +71,17 @@
             width: 100%;
             box-shadow: var(--shadow-elevated);
             animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .auth-header {
@@ -202,10 +260,8 @@
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             
-            // Clear previous errors
             document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
             
-            // Validation
             let isValid = true;
             
             if (username.length < 3) {
@@ -225,7 +281,6 @@
             
             if (!isValid) return;
             
-            // Check if user exists
             const users = JSON.parse(localStorage.getItem('users') || '{}');
             
             if (users[username]) {
@@ -233,7 +288,6 @@
                 return;
             }
             
-            // Save user
             users[username] = {
                 email: email,
                 password: password,
@@ -247,7 +301,6 @@
             localStorage.setItem('balance', '10000');
             localStorage.setItem('holdings', '{}');
             
-            // Redirect to exchange
             window.location.href = 'mrkt.html?user=' + encodeURIComponent(username);
         });
         
