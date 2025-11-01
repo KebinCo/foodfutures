@@ -5,81 +5,335 @@
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4e5LLtvYQ63HLsavreenFNFle4Y1GtorG4g&s" type="image/png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - FoodFutures</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="login.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #121212;
+            --card-bg: #1a1a1a;
+            --accent-color: #00ff88;
+            --accent-glow: rgba(0, 255, 136, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --negative-color: #ff4757;
+            --glow-primary: 0 0 20px rgba(0, 255, 136, 0.3);
+            --shadow-elevated: 0 16px 64px rgba(0, 0, 0, 0.6);
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --border-width: 1px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
+        }
+        
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-xl);
+        }
+        
+        .auth-card {
+            background: var(--card-bg);
+            border: var(--border-width) solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-2xl);
+            max-width: 450px;
+            width: 100%;
+            box-shadow: var(--shadow-elevated);
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .auth-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .auth-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        
+        .form-label {
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .form-input {
+            padding: var(--spacing-md);
+            background: var(--secondary-bg);
+            border: var(--border-width) solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: var(--glow-primary);
+        }
+        
+        .submit-btn {
+            padding: var(--spacing-md);
+            background: var(--accent-color);
+            color: var(--primary-bg);
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: var(--spacing-md);
+        }
+        
+        .submit-btn:hover {
+            box-shadow: var(--glow-primary);
+            transform: translateY(-2px);
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: var(--spacing-lg);
+            color: var(--text-secondary);
+        }
+        
+        .auth-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+        
+        .back-home {
+            position: absolute;
+            top: var(--spacing-xl);
+            left: var(--spacing-xl);
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            transition: color 0.3s ease;
+        }
+        
+        .back-home:hover {
+            color: var(--accent-color);
+        }
+        
+        .error-message {
+            color: var(--negative-color);
+            font-size: 0.9rem;
+            margin-top: var(--spacing-xs);
+            display: none;
+        }
+        
+        .guest-login {
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .guest-login-text {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+            font-size: 0.9rem;
+        }
+        
+        .guest-btn {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: transparent;
+            color: var(--text-primary);
+            border: var(--border-width) solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .guest-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            box-shadow: var(--glow-primary);
+        }
+    </style>
 </head>
 <body>
-    <div class="cursor-glow"></div>
+    <a href="index.html" class="back-home">← Back to Home</a>
     
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html" class="logo-text">FoodFutures</a>
-                <div class="logo-pulse"></div>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Log in to continue trading</p>
             </div>
             
-            <div class="nav-menu">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="markets.html" class="nav-link">Markets</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
-            
-            <div class="nav-actions">
-                <div class="language-toggle">
-                    <button class="lang-btn active" data-lang="en">EN</button>
-                    <button class="lang-btn" data-lang="ko">한국어</button>
-                </div>
-                <a href="login.html" class="nav-btn active">Login</a>
-                <a href="signup.html" class="nav-btn signup-btn">Sign Up</a>
-            </div>
-        </div>
-    </nav>
-
-    <main class="auth-main">
-        <div class="auth-container">
-            <div class="auth-card">
-                <div class="auth-header">
-                    <h1 class="auth-title">Welcome Back</h1>
-                    <p class="auth-subtitle">Sign in to your account to continue trading.</p>
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        class="form-input" 
+                        placeholder="Enter your username" 
+                        required
+                    />
                 </div>
                 
-                <form class="auth-form" id="loginForm">
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password">
-                    </div>
-                    <a href="#" class="forgot-password">Forgot Password?</a>
-                    <button type="submit" class="auth-button">
-                        <span class="button-text">Log In</span>
-                    </button>
-                    <div class="message-box hidden"></div>
-                </form>
-
-                <div class="social-login-separator">
-                    <span>Or Log In with</span>
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="form-input" 
+                        placeholder="Enter your password" 
+                        required
+                    />
                 </div>
-
-                <div class="social-buttons">
-                    <button class="social-btn google-btn">
-                        <img src="https://www.google.com/favicon.ico" alt="Google"> Google
-                    </button>
-                    <button class="social-btn apple-btn">
-                        <img src="https://www.apple.com/favicon.ico" alt="Apple"> Apple
-                    </button>
-                </div>
+                
+                <span class="error-message" id="loginError"></span>
+                
+                <button type="submit" class="submit-btn">Log In</button>
+            </form>
+            
+            <div class="guest-login">
+                <p class="guest-login-text">For booth contest participants:</p>
+                <button class="guest-btn" id="guestBtn">Quick Login (Enter Name)</button>
             </div>
-            <div class="auth-info">
-                <h2 class="auth-info-title">Unlock Your Trading Potential.</h2>
-                <p class="auth-info-text">Access real-time data, manage your portfolio, and make informed decisions on a secure, user-friendly platform.</p>
+            
+            <div class="auth-footer">
+                Don't have an account? <a href="signup.html" class="auth-link">Sign up</a>
             </div>
         </div>
-    </main>
+    </div>
     
-    <script src="login.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
+            
+            if (!users[username]) {
+                showError('Username not found');
+                return;
+            }
+            
+            if (users[username].password !== password) {
+                showError('Incorrect password');
+                return;
+            }
+            
+            localStorage.setItem('currentUser', username);
+            localStorage.setItem('balance', users[username].balance.toString());
+            localStorage.setItem('holdings', JSON.stringify(users[username].holdings));
+            
+            window.location.href = 'mrkt.html?user=' + encodeURIComponent(username);
+        });
+        
+        document.getElementById('guestBtn').addEventListener('click', function() {
+            const username = prompt('Enter your name for the contest:');
+            
+            if (!username || username.trim().length === 0) {
+                return;
+            }
+            
+            const trimmedUsername = username.trim();
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
+            
+            if (!users[trimmedUsername]) {
+                users[trimmedUsername] = {
+                    email: '',
+                    password: '',
+                    balance: 10000,
+                    holdings: {},
+                    createdAt: Date.now(),
+                    isGuest: true
+                };
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+            
+            localStorage.setItem('currentUser', trimmedUsername);
+            localStorage.setItem('balance', users[trimmedUsername].balance.toString());
+            localStorage.setItem('holdings', JSON.stringify(users[trimmedUsername].holdings));
+            
+            window.location.href = 'mrkt.html?user=' + encodeURIComponent(trimmedUsername);
+        });
+        
+        function showError(message) {
+            const errorEl = document.getElementById('loginError');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+        }
+    </script>
 </body>
 </html>
