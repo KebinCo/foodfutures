@@ -12,22 +12,24 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0e27;
-            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            font-size: 14px;
         }
 
         .ticker-bar {
-            background: #1a1f3a;
-            padding: 8px 0;
+            background: #0a0a0a;
+            padding: 10px 0;
             overflow: hidden;
-            border-bottom: 2px solid #2a3f5f;
+            border-bottom: 1px solid #1a1a1a;
+            font-size: 12px;
         }
 
         .ticker-content {
             display: flex;
             white-space: nowrap;
-            animation: scroll 30s linear infinite;
+            animation: scroll 40s linear infinite;
         }
 
         @keyframes scroll {
@@ -37,303 +39,473 @@
 
         .ticker-item {
             margin-right: 40px;
-            font-size: 14px;
+            font-family: 'Courier New', monospace;
         }
 
-        .ticker-item.up { color: #00ff88; }
-        .ticker-item.down { color: #ff4444; }
+        .ticker-item.up { color: #00c853; }
+        .ticker-item.down { color: #ff1744; }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0;
         }
 
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #2a3f5f;
+            padding: 20px 30px;
+            border-bottom: 1px solid #1a1a1a;
+            background: #0a0a0a;
         }
 
         h1 {
-            color: #00ff88;
-            font-size: 28px;
-            letter-spacing: 2px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .user-info {
             display: flex;
             gap: 30px;
-            font-size: 16px;
+            font-size: 13px;
             align-items: center;
         }
 
-        .balance {
-            color: #ffd700;
-            font-weight: bold;
+        .balance, .rank {
+            font-weight: 500;
+            font-family: 'Courier New', monospace;
         }
 
-        .rank {
-            color: #00ff88;
-            font-weight: bold;
-        }
+        .balance { color: #00c853; }
+        .rank { color: #2196f3; }
 
         .logout-btn {
-            padding: 8px 20px;
+            padding: 6px 16px;
             background: transparent;
-            color: #ff4444;
-            border: 2px solid #ff4444;
-            border-radius: 4px;
-            font-size: 14px;
+            color: #ff1744;
+            border: 1px solid #ff1744;
+            border-radius: 2px;
+            font-size: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
         }
 
         .logout-btn:hover {
-            background: #ff4444;
+            background: #ff1744;
             color: white;
         }
 
-        .news-bar {
-            background: #1a1f3a;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-left: 4px solid #ff9500;
-            border-radius: 4px;
-            min-height: 60px;
-            animation: fadeIn 0.5s;
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr 320px;
+            gap: 1px;
+            background: #1a1a1a;
+            min-height: calc(100vh - 140px);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .left-panel, .center-panel, .right-panel {
+            background: #000000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666666;
+            margin-bottom: 15px;
+            font-weight: 600;
         }
 
         .search-section {
-            margin-bottom: 20px;
-            position: relative;
+            margin-bottom: 30px;
         }
 
         #searchBar {
             width: 100%;
-            padding: 15px;
-            background: #1a1f3a;
-            border: 2px solid #2a3f5f;
-            color: #e0e0e0;
-            font-size: 16px;
-            border-radius: 4px;
+            padding: 10px;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            color: #ffffff;
+            font-size: 13px;
+            border-radius: 2px;
         }
 
         #searchBar:focus {
             outline: none;
-            border-color: #00ff88;
+            border-color: #2196f3;
         }
 
         #searchResults {
             position: absolute;
-            width: 100%;
-            background: #1a1f3a;
-            border: 2px solid #2a3f5f;
-            border-top: none;
-            max-height: 200px;
+            width: 280px;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            max-height: 300px;
             overflow-y: auto;
-            z-index: 10;
+            z-index: 100;
             display: none;
+            margin-top: 2px;
         }
 
         .search-result {
-            padding: 12px 15px;
+            padding: 10px;
             cursor: pointer;
-            border-bottom: 1px solid #2a3f5f;
+            border-bottom: 1px solid #1a1a1a;
+            font-size: 12px;
         }
 
         .search-result:hover {
-            background: #2a3f5f;
+            background: #1a1a1a;
         }
 
-        .leaderboard-section {
-            background: #1a1f3a;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            border: 2px solid #2a3f5f;
+        .futures-list {
+            margin-bottom: 30px;
         }
 
-        .leaderboard-section h3 {
-            color: #ffd700;
-            margin-bottom: 15px;
-            font-size: 20px;
+        .future-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #1a1a1a;
+            cursor: pointer;
+            transition: background 0.2s;
         }
 
-        .leaderboard-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px;
-            margin-bottom: 8px;
-            background: #0a0e27;
-            border-radius: 4px;
-            border-left: 3px solid #2a3f5f;
+        .future-item:hover {
+            background: #0a0a0a;
         }
 
-        .leaderboard-item.current-user {
-            border-left-color: #00ff88;
-            background: rgba(0, 255, 136, 0.1);
+        .future-item.active {
+            background: #0a0a0a;
+            border-left: 2px solid #2196f3;
+            padding-left: 10px;
         }
 
-        .leaderboard-item.top3 {
-            border-left-color: #ffd700;
+        .future-name {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
         }
 
-        .leaderboard-rank {
-            font-weight: bold;
-            color: #ffd700;
-            min-width: 30px;
+        .future-price {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            font-weight: 600;
         }
 
-        .leaderboard-name {
-            flex: 1;
-            margin-left: 15px;
+        .future-change {
+            font-size: 11px;
+            font-family: 'Courier New', monospace;
+            margin-left: 8px;
         }
 
-        .leaderboard-balance {
-            color: #00ff88;
-            font-weight: bold;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .chart-section {
-            background: #1a1f3a;
-            padding: 20px;
-            border-radius: 8px;
-        }
+        .future-change.up { color: #00c853; }
+        .future-change.down { color: #ff1744; }
 
         .chart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .price-display {
+            text-align: right;
         }
 
         .current-price {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffd700;
+            font-size: 32px;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            color: #ffffff;
+            display: block;
         }
 
         .price-change {
-            font-size: 16px;
-            margin-left: 10px;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            margin-top: 4px;
         }
 
-        .price-change.up { color: #00ff88; }
-        .price-change.down { color: #ff4444; }
+        .price-change.up { color: #00c853; }
+        .price-change.down { color: #ff1744; }
 
         #priceChart {
             width: 100%;
             height: 400px;
-        }
-
-        .holdings-section {
-            background: #1a1f3a;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .holdings-section h3 {
-            margin-bottom: 15px;
-            color: #00ff88;
-        }
-
-        .holding-item {
-            padding: 10px;
-            background: #0a0e27;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            border-left: 3px solid #00ff88;
-        }
-
-        .holding-item.loss {
-            border-left-color: #ff4444;
+            margin-bottom: 20px;
         }
 
         .trade-section {
-            background: #1a1f3a;
+            background: #0a0a0a;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 2px;
+            border: 1px solid #1a1a1a;
         }
 
         .trade-controls {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         #quantity {
-            flex: 1;
-            padding: 15px;
-            background: #0a0e27;
-            border: 2px solid #2a3f5f;
-            color: #e0e0e0;
-            font-size: 16px;
-            border-radius: 4px;
+            padding: 12px;
+            background: #000000;
+            border: 1px solid #1a1a1a;
+            color: #ffffff;
+            font-size: 14px;
+            border-radius: 2px;
+            font-family: 'Courier New', monospace;
         }
 
         button {
-            padding: 15px 40px;
-            font-size: 16px;
-            font-weight: bold;
+            padding: 12px;
+            font-size: 13px;
+            font-weight: 600;
             border: none;
-            border-radius: 4px;
+            border-radius: 2px;
             cursor: pointer;
-            transition: transform 0.1s;
-        }
-
-        button:active {
-            transform: scale(0.98);
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .buy-btn {
-            background: #00ff88;
-            color: #0a0e27;
+            background: #00c853;
+            color: #000000;
         }
 
         .buy-btn:hover {
-            background: #00dd77;
+            background: #00e676;
         }
 
         .sell-btn {
-            background: #ff4444;
-            color: white;
+            background: #ff1744;
+            color: #ffffff;
         }
 
         .sell-btn:hover {
-            background: #dd3333;
+            background: #ff5252;
         }
 
         .trade-info {
             text-align: center;
             padding: 10px;
-            font-size: 18px;
-            color: #ffd700;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            color: #666666;
+        }
+
+        .holdings-section, .news-section, .leaderboard-section {
+            margin-bottom: 30px;
+        }
+
+        .holding-item {
+            padding: 12px;
+            background: #0a0a0a;
+            margin-bottom: 8px;
+            border-radius: 2px;
+            border-left: 2px solid #00c853;
+            font-size: 12px;
+        }
+
+        .holding-item.loss {
+            border-left-color: #ff1744;
+        }
+
+        .holding-name {
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .holding-detail {
+            color: #888888;
+            margin-bottom: 2px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .holding-pl {
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            margin-top: 6px;
+        }
+
+        .leaderboard-item {
+            display: grid;
+            grid-template-columns: 40px 1fr 100px 80px;
+            gap: 10px;
+            padding: 10px;
+            margin-bottom: 6px;
+            background: #0a0a0a;
+            border-radius: 2px;
+            font-size: 12px;
+            align-items: center;
+        }
+
+        .leaderboard-item.current-user {
+            border: 1px solid #2196f3;
+            background: rgba(33, 150, 243, 0.05);
+        }
+
+        .leaderboard-item.top3 {
+            background: rgba(255, 193, 7, 0.05);
+        }
+
+        .leaderboard-rank {
+            font-weight: 700;
+            color: #ffc107;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+        }
+
+        .leaderboard-name {
+            font-weight: 500;
+        }
+
+        .leaderboard-balance {
+            color: #00c853;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            text-align: right;
+        }
+
+        .leaderboard-return {
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            text-align: right;
+        }
+
+        .leaderboard-return.positive { color: #00c853; }
+        .leaderboard-return.negative { color: #ff1744; }
+
+        .news-item {
+            padding: 12px;
+            background: #0a0a0a;
+            margin-bottom: 8px;
+            border-radius: 2px;
+            font-size: 12px;
+            line-height: 1.6;
+            border-left: 2px solid #ff9800;
+        }
+
+        .news-time {
+            color: #666666;
+            font-size: 10px;
+            margin-bottom: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .news-text {
+            color: #cccccc;
+        }
+
+        .news-impact {
+            margin-top: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .news-impact.positive { color: #00c853; }
+        .news-impact.negative { color: #ff1744; }
+
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                order: 2;
+            }
+
+            .center-panel {
+                order: 1;
+            }
+
+            .right-panel {
+                order: 3;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .user-info {
+                width: 100%;
+                justify-content: space-between;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
         }
 
         @media (max-width: 768px) {
-            .main-content {
+            .container {
+                padding: 0;
+            }
+
+            header {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 16px;
+            }
+
+            .left-panel, .center-panel, .right-panel {
+                padding: 15px;
+            }
+
+            .current-price {
+                font-size: 24px;
+            }
+
+            #priceChart {
+                height: 300px;
+            }
+
+            .trade-controls {
                 grid-template-columns: 1fr;
             }
-            
-            .trade-controls {
-                flex-direction: column;
+
+            .leaderboard-item {
+                grid-template-columns: 30px 1fr 80px;
+                font-size: 11px;
             }
+
+            .leaderboard-return {
+                display: none;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1a1a1a;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2a2a2a;
         }
     </style>
 </head>
@@ -353,84 +525,95 @@
             </div>
         </header>
 
-        <div class="news-bar" id="newsBar"></div>
+        <div class="main-grid">
+            <div class="left-panel">
+                <div class="search-section">
+                    <h3 class="section-title">Search Markets</h3>
+                    <input type="text" id="searchBar" placeholder="Search..." />
+                    <div id="searchResults"></div>
+                </div>
 
-        <div class="search-section">
-            <input type="text" id="searchBar" placeholder="Search futures (e.g., GRAIN, WHEAT, PORK)..." />
-            <div id="searchResults"></div>
-        </div>
+                <div class="futures-list">
+                    <h3 class="section-title">All Markets</h3>
+                    <div id="futuresList"></div>
+                </div>
+            </div>
 
-        <div class="leaderboard-section">
-            <h3>🏆 Leaderboard</h3>
-            <div id="leaderboard"></div>
-        </div>
-
-        <div class="main-content">
-            <div class="chart-section">
+            <div class="center-panel">
                 <div class="chart-header">
-                    <h2 id="selectedFuture">GRAIN-1W</h2>
-                    <div class="price-info">
+                    <div class="chart-title" id="selectedFuture">GRAIN-1W</div>
+                    <div class="price-display">
                         <span class="current-price">$<span id="currentPrice">245.50</span></span>
-                        <span class="price-change" id="priceChange">+2.34 (+0.96%)</span>
+                        <span class="price-change" id="priceChange">+0.00%</span>
                     </div>
                 </div>
+
                 <canvas id="priceChart"></canvas>
+
+                <div class="trade-section">
+                    <div class="trade-controls">
+                        <input type="number" id="quantity" placeholder="Quantity (kg)" min="1" value="10" />
+                        <button class="buy-btn" onclick="executeTrade('buy')">Buy</button>
+                        <button class="sell-btn" onclick="executeTrade('sell')">Sell</button>
+                    </div>
+                    <div class="trade-info">
+                        Est. Cost: $<span id="estCost">2455.00</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="holdings-section">
-                <h3>Your Holdings</h3>
-                <div id="holdings"></div>
-            </div>
-        </div>
+            <div class="right-panel">
+                <div class="holdings-section">
+                    <h3 class="section-title">Holdings</h3>
+                    <div id="holdings"></div>
+                </div>
 
-        <div class="trade-section">
-            <div class="trade-controls">
-                <input type="number" id="quantity" placeholder="Quantity (kg)" min="1" value="10" />
-                <button class="buy-btn" onclick="executeTrade('buy')">BUY</button>
-                <button class="sell-btn" onclick="executeTrade('sell')">SELL</button>
-            </div>
-            <div class="trade-info">
-                <span>Est. Cost: $<span id="estCost">2455.00</span></span>
+                <div class="leaderboard-section">
+                    <h3 class="section-title">Leaderboard</h3>
+                    <div id="leaderboard"></div>
+                </div>
+
+                <div class="news-section">
+                    <h3 class="section-title">Market News</h3>
+                    <div id="newsFeed"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         const FUTURES = {
-            'GRAIN-1W': { name: 'Grain (1 Week)', basePrice: 245, volatility: 2.5 },
-            'WHEAT-1W': { name: 'Wheat (1 Week)', basePrice: 310, volatility: 3.0 },
-            'CORN-1W': { name: 'Corn (1 Week)', basePrice: 189, volatility: 2.8 },
-            'RICE-1W': { name: 'Rice (1 Week)', basePrice: 425, volatility: 2.2 },
-            'PORK-1W': { name: 'Pork (1 Week)', basePrice: 890, volatility: 4.5 },
-            'BEEF-1W': { name: 'Beef (1 Week)', basePrice: 1250, volatility: 5.0 },
-            'CHICKEN-1W': { name: 'Chicken (1 Week)', basePrice: 340, volatility: 3.8 },
-            'MILK-1W': { name: 'Milk (1 Week)', basePrice: 78, volatility: 1.8 },
-            'SUGAR-1W': { name: 'Sugar (1 Week)', basePrice: 165, volatility: 3.2 },
-            'COFFEE-1W': { name: 'Coffee (1 Week)', basePrice: 520, volatility: 6.0 },
-            'SOYBEAN-1W': { name: 'Soybean (1 Week)', basePrice: 395, volatility: 3.5 },
-            'POTATO-1W': { name: 'Potato (1 Week)', basePrice: 145, volatility: 2.0 }
+            'GRAIN-1W': { name: 'Grain', basePrice: 245, volatility: 2.5, category: 'grain' },
+            'WHEAT-1W': { name: 'Wheat', basePrice: 310, volatility: 3.0, category: 'grain' },
+            'CORN-1W': { name: 'Corn', basePrice: 189, volatility: 2.8, category: 'grain' },
+            'RICE-1W': { name: 'Rice', basePrice: 425, volatility: 2.2, category: 'grain' },
+            'PORK-1W': { name: 'Pork', basePrice: 890, volatility: 4.5, category: 'meat' },
+            'BEEF-1W': { name: 'Beef', basePrice: 1250, volatility: 5.0, category: 'meat' },
+            'CHICKEN-1W': { name: 'Chicken', basePrice: 340, volatility: 3.8, category: 'meat' },
+            'MILK-1W': { name: 'Milk', basePrice: 78, volatility: 1.8, category: 'dairy' },
+            'SUGAR-1W': { name: 'Sugar', basePrice: 165, volatility: 3.2, category: 'commodity' },
+            'COFFEE-1W': { name: 'Coffee', basePrice: 520, volatility: 6.0, category: 'commodity' },
+            'SOYBEAN-1W': { name: 'Soybean', basePrice: 395, volatility: 3.5, category: 'grain' },
+            'POTATO-1W': { name: 'Potato', basePrice: 145, volatility: 2.0, category: 'produce' }
         };
 
-        const NEWS_ITEMS = [
-            "Breaking: Drought in midwest expected to impact grain yields by 15%",
-            "New farming technology promises 20% increase in wheat production",
-            "Consumer demand for pasta surges as restaurants reopen nationwide",
-            "Pig shortage looms as African swine fever spreads in Asia",
-            "Global coffee prices volatile amid climate concerns in Brazil",
-            "Record corn harvest expected this quarter, analysts say",
-            "Beef futures climb on strong export demand from China",
-            "Chicken producers struggle with rising feed costs",
-            "Milk prices stabilize after months of volatility",
-            "Sugar demand spikes as beverage companies ramp up production",
-            "Soybean tariffs lifted, market reacts positively",
-            "Potato blight concerns in Europe affect global supply chains",
-            "Major food processor announces shift to grain-based products",
-            "Weather patterns favorable for rice cultivation in Southeast Asia",
-            "Food inflation concerns drive investors to commodity futures",
-            "Supply chain disruptions continue to affect pork availability",
-            "Government subsidies for wheat farmers announced",
-            "Alternative protein demand impacts traditional meat futures"
+        const NEWS_TEMPLATES = [
+            { text: '[REGION] reports [EVENT] affecting [COMMODITY] supply', impact: 'negative', categories: ['grain', 'produce'] },
+            { text: '[COUNTRY] increases [COMMODITY] exports by [PERCENT]%', impact: 'positive', categories: ['all'] },
+            { text: 'Disease outbreak in [REGION] threatens [COMMODITY] production', impact: 'negative', categories: ['meat', 'dairy'] },
+            { text: 'New trade agreement boosts [COMMODITY] demand', impact: 'positive', categories: ['all'] },
+            { text: 'Weather concerns in [REGION] impact [COMMODITY] harvest', impact: 'negative', categories: ['grain', 'produce'] },
+            { text: 'Consumer demand for [COMMODITY] surges [PERCENT]%', impact: 'positive', categories: ['all'] },
+            { text: '[COUNTRY] imposes tariffs on [COMMODITY] imports', impact: 'negative', categories: ['all'] },
+            { text: 'Technology breakthrough promises [PERCENT]% yield increase for [COMMODITY]', impact: 'positive', categories: ['grain', 'produce'] },
+            { text: 'Supply chain disruptions delay [COMMODITY] shipments', impact: 'negative', categories: ['all'] },
+            { text: '[REGION] government subsidizes [COMMODITY] production', impact: 'positive', categories: ['all'] }
         ];
+
+        const REGIONS = ['Midwest', 'Southeast Asia', 'Europe', 'South America', 'Africa', 'Australia'];
+        const COUNTRIES = ['China', 'USA', 'Brazil', 'India', 'Russia', 'Argentina'];
+        const EVENTS = ['drought', 'flooding', 'pest infestation', 'extreme temperatures', 'crop failure'];
+        const PERCENTS = [15, 20, 25, 30, 35, 40];
 
         const urlUsername = new URLSearchParams(window.location.search).get('user');
         const currentUser = urlUsername || localStorage.getItem('currentUser') || 'Guest';
@@ -438,8 +621,8 @@
         const users = JSON.parse(localStorage.getItem('users') || '{}');
         let userData = users[currentUser] || {
             username: currentUser,
-            balance: parseFloat(localStorage.getItem('balance')) || 10000,
-            holdings: JSON.parse(localStorage.getItem('holdings')) || {}
+            balance: 10000,
+            holdings: {}
         };
 
         if (!users[currentUser]) {
@@ -449,39 +632,72 @@
 
         let currentFuture = 'GRAIN-1W';
         let priceHistory = [];
+        let initialPrices = {};
         let chartCanvas, chartCtx;
         const MAX_HISTORY = 60;
+        let newsHistory = [];
+        let pendingNewsImpacts = [];
 
         document.addEventListener('DOMContentLoaded', () => {
             initializeUser();
             initializeChart();
             initializeSearch();
+            initializeFuturesList();
+            
+            Object.keys(FUTURES).forEach(key => {
+                initialPrices[key] = FUTURES[key].basePrice;
+            });
+            
             updatePriceHistory();
             startMarketSimulation();
-            displayNews();
+            generateNews();
             updateHoldings();
             updateLeaderboard();
             
             setInterval(updatePriceHistory, 1000);
-            setInterval(displayNews, 15000);
+            setInterval(generateNews, 20000);
             setInterval(updateTicker, 2000);
             setInterval(updateLeaderboard, 5000);
+            setInterval(updateFuturesList, 1000);
         });
 
         function initializeUser() {
             document.getElementById('username').textContent = userData.username;
-            document.getElementById('balance').textContent = userData.balance.toFixed(2);
+            updateUserBalance();
             updateUserRank();
+        }
+
+        function getTotalPortfolioValue() {
+            let total = userData.balance;
+            Object.keys(userData.holdings).forEach(key => {
+                const holding = userData.holdings[key];
+                const currentPrice = getCurrentPrice(key);
+                total += holding.quantity * currentPrice;
+            });
+            return total;
+        }
+
+        function updateUserBalance() {
+            const totalValue = getTotalPortfolioValue();
+            document.getElementById('balance').textContent = totalValue.toFixed(2);
         }
 
         function updateUserRank() {
             const users = JSON.parse(localStorage.getItem('users') || '{}');
             const rankings = Object.keys(users)
-                .map(username => ({
-                    username: username,
-                    balance: users[username].balance || 10000
-                }))
-                .sort((a, b) => b.balance - a.balance);
+                .map(username => {
+                    const user = users[username];
+                    let portfolioValue = user.balance;
+                    if (user.holdings) {
+                        Object.keys(user.holdings).forEach(key => {
+                            const holding = user.holdings[key];
+                            const currentPrice = getCurrentPrice(key);
+                            portfolioValue += holding.quantity * currentPrice;
+                        });
+                    }
+                    return { username, portfolioValue };
+                })
+                .sort((a, b) => b.portfolioValue - a.portfolioValue);
             
             const rank = rankings.findIndex(u => u.username === currentUser) + 1;
             document.getElementById('userRank').textContent = `#${rank}`;
@@ -520,6 +736,30 @@
             });
         }
 
+        function initializeFuturesList() {
+            updateFuturesList();
+        }
+
+        function updateFuturesList() {
+            const futuresList = document.getElementById('futuresList');
+            futuresList.innerHTML = Object.keys(FUTURES).map(key => {
+                const price = getCurrentPrice(key);
+                const initial = initialPrices[key];
+                const change = ((price - initial) / initial * 100);
+                const changeClass = change >= 0 ? 'up' : 'down';
+                const changeSign = change >= 0 ? '+' : '';
+                const isActive = key === currentFuture ? 'active' : '';
+                
+                return `
+                    <div class="future-item ${isActive}" onclick="selectFuture('${key}')">
+                        <div class="future-name">${FUTURES[key].name}</div>
+                        <span class="future-price">$${price.toFixed(2)}</span>
+                        <span class="future-change ${changeClass}">${changeSign}${change.toFixed(2)}%</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
         function selectFuture(futureKey) {
             currentFuture = futureKey;
             priceHistory = [];
@@ -527,6 +767,7 @@
             document.getElementById('searchBar').value = '';
             document.getElementById('searchResults').style.display = 'none';
             updateEstCost();
+            updateFuturesList();
         }
 
         function getCurrentPrice(futureKey = currentFuture) {
@@ -546,14 +787,23 @@
                 const lastPrice = getCurrentPrice(key);
                 
                 const randomChange = (Math.random() - 0.5) * future.volatility;
-                const trendFactor = (Math.random() - 0.48) * 0.5;
-                const buyPressure = (key === currentFuture && Math.random() > 0.7) ? 0.3 : 0;
+                const trendFactor = (Math.random() - 0.48) * 0.3;
+                const buyPressure = (key === currentFuture && Math.random() > 0.7) ? 0.2 : 0;
+                
+                let newsImpact = 0;
+                pendingNewsImpacts = pendingNewsImpacts.filter(impact => {
+                    if (impact.future === key && Date.now() >= impact.applyAt) {
+                        newsImpact = impact.amount;
+                        return false;
+                    }
+                    return true;
+                });
                 
                 newPrices[key] = Math.max(
-                    future.basePrice * 0.7,
+                    future.basePrice * 0.5,
                     Math.min(
-                        future.basePrice * 1.3,
-                        lastPrice + randomChange + trendFactor + buyPressure
+                        future.basePrice * 1.5,
+                        lastPrice + randomChange + trendFactor + buyPressure + newsImpact
                     )
                 );
             });
@@ -569,22 +819,19 @@
             
             updatePriceDisplay();
             drawChart();
+            updateUserBalance();
         }
 
         function updatePriceDisplay() {
             const currentPrice = getCurrentPrice();
-            const previousPrice = priceHistory.length > 1 
-                ? priceHistory[priceHistory.length - 2].prices[currentFuture] 
-                : currentPrice;
-            
-            const change = currentPrice - previousPrice;
-            const changePercent = (change / previousPrice) * 100;
+            const initial = initialPrices[currentFuture];
+            const change = ((currentPrice - initial) / initial * 100);
             
             document.getElementById('currentPrice').textContent = currentPrice.toFixed(2);
             
             const changeEl = document.getElementById('priceChange');
             const sign = change >= 0 ? '+' : '';
-            changeEl.textContent = `${sign}${change.toFixed(2)} (${sign}${changePercent.toFixed(2)}%)`;
+            changeEl.textContent = `${sign}${change.toFixed(2)}%`;
             changeEl.className = change >= 0 ? 'price-change up' : 'price-change down';
         }
 
@@ -599,13 +846,13 @@
             ctx.clearRect(0, 0, width, height);
             
             const prices = priceHistory.map(d => d.prices[currentFuture]);
-            const minPrice = Math.min(...prices) * 0.99;
-            const maxPrice = Math.max(...prices) * 1.01;
+            const minPrice = Math.min(...prices) * 0.995;
+            const maxPrice = Math.max(...prices) * 1.005;
             const priceRange = maxPrice - minPrice;
             
-            ctx.strokeStyle = '#2a3f5f';
+            ctx.strokeStyle = '#1a1a1a';
             ctx.lineWidth = 1;
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i <= 4; i++) {
                 const y = (height / 4) * i;
                 ctx.beginPath();
                 ctx.moveTo(0, y);
@@ -613,12 +860,23 @@
                 ctx.stroke();
                 
                 const price = maxPrice - (priceRange / 4) * i;
-                ctx.fillStyle = '#666';
-                ctx.font = '12px monospace';
+                ctx.fillStyle = '#666666';
+                ctx.font = '11px monospace';
                 ctx.fillText(`$${price.toFixed(2)}`, 5, y - 5);
             }
             
-            ctx.strokeStyle = '#00ff88';
+            const initialPrice = initialPrices[currentFuture];
+            const initialY = height - ((initialPrice - minPrice) / priceRange) * height;
+            ctx.strokeStyle = '#666666';
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(0, initialY);
+            ctx.lineTo(width, initialY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            const isPositive = prices[prices.length - 1] >= initialPrice;
+            ctx.strokeStyle = isPositive ? '#00c853' : '#ff1744';
             ctx.lineWidth = 2;
             ctx.beginPath();
             
@@ -638,38 +896,99 @@
             ctx.lineTo(width, height);
             ctx.lineTo(0, height);
             ctx.closePath();
-            ctx.fillStyle = 'rgba(0, 255, 136, 0.1)';
+            ctx.fillStyle = isPositive ? 'rgba(0, 200, 83, 0.1)' : 'rgba(255, 23, 68, 0.1)';
             ctx.fill();
         }
 
         function startMarketSimulation() {
             setInterval(() => {
-                if (Math.random() > 0.95) {
+                if (Math.random() > 0.92) {
                     const randomFuture = Object.keys(FUTURES)[Math.floor(Math.random() * Object.keys(FUTURES).length)];
-                    const shock = (Math.random() - 0.5) * 10;
-                    const lastPrice = getCurrentPrice(randomFuture);
+                    const shockType = Math.random() > 0.5 ? 'surge' : 'crash';
+                    const shock = shockType === 'surge' ? 
+                        (Math.random() * 30 + 20) : 
+                        -(Math.random() * 30 + 20);
                     
                     if (priceHistory.length > 0) {
-                        priceHistory[priceHistory.length - 1].prices[randomFuture] = lastPrice + shock;
+                        priceHistory[priceHistory.length - 1].prices[randomFuture] += shock;
                     }
                 }
-            }, 3000);
+            }, 5000);
         }
 
-        function displayNews() {
-            const newsBar = document.getElementById('newsBar');
-            const randomNews = NEWS_ITEMS[Math.floor(Math.random() * NEWS_ITEMS.length)];
-            newsBar.textContent = `📰 ${randomNews}`;
+        function generateNews() {
+            const template = NEWS_TEMPLATES[Math.floor(Math.random() * NEWS_TEMPLATES.length)];
+            const region = REGIONS[Math.floor(Math.random() * REGIONS.length)];
+            const country = COUNTRIES[Math.floor(Math.random() * COUNTRIES.length)];
+            const event = EVENTS[Math.floor(Math.random() * EVENTS.length)];
+            const percent = PERCENTS[Math.floor(Math.random() * PERCENTS.length)];
+            
+            const affectedFutures = Object.keys(FUTURES).filter(key => {
+                const category = FUTURES[key].category;
+                return template.categories.includes('all') || template.categories.includes(category);
+            });
+            
+            const targetFuture = affectedFutures[Math.floor(Math.random() * affectedFutures.length)];
+            const commodity = FUTURES[targetFuture].name;
+            
+            let newsText = template.text
+                .replace('[REGION]', region)
+                .replace('[COUNTRY]', country)
+                .replace('[EVENT]', event)
+                .replace('[COMMODITY]', commodity)
+                .replace('[PERCENT]', percent);
+            
+            const impactMultiplier = template.impact === 'positive' ? 1 : -1;
+            const impactAmount = (Math.random() * 15 + 10) * impactMultiplier;
+            
+            pendingNewsImpacts.push({
+                future: targetFuture,
+                amount: impactAmount,
+                applyAt: Date.now() + 5000
+            });
+            
+            const newsItem = {
+                text: newsText,
+                time: new Date().toLocaleTimeString(),
+                impact: template.impact,
+                impactAmount: impactAmount,
+                commodity: commodity
+            };
+            
+            newsHistory.unshift(newsItem);
+            if (newsHistory.length > 20) {
+                newsHistory.pop();
+            }
+            
+            updateNewsFeed();
+        }
+
+        function updateNewsFeed() {
+            const newsFeed = document.getElementById('newsFeed');
+            newsFeed.innerHTML = newsHistory.map(news => {
+                const impactClass = news.impact === 'positive' ? 'positive' : 'negative';
+                const impactSign = news.impact === 'positive' ? '+' : '';
+                return `
+                    <div class="news-item">
+                        <div class="news-time">${news.time}</div>
+                        <div class="news-text">${news.text}</div>
+                        <div class="news-impact ${impactClass}">
+                            ${news.commodity}: ${impactSign}${news.impactAmount.toFixed(1)}
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
         function updateTicker() {
             const ticker = document.getElementById('ticker');
             const tickerItems = Object.keys(FUTURES).map(key => {
                 const price = getCurrentPrice(key);
-                const change = Math.random() - 0.5;
+                const initial = initialPrices[key];
+                const change = ((price - initial) / initial * 100);
                 const className = change >= 0 ? 'up' : 'down';
                 const sign = change >= 0 ? '▲' : '▼';
-                return `<span class="ticker-item ${className}">${key}: $${price.toFixed(2)} ${sign}</span>`;
+                return `<span class="ticker-item ${className}">${key} ${price.toFixed(2)} ${sign}${Math.abs(change).toFixed(2)}%</span>`;
             });
             
             ticker.innerHTML = tickerItems.join('') + tickerItems.join('');
@@ -710,10 +1029,10 @@
                 holding.quantity += quantity;
                 
                 if (priceHistory.length > 0) {
-                    priceHistory[priceHistory.length - 1].prices[currentFuture] += 0.2;
+                    priceHistory[priceHistory.length - 1].prices[currentFuture] += 0.15;
                 }
                 
-                alert(`Bought ${quantity}kg of ${currentFuture} at $${price.toFixed(2)}/kg`);
+                alert(`Bought ${quantity}kg of ${currentFuture} at ${price.toFixed(2)}/kg`);
             } else {
                 if (!userData.holdings[currentFuture] || userData.holdings[currentFuture].quantity < quantity) {
                     alert('Insufficient holdings');
@@ -727,14 +1046,14 @@
                     delete userData.holdings[currentFuture];
                 }
                 
-                alert(`Sold ${quantity}kg of ${currentFuture} at $${price.toFixed(2)}/kg`);
+                alert(`Sold ${quantity}kg of ${currentFuture} at ${price.toFixed(2)}/kg`);
             }
             
             saveUserData();
             updateHoldings();
+            updateUserBalance();
             updateUserRank();
             updateLeaderboard();
-            document.getElementById('balance').textContent = userData.balance.toFixed(2);
         }
 
         function updateHoldings() {
@@ -753,15 +1072,17 @@
                 const profitLoss = totalValue - totalCost;
                 const profitLossPercent = (profitLoss / totalCost) * 100;
                 const className = profitLoss >= 0 ? '' : 'loss';
+                const plColor = profitLoss >= 0 ? '#00c853' : '#ff1744';
+                const plSign = profitLoss >= 0 ? '+' : '';
                 
                 return `
                     <div class="holding-item ${className}">
-                        <div><strong>${key}</strong></div>
-                        <div>Quantity: ${holding.quantity}kg</div>
-                        <div>Avg Price: $${holding.avgPrice.toFixed(2)}</div>
-                        <div>Current: $${currentPrice.toFixed(2)}</div>
-                        <div style="color: ${profitLoss >= 0 ? '#00ff88' : '#ff4444'}">
-                            P/L: $${profitLoss.toFixed(2)} (${profitLossPercent.toFixed(2)}%)
+                        <div class="holding-name">${FUTURES[key].name}</div>
+                        <div class="holding-detail">Qty: ${holding.quantity}kg</div>
+                        <div class="holding-detail">Avg: ${holding.avgPrice.toFixed(2)}</div>
+                        <div class="holding-detail">Now: ${currentPrice.toFixed(2)}</div>
+                        <div class="holding-pl" style="color: ${plColor}">
+                            ${plSign}${profitLoss.toFixed(2)} (${plSign}${profitLossPercent.toFixed(2)}%)
                         </div>
                     </div>
                 `;
@@ -784,11 +1105,20 @@
         function updateLeaderboard() {
             const users = JSON.parse(localStorage.getItem('users') || '{}');
             const rankings = Object.keys(users)
-                .map(username => ({
-                    username: username,
-                    balance: users[username].balance || 10000
-                }))
-                .sort((a, b) => b.balance - a.balance)
+                .map(username => {
+                    const user = users[username];
+                    let portfolioValue = user.balance;
+                    if (user.holdings) {
+                        Object.keys(user.holdings).forEach(key => {
+                            const holding = user.holdings[key];
+                            const currentPrice = getCurrentPrice(key);
+                            portfolioValue += holding.quantity * currentPrice;
+                        });
+                    }
+                    const returnPercent = ((portfolioValue - 10000) / 10000) * 100;
+                    return { username, portfolioValue, returnPercent };
+                })
+                .sort((a, b) => b.portfolioValue - a.portfolioValue)
                 .slice(0, 10);
             
             const leaderboardDiv = document.getElementById('leaderboard');
@@ -802,21 +1132,26 @@
                 const rank = index + 1;
                 const isCurrentUser = user.username === currentUser;
                 const isTop3 = rank <= 3;
-                const className = isCurrentUser ? 'leaderboard-item current-user' : 
-                                 isTop3 ? 'leaderboard-item top3' : 'leaderboard-item';
+                const returnClass = user.returnPercent >= 0 ? 'positive' : 'negative';
+                const returnSign = user.returnPercent >= 0 ? '+' : '';
+                
+                let className = 'leaderboard-item';
+                if (isCurrentUser) className += ' current-user';
+                if (isTop3) className += ' top3';
                 
                 return `
                     <div class="${className}">
                         <span class="leaderboard-rank">#${rank}</span>
                         <span class="leaderboard-name">${user.username}${isCurrentUser ? ' (You)' : ''}</span>
-                        <span class="leaderboard-balance">${user.balance.toFixed(2)}</span>
+                        <span class="leaderboard-balance">${user.portfolioValue.toFixed(0)}</span>
+                        <span class="leaderboard-return ${returnClass}">${returnSign}${user.returnPercent.toFixed(1)}%</span>
                     </div>
                 `;
             }).join('');
         }
 
         function logout() {
-            if (confirm('Are you sure you want to logout?')) {
+            if (confirm('Logout?')) {
                 localStorage.removeItem('currentUser');
                 window.location.href = 'login.html';
             }
