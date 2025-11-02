@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Futures Exchange</title>
+    <title>식품 선물 거래소</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
- 
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #000000;
             color: #ffffff;
             font-size: 14px;
@@ -62,9 +63,9 @@
 
         h1 {
             color: #ffffff;
-            font-size: 18px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
         .user-info {
@@ -90,12 +91,15 @@
             border-radius: 2px;
             font-size: 12px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            font-family: 'Noto Sans KR', sans-serif;
         }
 
         .logout-btn:hover {
             background: #ff1744;
             color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 23, 68, 0.4);
         }
 
         .main-grid {
@@ -133,6 +137,7 @@
             color: #ffffff;
             font-size: 13px;
             border-radius: 2px;
+            font-family: 'Noto Sans KR', sans-serif;
         }
 
         #searchBar:focus {
@@ -208,14 +213,54 @@
         .chart-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .chart-title-section {
+            flex: 1;
         }
 
         .chart-title {
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 700;
             font-family: 'Courier New', monospace;
+            margin-bottom: 8px;
+        }
+
+        .chart-subtitle {
+            font-size: 13px;
+            color: #888888;
+            margin-bottom: 15px;
+        }
+
+        .certificate-box {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .cert-title {
+            font-weight: 700;
+            color: #ffc107;
+            margin-bottom: 6px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cert-detail {
+            color: #aaaaaa;
+            margin-bottom: 3px;
+        }
+
+        .cert-grade {
+            color: #00c853;
+            font-weight: 700;
         }
 
         .price-display {
@@ -239,10 +284,57 @@
         .price-change.up { color: #00c853; }
         .price-change.down { color: #ff1744; }
 
+        .chart-container {
+            position: relative;
+        }
+
         #priceChart {
             width: 100%;
             height: 400px;
             margin-bottom: 20px;
+        }
+
+        .chart-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.3;
+            filter: blur(80px);
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        .chart-glow.positive {
+            background: radial-gradient(circle, rgba(0, 200, 83, 0.4) 0%, transparent 70%);
+        }
+
+        .chart-glow.negative {
+            background: radial-gradient(circle, rgba(255, 23, 68, 0.4) 0%, transparent 70%);
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.2; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.4; }
+        }
+
+        .trade-warning {
+            background: rgba(255, 152, 0, 0.1);
+            border: 1px solid #ff9800;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #ffb74d;
+        }
+
+        .warning-title {
+            font-weight: 700;
+            color: #ff9800;
+            margin-bottom: 8px;
         }
 
         .trade-section {
@@ -276,9 +368,30 @@
             border: none;
             border-radius: 2px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        button:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:active:before {
+            width: 300px;
+            height: 300px;
         }
 
         .buy-btn {
@@ -288,6 +401,8 @@
 
         .buy-btn:hover {
             background: #00e676;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 200, 83, 0.5);
         }
 
         .sell-btn {
@@ -297,6 +412,8 @@
 
         .sell-btn:hover {
             background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 23, 68, 0.5);
         }
 
         .trade-info {
@@ -449,6 +566,10 @@
                 gap: 10px;
                 flex-wrap: wrap;
             }
+
+            .chart-header {
+                flex-direction: column;
+            }
         }
 
         @media (max-width: 768px) {
@@ -516,65 +637,83 @@
 
     <div class="container">
         <header>
-            <h1>FOOD FUTURES EXCHANGE</h1>
+            <h1>식품 선물 거래소</h1>
             <div class="user-info">
-                <span id="username">Loading...</span>
-                <span class="balance">Balance: $<span id="balance">10000.00</span></span>
-                <span class="rank">Rank: <span id="userRank">-</span></span>
-                <button class="logout-btn" onclick="logout()">Logout</button>
+                <span id="username">로딩중...</span>
+                <span class="balance">잔액: ₩<span id="balance">10000.00</span></span>
+                <span class="rank">순위: <span id="userRank">-</span></span>
+                <button class="logout-btn" onclick="logout()">로그아웃</button>
             </div>
         </header>
 
         <div class="main-grid">
             <div class="left-panel">
                 <div class="search-section">
-                    <h3 class="section-title">Search Markets</h3>
-                    <input type="text" id="searchBar" placeholder="Search..." />
+                    <h3 class="section-title">시장 검색</h3>
+                    <input type="text" id="searchBar" placeholder="검색..." />
                     <div id="searchResults"></div>
                 </div>
 
                 <div class="futures-list">
-                    <h3 class="section-title">All Markets</h3>
+                    <h3 class="section-title">전체 시장</h3>
                     <div id="futuresList"></div>
                 </div>
             </div>
 
             <div class="center-panel">
                 <div class="chart-header">
-                    <div class="chart-title" id="selectedFuture">GRAIN-1W</div>
+                    <div class="chart-title-section">
+                        <div class="chart-title" id="selectedFuture">곡물-1W</div>
+                        <div class="chart-subtitle" id="futureDescription">7일 후 곡물 1kg 예상 가격</div>
+                        <div class="certificate-box">
+                            <div class="cert-title">🏅 국제식품품질인증원 (IFQI) 인증</div>
+                            <div class="cert-detail">중량: <span id="certWeight">1.000kg</span></div>
+                            <div class="cert-detail">등급: <span class="cert-grade" id="certGrade">특급 (Excellent)</span></div>
+                            <div class="cert-detail">원산지: <span id="certOrigin">미국</span></div>
+                            <div class="cert-detail">보관상태: <span class="cert-grade">최적</span></div>
+                        </div>
+                    </div>
                     <div class="price-display">
-                        <span class="current-price">$<span id="currentPrice">245.50</span></span>
+                        <span class="current-price">₩<span id="currentPrice">245.50</span></span>
                         <span class="price-change" id="priceChange">+0.00%</span>
                     </div>
                 </div>
 
-                <canvas id="priceChart"></canvas>
+                <div class="chart-container">
+                    <div class="chart-glow positive" id="chartGlow"></div>
+                    <canvas id="priceChart"></canvas>
+                </div>
+
+                <div class="trade-warning">
+                    <div class="warning-title">⚠️ 시장 조작 방지 시스템 작동중</div>
+                    대량 매수/매도 시 가격 변동이 제한됩니다. 거래량 기반 가격 조정 알고리즘이 적용됩니다.
+                </div>
 
                 <div class="trade-section">
                     <div class="trade-controls">
-                        <input type="number" id="quantity" placeholder="Quantity (kg)" min="1" value="10" />
-                        <button class="buy-btn" onclick="executeTrade('buy')">Buy</button>
-                        <button class="sell-btn" onclick="executeTrade('sell')">Sell</button>
+                        <input type="number" id="quantity" placeholder="수량 (kg)" min="1" value="10" />
+                        <button class="buy-btn" onclick="executeTrade('buy')">매수</button>
+                        <button class="sell-btn" onclick="executeTrade('sell')">매도</button>
                     </div>
                     <div class="trade-info">
-                        Est. Cost: $<span id="estCost">2455.00</span>
+                        예상 비용: ₩<span id="estCost">2455.00</span>
                     </div>
                 </div>
             </div>
 
             <div class="right-panel">
                 <div class="holdings-section">
-                    <h3 class="section-title">Holdings</h3>
+                    <h3 class="section-title">보유 자산</h3>
                     <div id="holdings"></div>
                 </div>
 
                 <div class="leaderboard-section">
-                    <h3 class="section-title">Leaderboard</h3>
+                    <h3 class="section-title">리더보드</h3>
                     <div id="leaderboard"></div>
                 </div>
 
                 <div class="news-section">
-                    <h3 class="section-title">Market News</h3>
+                    <h3 class="section-title">시장 뉴스</h3>
                     <div id="newsFeed"></div>
                 </div>
             </div>
@@ -583,37 +722,37 @@
 
     <script>
         const FUTURES = {
-            'GRAIN-1W': { name: 'Grain', basePrice: 245, volatility: 2.5, category: 'grain' },
-            'WHEAT-1W': { name: 'Wheat', basePrice: 310, volatility: 3.0, category: 'grain' },
-            'CORN-1W': { name: 'Corn', basePrice: 189, volatility: 2.8, category: 'grain' },
-            'RICE-1W': { name: 'Rice', basePrice: 425, volatility: 2.2, category: 'grain' },
-            'PORK-1W': { name: 'Pork', basePrice: 890, volatility: 4.5, category: 'meat' },
-            'BEEF-1W': { name: 'Beef', basePrice: 1250, volatility: 5.0, category: 'meat' },
-            'CHICKEN-1W': { name: 'Chicken', basePrice: 340, volatility: 3.8, category: 'meat' },
-            'MILK-1W': { name: 'Milk', basePrice: 78, volatility: 1.8, category: 'dairy' },
-            'SUGAR-1W': { name: 'Sugar', basePrice: 165, volatility: 3.2, category: 'commodity' },
-            'COFFEE-1W': { name: 'Coffee', basePrice: 520, volatility: 6.0, category: 'commodity' },
-            'SOYBEAN-1W': { name: 'Soybean', basePrice: 395, volatility: 3.5, category: 'grain' },
-            'POTATO-1W': { name: 'Potato', basePrice: 145, volatility: 2.0, category: 'produce' }
+            'GRAIN-1W': { name: '곡물', basePrice: 245, volatility: 1.5, category: 'grain', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '미국' },
+            'WHEAT-1W': { name: '밀', basePrice: 310, volatility: 1.8, category: 'grain', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '캐나다' },
+            'CORN-1W': { name: '옥수수', basePrice: 189, volatility: 1.6, category: 'grain', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '미국' },
+            'RICE-1W': { name: '쌀', basePrice: 425, volatility: 1.3, category: 'grain', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '한국' },
+            'PORK-1W': { name: '돼지고기', basePrice: 890, volatility: 2.2, category: 'meat', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '덴마크' },
+            'BEEF-1W': { name: '소고기', basePrice: 1250, volatility: 2.5, category: 'meat', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '호주' },
+            'CHICKEN-1W': { name: '닭고기', basePrice: 340, volatility: 2.0, category: 'meat', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '브라질' },
+            'MILK-1W': { name: '우유', basePrice: 78, volatility: 1.0, category: 'dairy', days: 7, weight: '1.000L', grade: '특급 (Excellent)', origin: '뉴질랜드' },
+            'SUGAR-1W': { name: '설탕', basePrice: 165, volatility: 1.7, category: 'commodity', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '브라질' },
+            'COFFEE-1W': { name: '커피', basePrice: 520, volatility: 2.8, category: 'commodity', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '콜롬비아' },
+            'SOYBEAN-1W': { name: '대두', basePrice: 395, volatility: 1.9, category: 'grain', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '미국' },
+            'POTATO-1W': { name: '감자', basePrice: 145, volatility: 1.2, category: 'produce', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '네덜란드' }
         };
 
         const NEWS_TEMPLATES = [
-            { text: '[REGION] reports [EVENT] affecting [COMMODITY] supply', impact: 'negative', categories: ['grain', 'produce'] },
-            { text: '[COUNTRY] increases [COMMODITY] exports by [PERCENT]%', impact: 'positive', categories: ['all'] },
-            { text: 'Disease outbreak in [REGION] threatens [COMMODITY] production', impact: 'negative', categories: ['meat', 'dairy'] },
-            { text: 'New trade agreement boosts [COMMODITY] demand', impact: 'positive', categories: ['all'] },
-            { text: 'Weather concerns in [REGION] impact [COMMODITY] harvest', impact: 'negative', categories: ['grain', 'produce'] },
-            { text: 'Consumer demand for [COMMODITY] surges [PERCENT]%', impact: 'positive', categories: ['all'] },
-            { text: '[COUNTRY] imposes tariffs on [COMMODITY] imports', impact: 'negative', categories: ['all'] },
-            { text: 'Technology breakthrough promises [PERCENT]% yield increase for [COMMODITY]', impact: 'positive', categories: ['grain', 'produce'] },
-            { text: 'Supply chain disruptions delay [COMMODITY] shipments', impact: 'negative', categories: ['all'] },
-            { text: '[REGION] government subsidizes [COMMODITY] production', impact: 'positive', categories: ['all'] }
+            { text: '[REGION]에서 [EVENT] 발생, [COMMODITY] 공급 차질', impact: 'negative', categories: ['grain', 'produce'] },
+            { text: '[COUNTRY], [COMMODITY] 수출 [PERCENT]% 증가', impact: 'positive', categories: ['all'] },
+            { text: '[REGION] 질병 발생으로 [COMMODITY] 생산 위협', impact: 'negative', categories: ['meat', 'dairy'] },
+            { text: '새로운 무역 협정으로 [COMMODITY] 수요 증가', impact: 'positive', categories: ['all'] },
+            { text: '[REGION] 기상 악화로 [COMMODITY] 수확 영향', impact: 'negative', categories: ['grain', 'produce'] },
+            { text: '[COMMODITY] 소비자 수요 [PERCENT]% 급증', impact: 'positive', categories: ['all'] },
+            { text: '[COUNTRY], [COMMODITY] 수입 관세 부과', impact: 'negative', categories: ['all'] },
+            { text: '신기술로 [COMMODITY] 생산량 [PERCENT]% 증가 전망', impact: 'positive', categories: ['grain', 'produce'] },
+            { text: '공급망 차질로 [COMMODITY] 배송 지연', impact: 'negative', categories: ['all'] },
+            { text: '[REGION] 정부, [COMMODITY] 생산 보조금 지급', impact: 'positive', categories: ['all'] }
         ];
 
-        const REGIONS = ['Midwest', 'Southeast Asia', 'Europe', 'South America', 'Africa', 'Australia'];
-        const COUNTRIES = ['China', 'USA', 'Brazil', 'India', 'Russia', 'Argentina'];
-        const EVENTS = ['drought', 'flooding', 'pest infestation', 'extreme temperatures', 'crop failure'];
-        const PERCENTS = [15, 20, 25, 30, 35, 40];
+        const REGIONS = ['중서부', '동남아시아', '유럽', '남미', '아프리카', '오세아니아'];
+        const COUNTRIES = ['중국', '미국', '브라질', '인도', '러시아', '아르헨티나'];
+        const EVENTS = ['가뭄', '홍수', '병충해', '극심한 기온', '작황 부진'];
+        const PERCENTS = [15, 20, 25, 30];
 
         const urlUsername = new URLSearchParams(window.location.search).get('user');
         const currentUser = urlUsername || localStorage.getItem('currentUser') || 'Guest';
@@ -637,6 +776,7 @@
         const MAX_HISTORY = 60;
         let newsHistory = [];
         let pendingNewsImpacts = [];
+        let totalTradingVolume = {};
 
         document.addEventListener('DOMContentLoaded', () => {
             initializeUser();
@@ -646,13 +786,14 @@
             
             Object.keys(FUTURES).forEach(key => {
                 initialPrices[key] = FUTURES[key].basePrice;
+                totalTradingVolume[key] = 0;
             });
             
             updatePriceHistory();
-            startMarketSimulation();
             generateNews();
             updateHoldings();
             updateLeaderboard();
+            updateCertificate();
             
             setInterval(updatePriceHistory, 1000);
             setInterval(generateNews, 20000);
@@ -734,6 +875,10 @@
                     searchResults.style.display = 'none';
                 }
             });
+            
+            searchBar.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+            });
         }
 
         function initializeFuturesList() {
@@ -753,7 +898,7 @@
                 return `
                     <div class="future-item ${isActive}" onclick="selectFuture('${key}')">
                         <div class="future-name">${FUTURES[key].name}</div>
-                        <span class="future-price">$${price.toFixed(2)}</span>
+                        <span class="future-price">₩${price.toFixed(2)}</span>
                         <span class="future-change ${changeClass}">${changeSign}${change.toFixed(2)}%</span>
                     </div>
                 `;
@@ -763,11 +908,22 @@
         function selectFuture(futureKey) {
             currentFuture = futureKey;
             priceHistory = [];
+            const future = FUTURES[futureKey];
             document.getElementById('selectedFuture').textContent = futureKey;
+            document.getElementById('futureDescription').textContent = 
+                `${future.days}일 후 ${future.name} 1kg 예상 가격`;
             document.getElementById('searchBar').value = '';
             document.getElementById('searchResults').style.display = 'none';
+            updateCertificate();
             updateEstCost();
             updateFuturesList();
+        }
+
+        function updateCertificate() {
+            const future = FUTURES[currentFuture];
+            document.getElementById('certWeight').textContent = future.weight;
+            document.getElementById('certGrade').textContent = future.grade;
+            document.getElementById('certOrigin').textContent = future.origin;
         }
 
         function getCurrentPrice(futureKey = currentFuture) {
@@ -787,8 +943,11 @@
                 const lastPrice = getCurrentPrice(key);
                 
                 const randomChange = (Math.random() - 0.5) * future.volatility;
-                const trendFactor = (Math.random() - 0.48) * 0.3;
-                const buyPressure = (key === currentFuture && Math.random() > 0.7) ? 0.2 : 0;
+                const trendFactor = (Math.random() - 0.48) * 0.2;
+                
+                const volumeImpact = totalTradingVolume[key] || 0;
+                const dampedImpact = Math.sign(volumeImpact) * Math.log(Math.abs(volumeImpact) + 1) * 0.05;
+                totalTradingVolume[key] = volumeImpact * 0.9;
                 
                 let newsImpact = 0;
                 pendingNewsImpacts = pendingNewsImpacts.filter(impact => {
@@ -800,10 +959,10 @@
                 });
                 
                 newPrices[key] = Math.max(
-                    future.basePrice * 0.5,
+                    future.basePrice * 0.7,
                     Math.min(
-                        future.basePrice * 1.5,
-                        lastPrice + randomChange + trendFactor + buyPressure + newsImpact
+                        future.basePrice * 1.3,
+                        lastPrice + randomChange + trendFactor + dampedImpact + newsImpact
                     )
                 );
             });
@@ -833,6 +992,9 @@
             const sign = change >= 0 ? '+' : '';
             changeEl.textContent = `${sign}${change.toFixed(2)}%`;
             changeEl.className = change >= 0 ? 'price-change up' : 'price-change down';
+            
+            const glowEl = document.getElementById('chartGlow');
+            glowEl.className = change >= 0 ? 'chart-glow positive' : 'chart-glow negative';
         }
 
         function drawChart() {
@@ -862,7 +1024,7 @@
                 const price = maxPrice - (priceRange / 4) * i;
                 ctx.fillStyle = '#666666';
                 ctx.font = '11px monospace';
-                ctx.fillText(`$${price.toFixed(2)}`, 5, y - 5);
+                ctx.fillText(`₩${price.toFixed(2)}`, 5, y - 5);
             }
             
             const initialPrice = initialPrices[currentFuture];
@@ -900,22 +1062,6 @@
             ctx.fill();
         }
 
-        function startMarketSimulation() {
-            setInterval(() => {
-                if (Math.random() > 0.92) {
-                    const randomFuture = Object.keys(FUTURES)[Math.floor(Math.random() * Object.keys(FUTURES).length)];
-                    const shockType = Math.random() > 0.5 ? 'surge' : 'crash';
-                    const shock = shockType === 'surge' ? 
-                        (Math.random() * 30 + 20) : 
-                        -(Math.random() * 30 + 20);
-                    
-                    if (priceHistory.length > 0) {
-                        priceHistory[priceHistory.length - 1].prices[randomFuture] += shock;
-                    }
-                }
-            }, 5000);
-        }
-
         function generateNews() {
             const template = NEWS_TEMPLATES[Math.floor(Math.random() * NEWS_TEMPLATES.length)];
             const region = REGIONS[Math.floor(Math.random() * REGIONS.length)];
@@ -939,7 +1085,7 @@
                 .replace('[PERCENT]', percent);
             
             const impactMultiplier = template.impact === 'positive' ? 1 : -1;
-            const impactAmount = (Math.random() * 15 + 10) * impactMultiplier;
+            const impactAmount = (Math.random() * 8 + 5) * impactMultiplier;
             
             pendingNewsImpacts.push({
                 future: targetFuture,
@@ -949,7 +1095,7 @@
             
             const newsItem = {
                 text: newsText,
-                time: new Date().toLocaleTimeString(),
+                time: new Date().toLocaleTimeString('ko-KR'),
                 impact: template.impact,
                 impactAmount: impactAmount,
                 commodity: commodity
@@ -988,7 +1134,7 @@
                 const change = ((price - initial) / initial * 100);
                 const className = change >= 0 ? 'up' : 'down';
                 const sign = change >= 0 ? '▲' : '▼';
-                return `<span class="ticker-item ${className}">${key} ${price.toFixed(2)} ${sign}${Math.abs(change).toFixed(2)}%</span>`;
+                return `<span class="ticker-item ${className}">${key} ₩${price.toFixed(2)} ${sign}${Math.abs(change).toFixed(2)}%</span>`;
             });
             
             ticker.innerHTML = tickerItems.join('') + tickerItems.join('');
@@ -1001,6 +1147,9 @@
         }
 
         document.getElementById('quantity').addEventListener('input', updateEstCost);
+        document.getElementById('quantity').addEventListener('mousedown', (e) => {
+            e.stopPropagation();
+        });
 
         function executeTrade(action) {
             const quantity = parseFloat(document.getElementById('quantity').value);
@@ -1008,13 +1157,13 @@
             const cost = quantity * price;
             
             if (!quantity || quantity <= 0) {
-                alert('Please enter a valid quantity');
+                alert('올바른 수량을 입력하세요');
                 return;
             }
             
             if (action === 'buy') {
                 if (cost > userData.balance) {
-                    alert('Insufficient balance');
+                    alert('잔액이 부족합니다');
                     return;
                 }
                 
@@ -1028,14 +1177,12 @@
                 holding.avgPrice = ((holding.avgPrice * holding.quantity) + (price * quantity)) / (holding.quantity + quantity);
                 holding.quantity += quantity;
                 
-                if (priceHistory.length > 0) {
-                    priceHistory[priceHistory.length - 1].prices[currentFuture] += 0.15;
-                }
+                totalTradingVolume[currentFuture] = (totalTradingVolume[currentFuture] || 0) + quantity;
                 
-                alert(`Bought ${quantity}kg of ${currentFuture} at ${price.toFixed(2)}/kg`);
+                alert(`${quantity}kg의 ${FUTURES[currentFuture].name}를 ₩${price.toFixed(2)}/kg에 매수했습니다`);
             } else {
                 if (!userData.holdings[currentFuture] || userData.holdings[currentFuture].quantity < quantity) {
-                    alert('Insufficient holdings');
+                    alert('보유량이 부족합니다');
                     return;
                 }
                 
@@ -1046,7 +1193,9 @@
                     delete userData.holdings[currentFuture];
                 }
                 
-                alert(`Sold ${quantity}kg of ${currentFuture} at ${price.toFixed(2)}/kg`);
+                totalTradingVolume[currentFuture] = (totalTradingVolume[currentFuture] || 0) - quantity;
+                
+                alert(`${quantity}kg의 ${FUTURES[currentFuture].name}를 ₩${price.toFixed(2)}/kg에 매도했습니다`);
             }
             
             saveUserData();
@@ -1060,7 +1209,7 @@
             const holdingsDiv = document.getElementById('holdings');
             
             if (Object.keys(userData.holdings).length === 0) {
-                holdingsDiv.innerHTML = '<p style="color: #666;">No holdings</p>';
+                holdingsDiv.innerHTML = '<p style="color: #666;">보유 자산 없음</p>';
                 return;
             }
             
@@ -1078,11 +1227,11 @@
                 return `
                     <div class="holding-item ${className}">
                         <div class="holding-name">${FUTURES[key].name}</div>
-                        <div class="holding-detail">Qty: ${holding.quantity}kg</div>
-                        <div class="holding-detail">Avg: ${holding.avgPrice.toFixed(2)}</div>
-                        <div class="holding-detail">Now: ${currentPrice.toFixed(2)}</div>
+                        <div class="holding-detail">수량: ${holding.quantity}kg</div>
+                        <div class="holding-detail">평균가: ₩${holding.avgPrice.toFixed(2)}</div>
+                        <div class="holding-detail">현재가: ₩${currentPrice.toFixed(2)}</div>
                         <div class="holding-pl" style="color: ${plColor}">
-                            ${plSign}${profitLoss.toFixed(2)} (${plSign}${profitLossPercent.toFixed(2)}%)
+                            손익: ${plSign}₩${profitLoss.toFixed(2)} (${plSign}${profitLossPercent.toFixed(2)}%)
                         </div>
                     </div>
                 `;
@@ -1124,7 +1273,7 @@
             const leaderboardDiv = document.getElementById('leaderboard');
             
             if (rankings.length === 0) {
-                leaderboardDiv.innerHTML = '<p style="color: #666;">No traders yet</p>';
+                leaderboardDiv.innerHTML = '<p style="color: #666;">거래자 없음</p>';
                 return;
             }
             
@@ -1142,8 +1291,8 @@
                 return `
                     <div class="${className}">
                         <span class="leaderboard-rank">#${rank}</span>
-                        <span class="leaderboard-name">${user.username}${isCurrentUser ? ' (You)' : ''}</span>
-                        <span class="leaderboard-balance">${user.portfolioValue.toFixed(0)}</span>
+                        <span class="leaderboard-name">${user.username}${isCurrentUser ? ' (나)' : ''}</span>
+                        <span class="leaderboard-balance">₩${user.portfolioValue.toFixed(0)}</span>
                         <span class="leaderboard-return ${returnClass}">${returnSign}${user.returnPercent.toFixed(1)}%</span>
                     </div>
                 `;
@@ -1151,9 +1300,9 @@
         }
 
         function logout() {
-            if (confirm('Logout?')) {
+            if (confirm('로그아웃하시겠습니까?')) {
                 localStorage.removeItem('currentUser');
-                window.location.href = 'https://kebinco.github.io/foodfutures/index.html';
+                window.location.href = 'login.html';
             }
         }
 
