@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <title>거래장</title>
     <link rel="icon" type="image/png" sizes="64x64" href="https://github.com/KebinCo/foodfutures/blob/main/fdfdfdf.png?raw=true">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -107,7 +106,7 @@
 
         .main-grid {
             display: grid;
-            grid-template-columns: 300px 1fr 320px;
+            grid-template-columns: 300px 1fr 340px;
             gap: 1px;
             background: #1a1a1a;
             min-height: calc(100vh - 140px);
@@ -605,12 +604,17 @@
             }
 
             .leaderboard-item {
-                grid-template-columns: 30px 1fr 80px;
+                grid-template-columns: 30px 1fr 90px;
                 font-size: 11px;
+                padding: 10px 8px;
             }
 
             .leaderboard-return {
                 display: none;
+            }
+
+            .leaderboard-balance {
+                font-size: 10px;
             }
         }
 
@@ -705,14 +709,14 @@
             </div>
 
             <div class="right-panel">
-                <div class="holdings-section">
-                    <h3 class="section-title">보유 자산</h3>
-                    <div id="holdings"></div>
-                </div>
-
                 <div class="leaderboard-section">
                     <h3 class="section-title">리더보드</h3>
                     <div id="leaderboard"></div>
+                </div>
+
+                <div class="holdings-section">
+                    <h3 class="section-title">보유 자산</h3>
+                    <div id="holdings"></div>
                 </div>
 
                 <div class="news-section">
@@ -1362,7 +1366,7 @@
                     <div class="${className}">
                         <span class="leaderboard-rank">#${rank}</span>
                         <span class="leaderboard-name">${user.username}${isCurrentUser ? ' (나)' : ''}</span>
-                        <span class="leaderboard-balance">₩${(user.portfolioValue / 10000).toFixed(0)}만</span>
+                        <span class="leaderboard-balance">₩${user.portfolioValue.toLocaleString('ko-KR', {maximumFractionDigits: 0})}</span>
                         <span class="leaderboard-return ${returnClass}">${returnSign}${user.returnPercent.toFixed(1)}%</span>
                     </div>
                 `;
