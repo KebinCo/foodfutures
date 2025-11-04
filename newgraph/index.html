@@ -1,1320 +1,339 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4e5LLtvYQ63HLsavreenFNFle4Y1GtorG4g&s" type="image/png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>식품 선물 거래소</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Login - FoodFutures</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #121212;
+            --card-bg: #1a1a1a;
+            --accent-color: #00ff88;
+            --accent-glow: rgba(0, 255, 136, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --negative-color: #ff4757;
+            --glow-primary: 0 0 20px rgba(0, 255, 136, 0.3);
+            --shadow-elevated: 0 16px 64px rgba(0, 0, 0, 0.6);
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --border-width: 1px;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
-            background: #000000;
-            color: #ffffff;
-            font-size: 14px;
-            min-width: 1400px;
+            font-family: var(--font-primary);
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
         }
-
-        .ticker-bar {
-            background: #0a0a0a;
-            padding: 10px 0;
-            overflow: hidden;
-            border-bottom: 1px solid #1a1a1a;
-            font-size: 12px;
-        }
-
-        .ticker-content {
+        
+        .auth-container {
+            min-height: 100vh;
             display: flex;
-            white-space: nowrap;
-            animation: scroll 40s linear infinite;
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .ticker-item {
-            margin-right: 40px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .ticker-item.up { color: #00c853; }
-        .ticker-item.down { color: #ff1744; }
-
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 0;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 20px 30px;
-            border-bottom: 1px solid #1a1a1a;
-            background: #0a0a0a;
+            justify-content: center;
+            padding: var(--spacing-xl);
         }
-
-        h1 {
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .user-info {
-            display: flex;
-            gap: 30px;
-            font-size: 13px;
-            align-items: center;
-        }
-
-        .balance, .rank {
-            font-weight: 500;
-            font-family: 'Courier New', monospace;
-        }
-
-        .balance { color: #00c853; }
-        .rank { color: #2196f3; }
-
-        .logout-btn {
-            padding: 6px 16px;
-            background: transparent;
-            color: #ff1744;
-            border: 1px solid #ff1744;
-            border-radius: 2px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Pretendard', sans-serif;
-        }
-
-        .logout-btn:hover {
-            background: #ff1744;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 23, 68, 0.4);
-        }
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 300px 1fr 340px;
-            gap: 1px;
-            background: #1a1a1a;
-            min-height: calc(100vh - 140px);
-        }
-
-        .left-panel, .center-panel, .right-panel {
-            background: #000000;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .section-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #666666;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .search-section {
-            margin-bottom: 30px;
-        }
-
-        #searchBar {
+        
+        .auth-card {
+            background: var(--card-bg);
+            border: var(--border-width) solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-2xl);
+            max-width: 450px;
             width: 100%;
-            padding: 10px;
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            color: #ffffff;
-            font-size: 13px;
-            border-radius: 2px;
-            font-family: 'Pretendard', sans-serif;
+            box-shadow: var(--shadow-elevated);
+            animation: fadeInUp 0.6s ease-out;
         }
-
-        #searchBar:focus {
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .auth-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .auth-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        
+        .form-label {
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .form-input {
+            padding: var(--spacing-md);
+            background: var(--secondary-bg);
+            border: var(--border-width) solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
             outline: none;
-            border-color: #2196f3;
+            border-color: var(--accent-color);
+            box-shadow: var(--glow-primary);
         }
-
-        #searchResults {
-            position: absolute;
-            width: 280px;
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            max-height: 300px;
-            overflow-y: auto;
-            z-index: 100;
-            display: none;
-            margin-top: 2px;
-        }
-
-        .search-result {
-            padding: 10px;
-            cursor: pointer;
-            border-bottom: 1px solid #1a1a1a;
-            font-size: 12px;
-        }
-
-        .search-result:hover {
-            background: #1a1a1a;
-        }
-
-        .futures-list {
-            margin-bottom: 30px;
-        }
-
-        .future-item {
-            padding: 12px 0;
-            border-bottom: 1px solid #1a1a1a;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .future-item:hover {
-            background: #0a0a0a;
-        }
-
-        .future-item.active {
-            background: #0a0a0a;
-            border-left: 2px solid #2196f3;
-            padding-left: 10px;
-        }
-
-        .future-name {
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
-
-        .future-price {
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .future-change {
-            font-size: 11px;
-            font-family: 'Courier New', monospace;
-            margin-left: 8px;
-        }
-
-        .future-change.up { color: #00c853; }
-        .future-change.down { color: #ff1744; }
-
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 20px;
-            gap: 20px;
-        }
-
-        .chart-title-section {
-            flex: 1;
-        }
-
-        .chart-title {
-            font-size: 18px;
-            font-weight: 700;
-            font-family: 'Courier New', monospace;
-            margin-bottom: 8px;
-        }
-
-        .chart-subtitle {
-            font-size: 13px;
-            color: #888888;
-            margin-bottom: 15px;
-        }
-
-        .certificate-box {
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            border-radius: 4px;
-            padding: 12px;
-            font-size: 11px;
-            line-height: 1.6;
-        }
-
-        .cert-title {
-            font-weight: 700;
-            color: #ffc107;
-            margin-bottom: 6px;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .cert-detail {
-            color: #aaaaaa;
-            margin-bottom: 3px;
-        }
-
-        .cert-grade {
-            color: #00c853;
-            font-weight: 700;
-        }
-
-        .price-display {
-            text-align: right;
-        }
-
-        .current-price {
-            font-size: 32px;
-            font-weight: 700;
-            font-family: 'Courier New', monospace;
-            color: #ffffff;
-            display: block;
-        }
-
-        .price-change {
-            font-size: 14px;
-            font-family: 'Courier New', monospace;
-            margin-top: 4px;
-        }
-
-        .price-change.up { color: #00c853; }
-        .price-change.down { color: #ff1744; }
-
-        .chart-container {
-            position: relative;
-        }
-
-        #priceChart {
-            width: 100%;
-            height: 400px;
-            margin-bottom: 20px;
-        }
-
-        .chart-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0.3;
-            filter: blur(80px);
-            animation: pulseGlow 4s ease-in-out infinite;
-        }
-
-        .chart-glow.positive {
-            background: radial-gradient(circle, rgba(0, 200, 83, 0.4) 0%, transparent 70%);
-        }
-
-        .chart-glow.negative {
-            background: radial-gradient(circle, rgba(255, 23, 68, 0.4) 0%, transparent 70%);
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.2; }
-            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.4; }
-        }
-
-        .trade-warning {
-            background: rgba(255, 152, 0, 0.1);
-            border: 1px solid #ff9800;
-            border-radius: 4px;
-            padding: 15px;
-            margin-bottom: 15px;
-            font-size: 12px;
-            line-height: 1.6;
-            color: #ffb74d;
-        }
-
-        .warning-title {
-            font-weight: 700;
-            color: #ff9800;
-            margin-bottom: 8px;
-        }
-
-        .trade-section {
-            background: #0a0a0a;
-            padding: 20px;
-            border-radius: 2px;
-            border: 1px solid #1a1a1a;
-        }
-
-        .trade-controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        #quantity {
-            padding: 12px;
-            background: #000000;
-            border: 1px solid #1a1a1a;
-            color: #ffffff;
-            font-size: 14px;
-            border-radius: 2px;
-            font-family: 'Courier New', monospace;
-        }
-
-        button {
-            padding: 12px;
-            font-size: 13px;
-            font-weight: 600;
+        
+        .submit-btn {
+            padding: var(--spacing-md);
+            background: var(--accent-color);
+            color: var(--primary-bg);
             border: none;
-            border-radius: 2px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-            font-family: 'Pretendard', sans-serif;
+            transition: all 0.3s ease;
+            margin-top: var(--spacing-md);
         }
-
-        button:before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        button:active:before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .buy-btn {
-            background: #00c853;
-            color: #000000;
-        }
-
-        .buy-btn:hover {
-            background: #00e676;
+        
+        .submit-btn:hover {
+            box-shadow: var(--glow-primary);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 200, 83, 0.5);
         }
-
-        .sell-btn {
-            background: #ff1744;
-            color: #ffffff;
-        }
-
-        .sell-btn:hover {
-            background: #ff5252;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 23, 68, 0.5);
-        }
-
-        .trade-info {
+        
+        .auth-footer {
             text-align: center;
-            padding: 10px;
-            font-size: 14px;
-            font-family: 'Courier New', monospace;
-            color: #666666;
+            margin-top: var(--spacing-lg);
+            color: var(--text-secondary);
         }
-
-        .holdings-section, .news-section, .leaderboard-section {
-            margin-bottom: 30px;
-        }
-
-        .holding-item {
-            padding: 12px;
-            background: #0a0a0a;
-            margin-bottom: 8px;
-            border-radius: 2px;
-            border-left: 2px solid #00c853;
-            font-size: 12px;
-        }
-
-        .holding-item.loss {
-            border-left-color: #ff1744;
-        }
-
-        .holding-name {
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .holding-detail {
-            color: #888888;
-            margin-bottom: 2px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .holding-pl {
-            font-weight: 600;
-            font-family: 'Courier New', monospace;
-            margin-top: 6px;
-        }
-
-        .leaderboard-item {
-            display: grid;
-            grid-template-columns: 40px 1fr 110px 70px;
-            gap: 8px;
-            padding: 12px 10px;
-            margin-bottom: 6px;
-            background: #0a0a0a;
-            border-radius: 2px;
-            font-size: 12px;
-            align-items: center;
-        }
-
-        .leaderboard-item.current-user {
-            border: 1px solid #2196f3;
-            background: rgba(33, 150, 243, 0.05);
-        }
-
-        .leaderboard-item.top3 {
-            background: rgba(255, 193, 7, 0.05);
-        }
-
-        .leaderboard-rank {
-            font-weight: 700;
-            color: #ffc107;
-            font-family: 'Courier New', monospace;
-            text-align: center;
-            font-size: 12px;
-        }
-
-        .leaderboard-name {
+        
+        .auth-link {
+            color: var(--accent-color);
+            text-decoration: none;
             font-weight: 500;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
-
-        .leaderboard-balance {
-            color: #00c853;
+        
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+        
+        .back-home {
+            position: absolute;
+            top: var(--spacing-xl);
+            left: var(--spacing-xl);
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            transition: color 0.3s ease;
+        }
+        
+        .back-home:hover {
+            color: var(--accent-color);
+        }
+        
+        .error-message {
+            color: var(--negative-color);
+            font-size: 0.9rem;
+            margin-top: var(--spacing-xs);
+            display: none;
+        }
+        
+        .guest-login {
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .guest-login-text {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+            font-size: 0.9rem;
+        }
+        
+        .guest-btn {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: transparent;
+            color: var(--text-primary);
+            border: var(--border-width) solid var(--border-color);
+            border-radius: var(--border-radius);
             font-weight: 600;
-            font-family: 'Courier New', monospace;
-            text-align: right;
-            font-size: 11px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-
-        .leaderboard-return {
-            font-weight: 600;
-            font-family: 'Courier New', monospace;
-            text-align: right;
-            font-size: 11px;
-        }
-
-        .leaderboard-return.positive { color: #00c853; }
-        .leaderboard-return.negative { color: #ff1744; }
-
-        .news-item {
-            padding: 12px;
-            background: #0a0a0a;
-            margin-bottom: 8px;
-            border-radius: 2px;
-            font-size: 12px;
-            line-height: 1.6;
-            border-left: 2px solid #ff9800;
-        }
-
-        .news-time {
-            color: #666666;
-            font-size: 10px;
-            margin-bottom: 4px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .news-text {
-            color: #cccccc;
-        }
-
-        .news-impact {
-            margin-top: 6px;
-            font-size: 11px;
-            font-weight: 600;
-            font-family: 'Courier New', monospace;
-        }
-
-        .news-impact.positive { color: #00c853; }
-        .news-impact.negative { color: #ff1744; }
-
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #1a1a1a;
-            border-radius: 3px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #2a2a2a;
+        
+        .guest-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            box-shadow: var(--glow-primary);
         }
     </style>
 </head>
 <body>
-    <div class="ticker-bar">
-        <div class="ticker-content" id="ticker"></div>
-    </div>
-
-    <div class="container">
-        <header>
-            <h1>식품 선물 거래소</h1>
-            <div class="user-info">
-                <span id="username">로딩중...</span>
-                <span class="balance">잔액: ₩<span id="balance">10,000,000</span></span>
-                <span class="rank">순위: <span id="userRank">-</span></span>
-                <button class="logout-btn" onclick="logout()">로그아웃</button>
+    <a href="index.html" class="back-home">← Back to Home</a>
+    
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Log in to continue trading</p>
             </div>
-        </header>
-
-        <div class="main-grid">
-            <div class="left-panel">
-                <div class="search-section">
-                    <h3 class="section-title">시장 검색</h3>
-                    <input type="text" id="searchBar" placeholder="검색..." />
-                    <div id="searchResults"></div>
+            
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        class="form-input" 
+                        placeholder="Enter your username" 
+                        required
+                    />
                 </div>
-
-                <div class="futures-list">
-                    <h3 class="section-title">전체 시장</h3>
-                    <div id="futuresList"></div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="form-input" 
+                        placeholder="Enter your password" 
+                        required
+                    />
                 </div>
+                
+                <span class="error-message" id="loginError"></span>
+                
+                <button type="submit" class="submit-btn">Log In</button>
+            </form>
+            
+            <div class="guest-login">
+                <p class="guest-login-text">For booth contest participants:</p>
+                <button class="guest-btn" id="guestBtn">Quick Login (Enter Name)</button>
             </div>
-
-            <div class="center-panel">
-                <div class="chart-header">
-                    <div class="chart-title-section">
-                        <div class="chart-title" id="selectedFuture">곡물-1W</div>
-                        <div class="chart-subtitle" id="futureDescription">7일 후 곡물 1kg 예상 가격</div>
-                        <div class="certificate-box">
-                            <div class="cert-title">🏅 국제식품품질인증원 (IFQI) 인증</div>
-                            <div class="cert-detail">중량: <span id="certWeight">1.000kg</span></div>
-                            <div class="cert-detail">등급: <span class="cert-grade" id="certGrade">특급 (Excellent)</span></div>
-                            <div class="cert-detail">원산지: <span id="certOrigin">미국</span></div>
-                            <div class="cert-detail">보관상태: <span class="cert-grade">최적</span></div>
-                        </div>
-                    </div>
-                    <div class="price-display">
-                        <span class="current-price">₩<span id="currentPrice">45,000</span></span>
-                        <span class="price-change" id="priceChange">+0.00%</span>
-                    </div>
-                </div>
-
-                <div class="chart-container">
-                    <div class="chart-glow positive" id="chartGlow"></div>
-                    <canvas id="priceChart"></canvas>
-                </div>
-
-                <div class="trade-warning">
-                    <div class="warning-title">⚠️ 시장 조작 방지 시스템 작동중</div>
-                    대량 매수/매도 시 가격 변동이 제한됩니다. 거래량 기반 가격 조정 알고리즘이 적용됩니다.
-                </div>
-
-                <div class="trade-section">
-                    <div class="trade-controls">
-                        <input type="number" id="quantity" placeholder="수량 (kg)" min="1" value="10" />
-                        <button class="buy-btn" onclick="executeTrade('buy')">매수</button>
-                        <button class="sell-btn" onclick="executeTrade('sell')">매도</button>
-                    </div>
-                    <div class="trade-info">
-                        예상 비용: ₩<span id="estCost">450,000</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="right-panel">
-                <div class="leaderboard-section">
-                    <h3 class="section-title">리더보드</h3>
-                    <div id="leaderboard"></div>
-                </div>
-
-                <div class="holdings-section">
-                    <h3 class="section-title">보유 자산</h3>
-                    <div id="holdings"></div>
-                </div>
-
-                <div class="news-section">
-                    <h3 class="section-title">시장 뉴스</h3>
-                    <div id="newsFeed"></div>
-                </div>
+            
+            <div class="auth-footer">
+                Don't have an account? <a href="signup.html" class="auth-link">Sign up</a>
             </div>
         </div>
     </div>
-
+    
     <script>
-        const FUTURES = {
-            'GRAIN-1W': { name: '곡물', basePrice: 45000, volatility: 800, category: 'grain', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '미국' },
-            'WHEAT-1W': { name: '밀', basePrice: 38000, volatility: 700, category: 'grain', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '캐나다' },
-            'CORN-1W': { name: '옥수수', basePrice: 28000, volatility: 600, category: 'grain', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '미국' },
-            'RICE-1W': { name: '쌀', basePrice: 52000, volatility: 500, category: 'grain', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '한국' },
-            'PORK-1W': { name: '돼지고기', basePrice: 85000, volatility: 1500, category: 'meat', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '덴마크' },
-            'BEEF-1W': { name: '소고기', basePrice: 120000, volatility: 2000, category: 'meat', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '호주' },
-            'CHICKEN-1W': { name: '닭고기', basePrice: 48000, volatility: 1000, category: 'meat', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '브라질' },
-            'MILK-1W': { name: '우유', basePrice: 9500, volatility: 300, category: 'dairy', days: 7, weight: '1.000L', grade: '특급 (Excellent)', origin: '뉴질랜드' },
-            'SUGAR-1W': { name: '설탕', basePrice: 22000, volatility: 500, category: 'commodity', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '브라질' },
-            'COFFEE-1W': { name: '커피', basePrice: 65000, volatility: 1500, category: 'commodity', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '콜롬비아' },
-            'SOYBEAN-1W': { name: '대두', basePrice: 42000, volatility: 800, category: 'grain', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '미국' },
-            'POTATO-1W': { name: '감자', basePrice: 18000, volatility: 400, category: 'produce', days: 7, weight: '1.000kg', grade: '특급 (Excellent)', origin: '네덜란드' }
-        };
-
-        const NEWS_TEMPLATES = [
-            { text: '[REGION]에서 [EVENT] 발생, [COMMODITY] 공급 차질', impact: 'negative', categories: ['grain', 'produce'] },
-            { text: '[COUNTRY], [COMMODITY] 수출 [PERCENT]% 증가', impact: 'positive', categories: ['all'] },
-            { text: '[REGION] 질병 발생으로 [COMMODITY] 생산 위협', impact: 'negative', categories: ['meat', 'dairy'] },
-            { text: '새로운 무역 협정으로 [COMMODITY] 수요 증가', impact: 'positive', categories: ['all'] },
-            { text: '[REGION] 기상 악화로 [COMMODITY] 수확 영향', impact: 'negative', categories: ['grain', 'produce'] },
-            { text: '[COMMODITY] 소비자 수요 [PERCENT]% 급증', impact: 'positive', categories: ['all'] },
-            { text: '[COUNTRY], [COMMODITY] 수입 관세 부과', impact: 'negative', categories: ['all'] },
-            { text: '신기술로 [COMMODITY] 생산량 [PERCENT]% 증가 전망', impact: 'positive', categories: ['grain', 'produce'] },
-            { text: '공급망 차질로 [COMMODITY] 배송 지연', impact: 'negative', categories: ['all'] },
-            { text: '[REGION] 정부, [COMMODITY] 생산 보조금 지급', impact: 'positive', categories: ['all'] }
-        ];
-
-        const REGIONS = ['중서부', '동남아시아', '유럽', '남미', '아프리카', '오세아니아'];
-        const COUNTRIES = ['중국', '미국', '브라질', '인도', '러시아', '아르헨티나'];
-        const EVENTS = ['가뭄', '홍수', '병충해', '극심한 기온', '작황 부진'];
-        const PERCENTS = [15, 20, 25, 30];
-
-        const urlUsername = new URLSearchParams(window.location.search).get('user');
-        const currentUser = urlUsername || localStorage.getItem('currentUser') || 'Guest';
-
-        const users = JSON.parse(localStorage.getItem('users') || '{}');
-        let userData = users[currentUser];
-
-        if (!userData) {
-            userData = {
-                username: currentUser,
-                balance: 10000000,
-                holdings: {}
-            };
-            users[currentUser] = userData;
-            localStorage.setItem('users', JSON.stringify(users));
-        }
-
-        let currentFuture = 'GRAIN-1W';
-        let priceHistory = [];
-        let initialPrices = {};
-        let chartCanvas, chartCtx;
-        const MAX_HISTORY = 60;
-        let newsHistory = [];
-        let pendingNewsImpacts = [];
-        let totalTradingVolume = {};
-        let animationFrameId = null;
-        let targetPrices = {};
-        let currentAnimatedPrices = {};
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeUser();
-            initializeChart();
-            initializeSearch();
-            initializeFuturesList();
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            Object.keys(FUTURES).forEach(key => {
-                initialPrices[key] = FUTURES[key].basePrice;
-                totalTradingVolume[key] = 0;
-                currentAnimatedPrices[key] = FUTURES[key].basePrice;
-                targetPrices[key] = FUTURES[key].basePrice;
-            });
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
             
-            updatePriceHistory();
-            generateNews();
-            updateHoldings();
-            updateLeaderboard();
-            updateCertificate();
-            startPriceAnimation();
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
             
-            setInterval(updatePriceHistory, 1000);
-            setInterval(generateNews, 20000);
-            setInterval(updateTicker, 2000);
-            setInterval(updateLeaderboard, 5000);
-            setInterval(updateFuturesList, 1000);
+            if (!users[username]) {
+                showError('Username not found');
+                return;
+            }
+            
+            if (users[username].password !== password) {
+                showError('Incorrect password');
+                return;
+            }
+            
+            localStorage.setItem('currentUser', username);
+            localStorage.setItem('balance', users[username].balance.toString());
+            localStorage.setItem('holdings', JSON.stringify(users[username].holdings));
+            
+            window.location.href = 'mrkt.html?user=' + encodeURIComponent(username);
         });
-
-        function initializeUser() {
-            document.getElementById('username').textContent = userData.username;
-            updateUserBalance();
-            updateUserRank();
-        }
-
-        function getTotalPortfolioValue() {
-            let total = userData.balance;
-            Object.keys(userData.holdings).forEach(key => {
-                const holding = userData.holdings[key];
-                const currentPrice = getCurrentPrice(key);
-                total += holding.quantity * currentPrice;
-            });
-            return total;
-        }
-
-        function updateUserBalance() {
-            const totalValue = getTotalPortfolioValue();
-            document.getElementById('balance').textContent = totalValue.toLocaleString('ko-KR', {maximumFractionDigits: 0});
-        }
-
-        function updateUserRank() {
+        
+        document.getElementById('guestBtn').addEventListener('click', function() {
+            const username = prompt('Enter your name for the contest:');
+            
+            if (!username || username.trim().length === 0) {
+                return;
+            }
+            
+            const trimmedUsername = username.trim();
             const users = JSON.parse(localStorage.getItem('users') || '{}');
-            const rankings = Object.keys(users)
-                .map(username => {
-                    const user = users[username];
-                    let portfolioValue = user.balance;
-                    if (user.holdings) {
-                        Object.keys(user.holdings).forEach(key => {
-                            const holding = user.holdings[key];
-                            const currentPrice = getCurrentPrice(key);
-                            portfolioValue += holding.quantity * currentPrice;
-                        });
-                    }
-                    return { username, portfolioValue };
-                })
-                .sort((a, b) => b.portfolioValue - a.portfolioValue);
             
-            const rank = rankings.findIndex(u => u.username === currentUser) + 1;
-            document.getElementById('userRank').textContent = `#${rank}`;
-        }
-
-        function initializeChart() {
-            chartCanvas = document.getElementById('priceChart');
-            chartCtx = chartCanvas.getContext('2d');
-            chartCanvas.width = chartCanvas.offsetWidth;
-            chartCanvas.height = 400;
-        }
-
-        function initializeSearch() {
-            const searchBar = document.getElementById('searchBar');
-            const searchResults = document.getElementById('searchResults');
-            
-            searchBar.addEventListener('input', (e) => {
-                const query = e.target.value.toUpperCase();
-                if (query.length === 0) {
-                    searchResults.style.display = 'none';
-                    return;
-                }
-                
-                const matches = Object.keys(FUTURES).filter(key => 
-                    key.includes(query) || FUTURES[key].name.toUpperCase().includes(query)
-                );
-                
-                if (matches.length > 0) {
-                    searchResults.innerHTML = matches.map(key => 
-                        `<div class="search-result" onclick="selectFuture('${key}')">${FUTURES[key].name} (${key})</div>`
-                    ).join('');
-                    searchResults.style.display = 'block';
-                } else {
-                    searchResults.style.display = 'none';
-                }
-            });
-            
-            searchBar.addEventListener('mousedown', (e) => {
-                e.stopPropagation();
-            });
-        }
-
-        function initializeFuturesList() {
-            updateFuturesList();
-        }
-
-        function updateFuturesList() {
-            const futuresList = document.getElementById('futuresList');
-            futuresList.innerHTML = Object.keys(FUTURES).map(key => {
-                const price = getCurrentPrice(key);
-                const initial = initialPrices[key];
-                const change = ((price - initial) / initial * 100);
-                const changeClass = change >= 0 ? 'up' : 'down';
-                const changeSign = change >= 0 ? '+' : '';
-                const isActive = key === currentFuture ? 'active' : '';
-                
-                return `
-                    <div class="future-item ${isActive}" onclick="selectFuture('${key}')">
-                        <div class="future-name">${FUTURES[key].name}</div>
-                        <span class="future-price">₩${price.toLocaleString('ko-KR', {maximumFractionDigits: 0})}</span>
-                        <span class="future-change ${changeClass}">${changeSign}${change.toFixed(2)}%</span>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function selectFuture(futureKey) {
-            currentFuture = futureKey;
-            priceHistory = [];
-            const future = FUTURES[futureKey];
-            document.getElementById('selectedFuture').textContent = futureKey;
-            document.getElementById('futureDescription').textContent = 
-                `${future.days}일 후 ${future.name} 1kg 예상 가격`;
-            document.getElementById('searchBar').value = '';
-            document.getElementById('searchResults').style.display = 'none';
-            updateCertificate();
-            updateEstCost();
-            updateFuturesList();
-        }
-
-        function updateCertificate() {
-            const future = FUTURES[currentFuture];
-            document.getElementById('certWeight').textContent = future.weight;
-            document.getElementById('certGrade').textContent = future.grade;
-            document.getElementById('certOrigin').textContent = future.origin;
-        }
-
-        function getCurrentPrice(futureKey = currentFuture) {
-            return currentAnimatedPrices[futureKey] || FUTURES[futureKey].basePrice;
-        }
-
-        function getTargetPrice(futureKey = currentFuture) {
-            const future = FUTURES[futureKey];
-            if (!priceHistory.length) {
-                return future.basePrice;
-            }
-            const lastDataPoint = priceHistory[priceHistory.length - 1];
-            return lastDataPoint.prices[futureKey] || future.basePrice;
-        }
-
-        function startPriceAnimation() {
-            function animate() {
-                let needsUpdate = false;
-                
-                Object.keys(FUTURES).forEach(key => {
-                    const target = targetPrices[key];
-                    const current = currentAnimatedPrices[key];
-                    const diff = target - current;
-                    
-                    if (Math.abs(diff) > 1) {
-                        currentAnimatedPrices[key] = current + diff * 0.08;
-                        needsUpdate = true;
-                    } else {
-                        currentAnimatedPrices[key] = target;
-                    }
-                });
-                
-                if (needsUpdate) {
-                    updatePriceDisplay();
-                    drawChart();
-                    updateUserBalance();
-                }
-                
-                animationFrameId = requestAnimationFrame(animate);
+            if (!users[trimmedUsername]) {
+                users[trimmedUsername] = {
+                    email: '',
+                    password: '',
+                    balance: 10000000,
+                    holdings: {},
+                    createdAt: Date.now(),
+                    isGuest: true
+                };
+                localStorage.setItem('users', JSON.stringify(users));
             }
             
-            animate();
-        }
-
-        function updatePriceHistory() {
-            const newPrices = {};
+            localStorage.setItem('currentUser', trimmedUsername);
+            localStorage.setItem('balance', users[trimmedUsername].balance.toString());
+            localStorage.setItem('holdings', JSON.stringify(users[trimmedUsername].holdings));
             
-            Object.keys(FUTURES).forEach(key => {
-                const future = FUTURES[key];
-                const lastPrice = getTargetPrice(key);
-                
-                const randomChange = (Math.random() - 0.5) * future.volatility;
-                const trendFactor = (Math.random() - 0.48) * 0.2;
-                
-                const volumeImpact = totalTradingVolume[key] || 0;
-                const dampedImpact = Math.sign(volumeImpact) * Math.log(Math.abs(volumeImpact) + 1) * 0.05;
-                totalTradingVolume[key] = volumeImpact * 0.9;
-                
-                let newsImpact = 0;
-                pendingNewsImpacts = pendingNewsImpacts.filter(impact => {
-                    if (impact.future === key && Date.now() >= impact.applyAt) {
-                        newsImpact = impact.amount;
-                        return false;
-                    }
-                    return true;
-                });
-                
-                newPrices[key] = Math.max(
-                    future.basePrice * 0.7,
-                    Math.min(
-                        future.basePrice * 1.3,
-                        lastPrice + randomChange + trendFactor + dampedImpact + newsImpact
-                    )
-                );
-                
-                targetPrices[key] = newPrices[key];
-            });
-            
-            priceHistory.push({
-                time: Date.now(),
-                prices: newPrices
-            });
-            
-            if (priceHistory.length > MAX_HISTORY) {
-                priceHistory.shift();
-            }
-        }
-
-        function updatePriceDisplay() {
-            const currentPrice = getCurrentPrice();
-            const initial = initialPrices[currentFuture];
-            const change = ((currentPrice - initial) / initial * 100);
-            
-            document.getElementById('currentPrice').textContent = currentPrice.toLocaleString('ko-KR', {maximumFractionDigits: 0});
-            
-            const changeEl = document.getElementById('priceChange');
-            const sign = change >= 0 ? '+' : '';
-            changeEl.textContent = `${sign}${change.toFixed(2)}%`;
-            changeEl.className = change >= 0 ? 'price-change up' : 'price-change down';
-            
-            const glowEl = document.getElementById('chartGlow');
-            glowEl.className = change >= 0 ? 'chart-glow positive' : 'chart-glow negative';
-        }
-
-        function drawChart() {
-            if (!priceHistory.length) return;
-            
-            const ctx = chartCtx;
-            const canvas = chartCanvas;
-            const width = canvas.width;
-            const height = canvas.height;
-            
-            ctx.clearRect(0, 0, width, height);
-            
-            const prices = priceHistory.map((d, i) => {
-                if (i === priceHistory.length - 1) {
-                    return currentAnimatedPrices[currentFuture];
-                }
-                return d.prices[currentFuture];
-            });
-            
-            const minPrice = Math.min(...prices) * 0.995;
-            const maxPrice = Math.max(...prices) * 1.005;
-            const priceRange = maxPrice - minPrice;
-            
-            ctx.strokeStyle = '#1a1a1a';
-            ctx.lineWidth = 1;
-            for (let i = 0; i <= 4; i++) {
-                const y = (height / 4) * i;
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(width, y);
-                ctx.stroke();
-                
-                const price = maxPrice - (priceRange / 4) * i;
-                ctx.fillStyle = '#666666';
-                ctx.font = '11px Pretendard, monospace';
-                ctx.fillText(`₩${price.toLocaleString('ko-KR', {maximumFractionDigits: 0})}`, 5, y - 5);
-            }
-            
-            const initialPrice = initialPrices[currentFuture];
-            const initialY = height - ((initialPrice - minPrice) / priceRange) * height;
-            ctx.strokeStyle = '#666666';
-            ctx.setLineDash([5, 5]);
-            ctx.beginPath();
-            ctx.moveTo(0, initialY);
-            ctx.lineTo(width, initialY);
-            ctx.stroke();
-            ctx.setLineDash([]);
-            
-            const isPositive = prices[prices.length - 1] >= initialPrice;
-            
-            const gradient = ctx.createLinearGradient(0, 0, width, 0);
-            if (isPositive) {
-                gradient.addColorStop(0, '#00c853');
-                gradient.addColorStop(1, '#00e676');
-            } else {
-                gradient.addColorStop(0, '#ff1744');
-                gradient.addColorStop(1, '#ff5252');
-            }
-            
-            ctx.strokeStyle = gradient;
-            ctx.lineWidth = 3;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = isPositive ? 'rgba(0, 200, 83, 0.5)' : 'rgba(255, 23, 68, 0.5)';
-            ctx.beginPath();
-            
-            prices.forEach((price, i) => {
-                const x = (width / (MAX_HISTORY - 1)) * i;
-                const y = height - ((price - minPrice) / priceRange) * height;
-                
-                if (i === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
-            });
-            
-            ctx.stroke();
-            ctx.shadowBlur = 0;
-            
-            ctx.lineTo(width, height);
-            ctx.lineTo(0, height);
-            ctx.closePath();
-            
-            const fillGradient = ctx.createLinearGradient(0, 0, 0, height);
-            if (isPositive) {
-                fillGradient.addColorStop(0, 'rgba(0, 200, 83, 0.15)');
-                fillGradient.addColorStop(1, 'rgba(0, 200, 83, 0.02)');
-            } else {
-                fillGradient.addColorStop(0, 'rgba(255, 23, 68, 0.15)');
-                fillGradient.addColorStop(1, 'rgba(255, 23, 68, 0.02)');
-            }
-            ctx.fillStyle = fillGradient;
-            ctx.fill();
-        }
-
-        function generateNews() {
-            const template = NEWS_TEMPLATES[Math.floor(Math.random() * NEWS_TEMPLATES.length)];
-            const region = REGIONS[Math.floor(Math.random() * REGIONS.length)];
-            const country = COUNTRIES[Math.floor(Math.random() * COUNTRIES.length)];
-            const event = EVENTS[Math.floor(Math.random() * EVENTS.length)];
-            const percent = PERCENTS[Math.floor(Math.random() * PERCENTS.length)];
-            
-            const affectedFutures = Object.keys(FUTURES).filter(key => {
-                const category = FUTURES[key].category;
-                return template.categories.includes('all') || template.categories.includes(category);
-            });
-            
-            const targetFuture = affectedFutures[Math.floor(Math.random() * affectedFutures.length)];
-            const commodity = FUTURES[targetFuture].name;
-            
-            let newsText = template.text
-                .replace('[REGION]', region)
-                .replace('[COUNTRY]', country)
-                .replace('[EVENT]', event)
-                .replace('[COMMODITY]', commodity)
-                .replace('[PERCENT]', percent);
-            
-            const impactMultiplier = template.impact === 'positive' ? 1 : -1;
-            const impactAmount = (Math.random() * 8 + 5) * impactMultiplier;
-            
-            pendingNewsImpacts.push({
-                future: targetFuture,
-                amount: impactAmount,
-                applyAt: Date.now() + 5000
-            });
-            
-            const newsItem = {
-                text: newsText,
-                time: new Date().toLocaleTimeString('ko-KR'),
-                impact: template.impact,
-                impactAmount: impactAmount,
-                commodity: commodity
-            };
-            
-            newsHistory.unshift(newsItem);
-            if (newsHistory.length > 20) {
-                newsHistory.pop();
-            }
-            
-            updateNewsFeed();
-        }
-
-        function updateNewsFeed() {
-            const newsFeed = document.getElementById('newsFeed');
-            newsFeed.innerHTML = newsHistory.map(news => {
-                const impactClass = news.impact === 'positive' ? 'positive' : 'negative';
-                const impactSign = news.impact === 'positive' ? '+' : '';
-                return `
-                    <div class="news-item">
-                        <div class="news-time">${news.time}</div>
-                        <div class="news-text">${news.text}</div>
-                        <div class="news-impact ${impactClass}">
-                            ${news.commodity}: ${impactSign}${news.impactAmount.toFixed(1)}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function updateTicker() {
-            const ticker = document.getElementById('ticker');
-            const tickerItems = Object.keys(FUTURES).map(key => {
-                const price = getCurrentPrice(key);
-                const initial = initialPrices[key];
-                const change = ((price - initial) / initial * 100);
-                const className = change >= 0 ? 'up' : 'down';
-                const sign = change >= 0 ? '▲' : '▼';
-                return `<span class="ticker-item ${className}">${key} ₩${(price / 1000).toFixed(1)}k ${sign}${Math.abs(change).toFixed(2)}%</span>`;
-            });
-            
-            ticker.innerHTML = tickerItems.join('') + tickerItems.join('');
-        }
-
-        function updateEstCost() {
-            const quantity = parseFloat(document.getElementById('quantity').value) || 0;
-            const price = getCurrentPrice();
-            document.getElementById('estCost').textContent = (quantity * price).toLocaleString('ko-KR', {maximumFractionDigits: 0});
-        }
-
-        document.getElementById('quantity').addEventListener('input', updateEstCost);
-        document.getElementById('quantity').addEventListener('mousedown', (e) => {
-            e.stopPropagation();
+            window.location.href = 'mrkt.html?user=' + encodeURIComponent(trimmedUsername);
         });
-
-        function executeTrade(action) {
-            const quantity = parseFloat(document.getElementById('quantity').value);
-            const price = getCurrentPrice();
-            const cost = quantity * price;
-            
-            if (!quantity || quantity <= 0) {
-                alert('올바른 수량을 입력하세요');
-                return;
-            }
-            
-            if (action === 'buy') {
-                if (cost > userData.balance) {
-                    alert('잔액이 부족합니다');
-                    return;
-                }
-                
-                userData.balance -= cost;
-                
-                if (!userData.holdings[currentFuture]) {
-                    userData.holdings[currentFuture] = { quantity: 0, avgPrice: 0 };
-                }
-                
-                const holding = userData.holdings[currentFuture];
-                holding.avgPrice = ((holding.avgPrice * holding.quantity) + (price * quantity)) / (holding.quantity + quantity);
-                holding.quantity += quantity;
-                
-                totalTradingVolume[currentFuture] = (totalTradingVolume[currentFuture] || 0) + quantity;
-                
-                alert(`${quantity}kg의 ${FUTURES[currentFuture].name}를 ₩${price.toLocaleString('ko-KR', {maximumFractionDigits: 0})}/kg에 매수했습니다`);
-            } else {
-                if (!userData.holdings[currentFuture] || userData.holdings[currentFuture].quantity < quantity) {
-                    alert('보유량이 부족합니다');
-                    return;
-                }
-                
-                userData.balance += cost;
-                userData.holdings[currentFuture].quantity -= quantity;
-                
-                if (userData.holdings[currentFuture].quantity === 0) {
-                    delete userData.holdings[currentFuture];
-                }
-                
-                totalTradingVolume[currentFuture] = (totalTradingVolume[currentFuture] || 0) - quantity;
-                
-                alert(`${quantity}kg의 ${FUTURES[currentFuture].name}를 ₩${price.toLocaleString('ko-KR', {maximumFractionDigits: 0})}/kg에 매도했습니다`);
-            }
-            
-            saveUserData();
-            updateHoldings();
-            updateUserBalance();
-            updateUserRank();
-            updateLeaderboard();
+        
+        function showError(message) {
+            const errorEl = document.getElementById('loginError');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
         }
-
-        function updateHoldings() {
-            const holdingsDiv = document.getElementById('holdings');
-            
-            if (Object.keys(userData.holdings).length === 0) {
-                holdingsDiv.innerHTML = '<p style="color: #666;">보유 자산 없음</p>';
-                return;
-            }
-            
-            holdingsDiv.innerHTML = Object.keys(userData.holdings).map(key => {
-                const holding = userData.holdings[key];
-                const currentPrice = getCurrentPrice(key);
-                const totalValue = holding.quantity * currentPrice;
-                const totalCost = holding.quantity * holding.avgPrice;
-                const profitLoss = totalValue - totalCost;
-                const profitLossPercent = (profitLoss / totalCost) * 100;
-                const className = profitLoss >= 0 ? '' : 'loss';
-                const plColor = profitLoss >= 0 ? '#00c853' : '#ff1744';
-                const plSign = profitLoss >= 0 ? '+' : '';
-                
-                return `
-                    <div class="holding-item ${className}">
-                        <div class="holding-name">${FUTURES[key].name}</div>
-                        <div class="holding-detail">수량: ${holding.quantity}kg</div>
-                        <div class="holding-detail">평균가: ₩${holding.avgPrice.toLocaleString('ko-KR', {maximumFractionDigits: 0})}</div>
-                        <div class="holding-detail">현재가: ₩${currentPrice.toLocaleString('ko-KR', {maximumFractionDigits: 0})}</div>
-                        <div class="holding-pl" style="color: ${plColor}">
-                            손익: ${plSign}₩${profitLoss.toLocaleString('ko-KR', {maximumFractionDigits: 0})} (${plSign}${profitLossPercent.toFixed(2)}%)
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function saveUserData() {
-            const users = JSON.parse(localStorage.getItem('users') || '{}');
-            users[currentUser] = {
-                ...users[currentUser],
-                balance: userData.balance,
-                holdings: userData.holdings,
-                lastActive: Date.now()
-            };
-            localStorage.setItem('users', JSON.stringify(users));
-            localStorage.setItem('balance', userData.balance.toString());
-            localStorage.setItem('holdings', JSON.stringify(userData.holdings));
-        }
-
-        function updateLeaderboard() {
-            const users = JSON.parse(localStorage.getItem('users') || '{}');
-            const rankings = Object.keys(users)
-                .map(username => {
-                    const user = users[username];
-                    let portfolioValue = user.balance || 10000000;
-                    if (user.holdings) {
-                        Object.keys(user.holdings).forEach(key => {
-                            const holding = user.holdings[key];
-                            const currentPrice = getCurrentPrice(key);
-                            portfolioValue += holding.quantity * currentPrice;
-                        });
-                    }
-                    const returnPercent = ((portfolioValue - 10000000) / 10000000) * 100;
-                    return { username, portfolioValue, returnPercent };
-                })
-                .sort((a, b) => b.portfolioValue - a.portfolioValue)
-                .slice(0, 10);
-            
-            const leaderboardDiv = document.getElementById('leaderboard');
-            
-            if (rankings.length === 0) {
-                leaderboardDiv.innerHTML = '<p style="color: #666;">거래자 없음</p>';
-                return;
-            }
-            
-            leaderboardDiv.innerHTML = rankings.map((user, index) => {
-                const rank = index + 1;
-                const isCurrentUser = user.username === currentUser;
-                const isTop3 = rank <= 3;
-                const returnClass = user.returnPercent >= 0 ? 'positive' : 'negative';
-                const returnSign = user.returnPercent >= 0 ? '+' : '';
-                
-                let className = 'leaderboard-item';
-                if (isCurrentUser) className += ' current-user';
-                if (isTop3) className += ' top3';
-                
-                return `
-                    <div class="${className}">
-                        <span class="leaderboard-rank">#${rank}</span>
-                        <span class="leaderboard-name">${user.username}${isCurrentUser ? ' (나)' : ''}</span>
-                        <span class="leaderboard-balance">₩${user.portfolioValue.toLocaleString('ko-KR', {maximumFractionDigits: 0})}</span>
-                        <span class="leaderboard-return ${returnClass}">${returnSign}${user.returnPercent.toFixed(1)}%</span>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function logout() {
-            if (confirm('로그아웃하시겠습니까?')) {
-                localStorage.removeItem('currentUser');
-                window.location.href = 'login.html';
-            }
-        }
-
-        window.getFoodFuturesPrice = (futureKey) => getCurrentPrice(futureKey);
-        window.getAllFuturesPrices = () => {
-            const prices = {};
-            Object.keys(FUTURES).forEach(key => {
-                prices[key] = getCurrentPrice(key);
-            });
-            return prices;
-        };
     </script>
 </body>
 </html>
