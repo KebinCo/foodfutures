@@ -843,4 +843,536 @@
             Object.keys(userData.holdings).forEach(key => {
                 const holding = userData.holdings[key];
                 const currentPrice = getCurrentPrice(key);
-                total +=
+                total += holding.quantity * currentPrice;
+            });
+            return total;
+        }
+
+        function updateUserBalance() {
+            const totalValue = getTotalPortfolioValue();
+            document.getElementById('balance').textContent = totalValue.toFixed(2);
+        }
+
+        function updateUserRank() {
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
+            const rankings = Object.keys(users)
+                .map(username => {
+                    const user = users[username];
+                    let portfolioValue = user.balance;
+                    if (user.holdings) {
+                        Object.keys(user.holdings).forEach(key => {
+                            const holding = user.holdings[key];
+                            const currentPrice = getCurrentPrice(key);
+                            portfolioValue += holding.quantity * currentPrice;
+                        });
+                    }
+                    return { username, portfolioValue };
+                })
+                .sort((a, b) => b.portfolioValue - a.portfolioValue);
+            
+            const rank = rankings.findIndex(u => u.username === currentUser) + 1;
+            document.getElementById('userRank').textContent = `#${rank}`;
+        }
+
+        function initializeChart() {
+            chartCanvas = document.getElementById('priceChart');
+            chartCtx = chartCanvas.getContext('2d');
+            chartCanvas.width = chartCanvas.offsetWidth;
+            chartCanvas.height = 400;
+        }
+
+        function initializeSearch() {
+            const searchBar = document.getElementById('searchBar');
+            const searchResults = document.getElementById('searchResults');
+            
+            searchBar.addEventListener('focus', () => {
+                searchBar.value = '';
+            });
+            
+            searchBar.addEventListener('input', (e) => {
+                const query = e.target.value.toUpperCase();
+                if (query.length === 0) {
+                    searchResults.style.display = 'none';
+                    return;
+                }
+                
+                const matches = Object.keys(FUTURES).filter(key => 
+                    key.includes(query) || FUTURES[key].name.includes(query)
+                );
+                
+                if (matches.length > 0) {
+                    searchResults.innerHTML = matches.map(key => 
+                        `<div class="search-result" onclick="selectFuture('${key}'); event.stopPropagation();">${FUTURES[key].name} (${key})</div>`
+                    ).join('');
+                    searchResults.style.display = 'block';
+                } else {
+                    searchResults.style.display = 'none';
+                }
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!searchBar.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.style.display = 'none';
+                }
+            });
+        }
+
+        function initializeFuturesList() {
+            updateFuturesList();
+        }
+
+        function updateFuturesList() {
+            const futuresList = document.getElementById('futuresList');
+            futuresList.innerHTML = Object.keys(FUTURES).map(key => {
+                const price = getCurrentPrice(key);
+                const initial = initialPrices[key];
+                const change = ((price - initial) / initial * 100);
+                const changeClass = change >= 0 ? 'up' : 'down';
+                const changeSign = change >= 0 ? '+' : '';
+                const isActive = key === currentFuture ? 'active' : '';
+                
+                return `
+                    <div class="future-item ${isActive}" onclick="selectFuture('${key}')">
+                        <div class="future-name">${FUTURES[key].name}</div>
+                        <span class="future-price">${price.toFixed(2)}</span>
+                        <span class="future-change ${changeClass}">${changeSign}${change.toFixed(2)}%</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectFuture(futureKey) {
+            currentFuture = futureKey;
+            priceHistory = [];
+            const future = FUTURES[futureKey];
+            document.getElementById('selectedFuture').textContent = future.name + '-1주';
+            document.getElementById('futureDescription').textContent = `${future.days}일 후 ${future.name} 1kg 예상 가격`;
+            document.getElementById('searchBar').value = '';
+            document.getElementById('searchResults').style.display = 'none';
+            updateEstCost();
+            updateFuturesList();
+            updateCertificate();
+        }
+
+        function updateCertificate() {
+            const future = FUTURES[currentFuture];
+            document.getElementById('certWeight').textContent = future.weight;
+            document.getElementById('certGrade').textContent = future.grade;
+            document.getElementById('certOrigin').textContent = future.origin;
+        }
+
+        function getCurrentPrice(futureKey = currentFuture) {
+            const future = FUTURES[futureKey];
+            if (!priceHistory.length) {
+                return future.basePrice;
+            }
+            const lastDataPoint = priceHistory[priceHistory.length - 1];
+            return lastDataPoint.prices[futureKey] || future.basePrice;
+        }
+
+        function updatePriceHistory() {
+            const newPrices = {};
+            
+            Object.keys(FUTURES).forEach(key => {
+                const future = FUTURES[key];
+                const lastPrice = getCurrentPrice(key);
+                
+                const randomChange = (Math.random() - 0.5) * future.volatility;
+                const trendFactor = (Math.random() - 0.48) * 0.2;
+                
+                let newsImpact = 0;
+                pendingNewsImpacts = pendingNewsImpacts.filter(impact => {
+                    if (impact.future === key && Date.now() >= impact.applyAt) {
+                        newsImpact = impact.amount;
+                        return false;
+                    }
+                    return true;
+                });
+                
+                newPrices[key] = Math.max(
+                    future.basePrice * 0.7,
+                    Math.min(
+                        future.basePrice * 1.3,
+                        lastPrice + randomChange + trendFactor + newsImpact
+                    )
+                );
+            });
+            
+            priceHistory.push({
+                time: Date.now(),
+                prices: newPrices
+            });
+            
+            if (priceHistory.length > MAX_HISTORY) {
+                priceHistory.shift();
+            }
+            
+            updatePriceDisplay();
+            drawChart();
+            updateUserBalance();
+        }
+
+        function updatePriceDisplay() {
+            const currentPrice = getCurrentPrice();
+            const initial = initialPrices[currentFuture];
+            const change = ((currentPrice - initial) / initial * 100);
+            
+            document.getElementById('currentPrice').textContent = currentPrice.toFixed(2);
+            
+            const changeEl = document.getElementById('priceChange');
+            const sign = change >= 0 ? '+' : '';
+            changeEl.textContent = `${sign}${change.toFixed(2)}%`;
+            changeEl.className = change >= 0 ? 'price-change up' : 'price-change down';
+        }
+
+        function drawChart() {
+            if (!priceHistory.length) return;
+            
+            const ctx = chartCtx;
+            const canvas = chartCanvas;
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            ctx.clearRect(0, 0, width, height);
+            
+            const prices = priceHistory.map(d => d.prices[currentFuture]);
+            const minPrice = Math.min(...prices) * 0.995;
+            const maxPrice = Math.max(...prices) * 1.005;
+            const priceRange = maxPrice - minPrice;
+            
+            ctx.strokeStyle = '#1a1a1a';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 4; i++) {
+                const y = (height / 4) * i;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+                
+                const price = maxPrice - (priceRange / 4) * i;
+                ctx.fillStyle = '#666666';
+                ctx.font = '11px Nanum Gothic Coding';
+                ctx.fillText(`${price.toFixed(2)}`, 5, y - 5);
+            }
+            
+            const initialPrice = initialPrices[currentFuture];
+            const initialY = height - ((initialPrice - minPrice) / priceRange) * height;
+            ctx.strokeStyle = '#666666';
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(0, initialY);
+            ctx.lineTo(width, initialY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            const isPositive = prices[prices.length - 1] >= initialPrice;
+            
+            const gradient = ctx.createLinearGradient(0, 0, width, 0);
+            if (isPositive) {
+                gradient.addColorStop(0, '#00c853');
+                gradient.addColorStop(0.5, '#00e676');
+                gradient.addColorStop(1, '#00c853');
+            } else {
+                gradient.addColorStop(0, '#ff1744');
+                gradient.addColorStop(0.5, '#ff5252');
+                gradient.addColorStop(1, '#ff1744');
+            }
+            
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 2.5;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = isPositive ? 'rgba(0, 200, 83, 0.5)' : 'rgba(255, 23, 68, 0.5)';
+            ctx.beginPath();
+            
+            prices.forEach((price, i) => {
+                const x = (width / (MAX_HISTORY - 1)) * i;
+                const y = height - ((price - minPrice) / priceRange) * height;
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+            
+            ctx.lineTo(width, height);
+            ctx.lineTo(0, height);
+            ctx.closePath();
+            
+            const fillGradient = ctx.createLinearGradient(0, 0, 0, height);
+            if (isPositive) {
+                fillGradient.addColorStop(0, 'rgba(0, 200, 83, 0.2)');
+                fillGradient.addColorStop(1, 'rgba(0, 200, 83, 0)');
+            } else {
+                fillGradient.addColorStop(0, 'rgba(255, 23, 68, 0.2)');
+                fillGradient.addColorStop(1, 'rgba(255, 23, 68, 0)');
+            }
+            ctx.fillStyle = fillGradient;
+            ctx.fill();
+        }
+
+        function startMarketSimulation() {
+            // Removed dramatic changes as requested
+        }
+
+        function generateNews() {
+            const template = NEWS_TEMPLATES[Math.floor(Math.random() * NEWS_TEMPLATES.length)];
+            const region = REGIONS[Math.floor(Math.random() * REGIONS.length)];
+            const country = COUNTRIES[Math.floor(Math.random() * COUNTRIES.length)];
+            const event = EVENTS[Math.floor(Math.random() * EVENTS.length)];
+            const percent = PERCENTS[Math.floor(Math.random() * PERCENTS.length)];
+            
+            const affectedFutures = Object.keys(FUTURES).filter(key => {
+                const category = FUTURES[key].category;
+                return template.categories.includes('all') || template.categories.includes(category);
+            });
+            
+            const targetFuture = affectedFutures[Math.floor(Math.random() * affectedFutures.length)];
+            const commodity = FUTURES[targetFuture].name;
+            
+            let newsText = template.text
+                .replace('[REGION]', region)
+                .replace('[COUNTRY]', country)
+                .replace('[EVENT]', event)
+                .replace('[COMMODITY]', commodity)
+                .replace('[PERCENT]', percent);
+            
+            const impactMultiplier = template.impact === 'positive' ? 1 : -1;
+            const impactAmount = (Math.random() * 8 + 5) * impactMultiplier;
+            
+            pendingNewsImpacts.push({
+                future: targetFuture,
+                amount: impactAmount,
+                applyAt: Date.now() + 5000
+            });
+            
+            const newsItem = {
+                text: newsText,
+                time: new Date().toLocaleTimeString('ko-KR'),
+                impact: template.impact,
+                impactAmount: impactAmount,
+                commodity: commodity
+            };
+            
+            newsHistory.unshift(newsItem);
+            if (newsHistory.length > 20) {
+                newsHistory.pop();
+            }
+            
+            updateNewsFeed();
+        }
+
+        function updateNewsFeed() {
+            const newsFeed = document.getElementById('newsFeed');
+            newsFeed.innerHTML = newsHistory.map(news => {
+                const impactClass = news.impact === 'positive' ? 'positive' : 'negative';
+                const impactSign = news.impact === 'positive' ? '+' : '';
+                return `
+                    <div class="news-item">
+                        <div class="news-time">${news.time}</div>
+                        <div class="news-text">${news.text}</div>
+                        <div class="news-impact ${impactClass}">
+                            ${news.commodity}: ${impactSign}${news.impactAmount.toFixed(1)}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateTicker() {
+            const ticker = document.getElementById('ticker');
+            const tickerItems = Object.keys(FUTURES).map(key => {
+                const price = getCurrentPrice(key);
+                const initial = initialPrices[key];
+                const change = ((price - initial) / initial * 100);
+                const className = change >= 0 ? 'up' : 'down';
+                const sign = change >= 0 ? '▲' : '▼';
+                return `<span class="ticker-item ${className}">${FUTURES[key].name} ${price.toFixed(2)} ${sign}${Math.abs(change).toFixed(2)}%</span>`;
+            });
+            
+            ticker.innerHTML = tickerItems.join('') + tickerItems.join('');
+        }
+
+        function updateEstCost() {
+            const quantityInput = document.getElementById('quantity');
+            const quantity = parseFloat(quantityInput.value) || 0;
+            const price = getCurrentPrice();
+            document.getElementById('estCost').textContent = (quantity * price).toFixed(2);
+        }
+
+        const quantityInput = document.getElementById('quantity');
+        quantityInput.addEventListener('input', updateEstCost);
+        quantityInput.addEventListener('focus', function() {
+            this.select();
+        });
+
+        function executeTrade(action) {
+            const quantity = parseFloat(document.getElementById('quantity').value);
+            const price = getCurrentPrice();
+            const cost = quantity * price;
+            
+            if (!quantity || quantity <= 0) {
+                alert('유효한 수량을 입력하세요');
+                return;
+            }
+            
+            if (action === 'buy') {
+                if (cost > userData.balance) {
+                    alert('잔액이 부족합니다');
+                    return;
+                }
+                
+                userData.balance -= cost;
+                
+                if (!userData.holdings[currentFuture]) {
+                    userData.holdings[currentFuture] = { quantity: 0, avgPrice: 0 };
+                }
+                
+                const holding = userData.holdings[currentFuture];
+                holding.avgPrice = ((holding.avgPrice * holding.quantity) + (price * quantity)) / (holding.quantity + quantity);
+                holding.quantity += quantity;
+                
+                const priceImpact = Math.min(0.5, (quantity * 0.001));
+                if (priceHistory.length > 0) {
+                    priceHistory[priceHistory.length - 1].prices[currentFuture] += priceImpact;
+                }
+                
+                alert(`${quantity}kg ${FUTURES[currentFuture].name}을(를) ${price.toFixed(2)}/kg에 매수했습니다`);
+            } else {
+                if (!userData.holdings[currentFuture] || userData.holdings[currentFuture].quantity < quantity) {
+                    alert('보유량이 부족합니다');
+                    return;
+                }
+                
+                userData.balance += cost;
+                userData.holdings[currentFuture].quantity -= quantity;
+                
+                if (userData.holdings[currentFuture].quantity === 0) {
+                    delete userData.holdings[currentFuture];
+                }
+                
+                alert(`${quantity}kg ${FUTURES[currentFuture].name}을(를) ${price.toFixed(2)}/kg에 매도했습니다`);
+            }
+            
+            saveUserData();
+            updateHoldings();
+            updateUserBalance();
+            updateUserRank();
+            updateLeaderboard();
+        }
+
+        function updateHoldings() {
+            const holdingsDiv = document.getElementById('holdings');
+            
+            if (Object.keys(userData.holdings).length === 0) {
+                holdingsDiv.innerHTML = '<p style="color: #666;">보유 자산 없음</p>';
+                return;
+            }
+            
+            holdingsDiv.innerHTML = Object.keys(userData.holdings).map(key => {
+                const holding = userData.holdings[key];
+                const currentPrice = getCurrentPrice(key);
+                const totalValue = holding.quantity * currentPrice;
+                const totalCost = holding.quantity * holding.avgPrice;
+                const profitLoss = totalValue - totalCost;
+                const profitLossPercent = (profitLoss / totalCost) * 100;
+                const className = profitLoss >= 0 ? '' : 'loss';
+                const plColor = profitLoss >= 0 ? '#00c853' : '#ff1744';
+                const plSign = profitLoss >= 0 ? '+' : '';
+                
+                return `
+                    <div class="holding-item ${className}">
+                        <div class="holding-name">${FUTURES[key].name}</div>
+                        <div class="holding-detail">수량: ${holding.quantity}kg</div>
+                        <div class="holding-detail">평균가: ${holding.avgPrice.toFixed(2)}</div>
+                        <div class="holding-detail">현재가: ${currentPrice.toFixed(2)}</div>
+                        <div class="holding-pl" style="color: ${plColor}">
+                            ${plSign}${profitLoss.toFixed(2)} (${plSign}${profitLossPercent.toFixed(2)}%)
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function saveUserData() {
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
+            users[currentUser] = {
+                ...users[currentUser],
+                balance: userData.balance,
+                holdings: userData.holdings,
+                lastActive: Date.now()
+            };
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('balance', userData.balance.toString());
+            localStorage.setItem('holdings', JSON.stringify(userData.holdings));
+        }
+
+        function updateLeaderboard() {
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
+            const rankings = Object.keys(users)
+                .map(username => {
+                    const user = users[username];
+                    let portfolioValue = user.balance;
+                    if (user.holdings) {
+                        Object.keys(user.holdings).forEach(key => {
+                            const holding = user.holdings[key];
+                            const currentPrice = getCurrentPrice(key);
+                            portfolioValue += holding.quantity * currentPrice;
+                        });
+                    }
+                    const returnPercent = ((portfolioValue - 5000000) / 5000000) * 100;
+                    return { username, portfolioValue, returnPercent };
+                })
+                .sort((a, b) => b.portfolioValue - a.portfolioValue)
+                .slice(0, 10);
+            
+            const leaderboardDiv = document.getElementById('leaderboard');
+            
+            if (rankings.length === 0) {
+                leaderboardDiv.innerHTML = '<p style="color: #666;">거래자 없음</p>';
+                return;
+            }
+            
+            leaderboardDiv.innerHTML = rankings.map((user, index) => {
+                const rank = index + 1;
+                const isCurrentUser = user.username === currentUser;
+                const isTop3 = rank <= 3;
+                const returnClass = user.returnPercent >= 0 ? 'positive' : 'negative';
+                const returnSign = user.returnPercent >= 0 ? '+' : '';
+                
+                let className = 'leaderboard-item';
+                if (isCurrentUser) className += ' current-user';
+                if (isTop3) className += ' top3';
+                
+                return `
+                    <div class="${className}">
+                        <span class="leaderboard-rank">#${rank}</span>
+                        <span class="leaderboard-name">${user.username}${isCurrentUser ? ' (나)' : ''}</span>
+                        <span class="leaderboard-balance">${(user.portfolioValue / 1000000).toFixed(2)}M</span>
+                        <span class="leaderboard-return ${returnClass}">${returnSign}${user.returnPercent.toFixed(1)}%</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function logout() {
+            if (confirm('로그아웃 하시겠습니까?')) {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'login.html';
+            }
+        }
+
+        window.getFoodFuturesPrice = (futureKey) => getCurrentPrice(futureKey);
+        window.getAllFuturesPrices = () => {
+            const prices = {};
+            Object.keys(FUTURES).forEach(key => {
+                prices[key] = getCurrentPrice(key);
+            });
+            return prices;
+        };
+    </script>
+</body>
+</html>
